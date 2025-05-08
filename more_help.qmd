@@ -1,0 +1,13 @@
+---
+toc: true
+toc-depth: 3
+toc-title: ""
+---
+
+# More help
+
+If you need more help, documentation, code examples, you should have a look at the `sf` vignettes and the `terra` documentation (<https://rspatial.org>{target="_blank"}).
+
+The book *Geocomputation with R*[@lovelace_geocomputation_2025] is absolutely amazing and available for free (legally) on the web: <https://r.geocompx.org>{target="_blank"}. The book *Spatial Data Science*[@pebesma_spatial_2023] also provides some advanced information on spatial data: <https://r-spatial.org/book/>{target="_blank"}.
+
+If you really like `tmap`, you should also check its website (<https://r-tmap.github.io/tmap>{target="_blank"}). There's also a book draft which looks really promising: <https://tmap.geocompx.org>{target="_blank"}[@tennekes_elegant_2025].

@@ -1,0 +1,46 @@
+---
+toc: true
+toc-depth: 3
+toc-title: ""
+---
+
+# Introduction
+
+## R and GIS
+
+You've probably already used a more traditional GIS software such as QGIS or ArcGIS Pro, you've maybe even heard that many GIS specialists use the Python programming language. Then why would you start using R, a statistic software, to perform your GIS analyses and make maps? I will only outline a few advantages and disadvantages in this introduction.
+
+A lot of ecological data you're going to analyse has a spatial component and it's convenient to perform everything in the same software. You will not need to transfer files and everything will be in the right format for subsequent statistical analyses. Moreover, most of you already know R and it's definitely easier to extend a bit you knowledge to include GIS analyses than to learn how to use a new software or how to code in Python. Fortunately, there's a really active community of R-users doing GIS, so you will not be alone and you'll easily find a lot of documentation online. There's also an incredibly large number of packages on CRAN for spatial data processing or analysis. You'll find an overview on the [CRAN Task View: Analysis of Spatial Data](https://cran.r-project.org/web/views/Spatial.html){target="_blank"}.
+
+Doing your GIS analyses with code is also a nice opportunity to make your research more reproducible. The whole data processing is documented and you and others can easily check and re-run everything. The same applies for maps, you can re-create them in a few seconds if the data changed. This is much harder if you only use a "point and click" GIS software.
+
+However there are some GIS tasks where R doesn't shine. I would for example never digitize GIS data or georeference images (such as old maps) using R. As we will later, the cartographic capabilities of some R packages are really impressive. But it will still be easier to use a traditional GIS software if you need more specialized techniques such as complex labeling, advanced symbology or complex map layouts. The same applies if you need to use 3D vector data (with the exception of point clouds).
+
+
+## GIS data models
+
+When we work with geographic data we need to decide how to model real world objects or concepts (buildings, forests, elevation, etc.) before we can use them in a computer with a GIS (Geographic Information System) software. GIS people mainly use 2 main data models: vector and raster. Other models exist, such as TINs, point clouds or meshes, but we won't cover them here.
+
+Vector data is normally used for high precision data sets and can be represented as points, lines or polygons. Properties of the represented features are stored as attributes. The vector types you will use depends of course on your own data and on the required analyses. For example: points could be appropriate for bird nests and sightings, lines for moving animals and linear structures (paths, rivers), and polygons for territories and land cover categories. Of course a river can also be modeled as a polygon if you're interested in its width (or you can also store its width as an attribute of the line).
+
+::: callout-note
+High precision doesn't necessarily mean high accuracy! For example the coordinates of some points could be stored in meters with 5 decimals even though the measurement error was 2 meters.
+
+Most vector data formats include some possibility to store information about measurement errors but this is actually very rarely used.
+:::
+
+The best known format for storing vector data is the shapefile, an old and inefficient format developed by ESRI. Even though the shapefile format is still widely used, it has a lot of limitations and problems (listed on the following website: <http://switchfromshapefile.org>{target="_blank"}). Nowadays GIS specialists advise to replace it with better alternatives such as the **GeoPackage** format. Every modern GIS software can read and write GeoPackages and the format is also completely open-source. It is also published as a standard by the Open Geospatial Consortium (OGC) which makes it a future-proof alternative.
+
+::: callout-important
+I strongly advise against using GeoPackages (or any other file database format) on cloud-storage platforms such as Dropbox, OneDrive or Google Drive, especially if you need to edit them! Most of the time everything will work fine, but the risk of corruption and/or data loss due to the synchronization mechanism is not negligible!
+:::
+
+Raster data is basically an image divided into cells (pixels) of constant size, and each cell has an associated value. Satellite imagery, topographic maps and digital elevation models (DEM) are typical examples where the raster data model is appropriate. A raster data set can have several layers called bands, for example most aerial images have at least three bands: red, green and blue. In the raster data model, specific geographic features are aggregated to a given resolution to create a consistent data set, associated with a loss of precision. The resolution used to aggregate can have a large influence of some analyses and must be thought of carefully.
+
+There exists thousands of different raster data formats. As of today I recommend using the **GeoTiff** format. It is widely used in the GIS world and every GIS software can read and write raster data in this format. Note that it is also possible to use the GeoPackage format to save raster data sets, however I would advise against using it since some GIS software won't be able to read these rasters.
+
+::: callout-tip
+Vector data: use the GeoPackage format
+
+Raster data: use the GeoTiff format
+:::

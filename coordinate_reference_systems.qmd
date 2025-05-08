@@ -1,0 +1,77 @@
+---
+toc: true
+toc-depth: 3
+toc-title: ""
+---
+
+```{r}
+#| echo: false
+#| output: false
+library(sf)
+```
+
+# Coordinate reference systems
+
+::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
+Run the following code to load and create everything you'll need to run the examples in this section.
+```{r}
+#| eval: false
+library(sf)
+```
+:::
+
+The majority of normal people will get scared if there's some problem to solve involving coordinate reference systems or projections. That's why I will keep this part really short and only show you the stuff you will need to perform standard GIS analyses with R. If you want to read more about this (extremely interesting) topic, I invite you to read the following book chapters: <https://r.geocompx.org/spatial-class.html#crs-intro>{target="_blank"} and <https://r-tmap.github.io/tmap-book/geodata.html#crs>{target="_blank"}.
+
+There is a famous expression saying "spatial is special"... One of the main reasons is that such data will have an associated location and you thus need a reference frame to describe this location. This reference frame is called a coordinate reference system (CRS) in the GIS world. CRSs can be either geographic or projected.
+
+::: callout-important
+When you're working with GIS data, you should always know the CRS you're using. Otherwise coordinates are just numbers without a reference frame. When you share GIS data, make sure the CRS is always defined in the data set or documented in some other way. The CRS of `sf` objects can be queried with the `st_crs()` function, for `terra` objects you should use the `crs()` function.
+:::
+
+A geographic CRS will identify locations on a spheroid or an ellipsoid using 2 values: latitude and longitude. The shape of the Earth is actually a geoid, but it is too complex to perform computations and thus one has to use approximations. The spheroid is making the assumption that the Earth is a sphere, while the ellipsoid is a better approximation accounting for the fact that our planet is a bit compressed (flatter at the North and South Poles). Geographic coordinate systems are not using a projection! All the computations (distances, buffers, etc.) have to happen on the spheroid/ellipsoid, which makes things more complex. It is easy to make mistakes when working with geographic CRSs, and even smart people fell in this trap (e.g. <https://georeferenced.wordpress.com/2014/05/22/worldmapblunders>{target="_blank"}).
+
+Projected CRSs are based on geographic CRSs but include an additional step: a projection on a flat surface. When using a projected CRS, locations are described using Cartesian coordinates called easting and northing (x and y). Projecting a spherical or ellipsoidal surface on a plane will cause deformations. These will affect four properties of the surface: areas, distances, shapes and directions. A projected CRS can preserve only one or two of these properties. There exists a ton of different projections and all of them make different compromises, some are even totally useless (check this beautiful xkcd comic: <https://xkcd.com/977>{target="_blank"}). Choosing a projection can be challenging, especially if your data covers a very large area. The following websites allow you to visualize the main projection types: <https://www.geo-projections.com>{target="_blank"} and <https://map-projections.net/singleview.php>{target="_blank"}. The second website also provides a nice tool to visualize distortions called a Tissot indicatrix. Fortunately, if your data is within a "smallish" area, it is relatively easy to find a good projected CRS that has only minimal distortions. Almost every country has its own recommended projected CRS (or CRSs), and if your data covers several countries, you can use a UTM (Universal Transverse Mercator) projection, or even better a Lambert azimuthal equal-area projection (set the latitude and the longitude of origin to the center of the study area).
+
+::: callout-tip
+It is almost always easier to work with a projected CRS, except if your data is really global (or covering a really large area, like a continent). Moreover, most GIS software will (still) make the assumption that you're data is on a flat plane, even if you're working with a geographic CRS. The `sf` package is kind of an exception since it will actually perform calculations on a spheroid if you use a geographic CRS, thanks to the s2 library.
+:::
+
+::: callout-important
+The CRS used by almost all mapping websites (OpenStreetMap, Google Maps, etc.) should never be used for any analysis. It is a slightly modified version of the Mercator projection called Web Mercator or Pseudo-Mercator. It has some advantages allowing good visualization speed, but the distortions are massive. Check the following website: <https://www.thetruesize.com>{target="_blank"}.
+:::
+
+With so many CRSs available, we need a way to classify them. That's what the EPSG (European Petroleum Survey Group) started doing a few years ago. They collected and documented most available CRSs in a data set which is now called the EPSG Geodetic Parameter Dataset (<https://epsg.org/home.html>{target="_blank"}). In this data set, every CRS has a unique identification number that can be used in a GIS software instead of writing the full definition of the CRS. The best available transformations between CRSs are also defined. Sadly this data set is still missing a few interesting CRSs and was thus completed by other companies such as ESRI. This is the reason why you'll sometimes see ESRI codes instead of EPSG for some CRSs. To avoid confusion, CRSs are usually referenced by an SRID (Spatial Reference System Identifier), which is made of two components, an authority (such as EPSG or ESRI) and an identifier. If no authority is mentioned you can usually assume it's coming from the EPSG data set (especially in the open-source GIS world). For clarity, I recommend always specifying the full SRID when working with CRSs. With `sf` and `terra` (and most other GIS packages), the SRID has to be written in the form "authority:identifier".
+
+The following CRSs are especially interesting for us:
+
+| SRID | Name | Description |
+|-----------------|-----------------|--------------------------------------|
+| EPSG:2056 | CH1903+/LV95 | Projected CRS currently used in Switzerland |
+| EPSG:21781 | CH1903/LV03 | Former projected CRS used in Switzerland, you will still find data sets using this one |
+| EPSG:4326 | WGS84 | Geographic CRS used for most global data sets, and by GPS devices |
+| EPSG:3857 | Pseudo-Mercator | Projected CRS used by online maps |
+| EPSG:8857 | Equal Earth Greenwich | Nice equal-area projection for world maps |
+| ESRI:54030 | Robinson | Aesthetically pleasing projection for world maps |
+
+
+::: {.callout-important title="Proj4strings"}
+When looking for examples on the web, you will often find code snippets using what is called a proj4string to define a CRS or to reproject data. For example the proj4string for the current Swiss CRS looks like this: `+proj=somerc +lat_0=46.9524055555556 +lon_0=7.43958333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs +type=crs`. This was the standard way of describing CRSs until a few years ago. You should NOT use these strings, instead always use the EPSG (or another authority) number to be on the safe side. Otherwise you may get small to medium position errors when reprojecting your data.
+
+Similarly, you will sometimes see some CRS definitions using the `+init=` syntax (e.g., `+init=EPSG:2056`). This should also be avoided for similar reasons, moreover this can also cause problems with other GIS software not recognizing the CRS properly.
+:::
+
+::: callout-important
+If you search for the EPSG database on your favorite search engine, you may find the website <https://epsg.io>{target="_blank"}. Please do not use it for EPSG codes (it's still useful for ESRI codes, though)! It is not the official EPSG website, it doesn't use the latest version of the EPSG database, and therefore some definitions of CRSs are outdated.
+:::
+
+You can easily explore how CRSs are stored in modern GIS software. For example if you want to inspect the current Swiss CRS:
+
+```{r}
+st_crs("EPSG:2056")
+```
+
+We get the full description of the CRS with all its parameters. The format used is unfortunately also named WKT, but this has nothing to do with the WKT format used to define geometries. If you use EPSG codes, you can also simply enter the code as an integer (please don't do this to avoid confusion).
+
+::: {.callout-note icon="false" title="Exercise (5 minutes)"}
+Try to understand some of the elements of the output of the `st_crs()` function. Try it with a geographic CRS.
+:::

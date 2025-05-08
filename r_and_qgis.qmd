@@ -1,0 +1,60 @@
+---
+toc: true
+toc-depth: 3
+toc-title: ""
+---
+
+```{r}
+#| echo: false
+#| output: false
+library(sf)
+obs <- read.csv("data/observations.csv")
+obs <- st_as_sf(obs, coords = c("x", "y"), crs = "EPSG:2056")
+```
+
+# Using QGIS via R
+
+::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
+Run the following code to load and create everything you'll need to run the examples in this section.
+```{r}
+#| eval: false
+library(sf)
+obs <- read.csv("data/observations.csv")
+obs <- st_as_sf(obs, coords = c("x", "y"), crs = "EPSG:2056")
+```
+:::
+
+Sometimes you know how to do things in QGIS and you don't have the time to search how to do it in R, or maybe QGIS is faster for a specific task. A recent R package called `qgisprocess`[@dunnington_r_2024] was developed for this reason. It gives access to the whole Processing toolbox available in QGIS. Of course you need to have QGIS installed as well. I will not go into the details of all the possibilities here but just show a quick example.
+
+If you have multiple versions of QGIS installed, `qgisprocess` should find all of them and automatically use the most recent one.
+
+```{r}
+library(qgisprocess)
+```
+
+You can easily list all the available algorithms using the `qgis_algorithms()` function or search for a specific one using the `qgis_search_algorithms()` function. For example let's compute a simple buffer around our sightings. The package will convert the `sf` object to a format understood by QGIS, then QGIS will compute the buffer and produce a GeoPackage with the output. We can then import it back to an `sf` object thanks to the `st_as_sf()` function. Recent versions of the package also support `terra` objects. If the output of the processing algorithm is a raster, you should thus use the `qgis_as_terra()` function instead of `st_as_sf()`.
+
+```{r}
+obs_buff_qgis_res <- qgis_run_algorithm("native:buffer", 
+                                        INPUT = obs,
+                                        DISTANCE = 1000,
+                                        DISSOLVE = TRUE,
+                                        .quiet = TRUE)
+obs_buff_qgis_res
+obs_buff_qgis <- st_as_sf(obs_buff_qgis_res, as_tibble = FALSE)
+plot(st_geometry(obs_buff_qgis))
+```
+
+To check the name of the function parameters, you can access the QGIS help files via R using the `qgis_show_help()` function, or just display the parameters using the `qgis_get_argument_specs()` function.
+
+```{r}
+qgis_get_argument_specs("native:buffer")
+```
+
+If you want to clean the temporary data that is created by `qgisprocess`, you can use the `qgis_clean_result()` function.
+
+```{r}
+file.exists(qgis_extract_output(obs_buff_qgis_res))
+qgis_clean_result(obs_buff_qgis_res)
+file.exists(qgis_extract_output(obs_buff_qgis_res))
+```

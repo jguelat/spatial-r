@@ -1,0 +1,29 @@
+---
+toc: true
+toc-depth: 3
+toc-title: ""
+---
+
+# Raster data
+
+As we saw above, a raster data set is basically an image, which is the same as a grid of pixels. These pixels are often called cells. Most raster data sets you will encounter will have square cells with a constant size (also called resolution), and we will only focus on these in this tutorial. However don't forget that other kind of grids, for example sheared or curvilinear, also exist. This is sometimes needed depending on the coordinate reference system used to store the data, or can be caused by some reprojections.
+
+Rasters are perfect for storing continuous values contained in a large area (called the extent of the raster). Digital elevation models are a typical example of such data, each cell is used to store an elevation value. You will also find rasters containing discrete values, these are often used to store landcover or landuse data sets. Note that, unlike vector data, it is impossible to store overlapping features in the same data set.
+
+We saw that vector data sets can store multiple attributes for a single feature. We can use a similar technique for raster data sets with the help of raster bands. You can think of raster bands as different layers of the same grid, each layer containing a different information. This is mainly use for spectral data, for example the red, green and blue intensity values in an aerial picture; satellite imagery will have even more bands depending on the number of sensors. Multiband rasters are also often used to store environment variables that change through time (e.g. a temperature raster, with one band per day). Such rasters are often called datacubes.
+
+![](figures/raster_types.jpg)
+
+Performing computations on raster data sets is usually very efficient and faster than using vector data. This is due to the fact that rasters are stored in some kind of matrix formats with some extra information such as the coordinate reference system and the origin of the raster. It this thus possible to use highly efficient linear algebra libraries. The mathematical operations performed on raster cells are called map algebra.
+
+We will use the `terra` package to work with raster data. This package has everything needed to import, analyse, visualize and export raster data sets. Like the `sf` package, it is also using the GDAL library for the import/export operations, which means it can open almost every raster data format. Unlike the `sf` package, `terra` will not import the full data sets in memory but only create a pointer to the data and then read smaller blocks of data successively. This allows working with very large rasters with a relatively small memory footprint. The amount of functions available in the `terra` package is similar to typical GIS software.
+
+::: {.callout-important title="Rasters and R workspaces"}
+Since `terra` only stores a pointer to the raster data set, this means the actual data set won't be included if you save your session in an R workspace (.Rdata files). If you really want to include it in your workspace, you can use the `wrap()` function. Note that this is also needed if you want to pass raster data over a connection that serializes, e.g. to a computer cluster.
+:::
+
+There is another famous R package to process raster data, the `stars` package. It is especially useful if you need to work with "irregular" rasters (sheared, curvilinear, etc.) or with complex datacubes. It is also tidyverse-friendly and the syntax is closed to the one used in `sf`. However the number of available functions is (still) much lower than in `terra`. If you need to use both packages, it is fortunately easy to convert raster objects from `terra` to `stars` (using the function `st_as_stars()`), and the other way round (using the function `rast()`).
+
+::: {.callout-note title="A bit of history"}
+A revolution happened in 2010 in the small world of R-spatial when the `raster` package was released. People were able to perform analyses using raster data sets in R instead of using a standard GIS software. The package has been maintained during many years, and many functions were added. However its developer decided to create a new package from scratch in order to improve speed and memory efficiency, the `terra` package was born. You will often find a lot of R code using the `raster` package on the web. Fortunately it is quite easy to adapt code written for the `raster` package to `terra`. The functions have similar names (sometimes even identical) and everything that was available in `raster` should also be available in `terra`. Actually the recent versions of `raster` even uses `terra` in the background instead of the original `raster` code.
+:::

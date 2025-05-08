@@ -1,0 +1,23 @@
+---
+toc: true
+toc-depth: 3
+toc-title: ""
+---
+
+# Getting data
+
+Here's a non-exhaustive list of packages you can use to download GIS data.
+
+| Package name | Description |
+|------------------|------------------------------------------------------|
+| `maptiles` | Download and import background maps from several providers |
+| `osmdata` | Download and import small OpenStreetMap data sets |
+| `osmextract` | Download and import large OpenStreetMap data sets |
+| `geodata` | Download and import imports administrative, elevation, WorldClim data, etc. |
+| `rnaturalearth` | Access to Natural Earth vector and raster data |
+| `elevatr` | Import digital elevation models |
+| `giscoR` | Tools to download data from the GISCO (Geographic Information System of the Commission) Eurostat database |
+| `rsi` | Download Landsat and Sentinel data and compute spectral indices |
+| `modisfast` | Download MODIS satellite data |
+| `climateR` | Download climate, land cover, and soil data (<https://mikejohnson51.github.io/climateR>{target="_blank"}) |
+| `swissgd` | Download data from the Swiss geodata infrastructure (<https://github.com/zumbov2/swissgd>{target="_blank"}) |

@@ -1,0 +1,246 @@
+---
+toc: true
+toc-depth: 3
+toc-title: ""
+---
+
+# Vector data
+
+## Vector data model
+
+The main vector types are points, lines and polygons (or a combination thereof) and the point is the base of all these types. For example a simple line consists of 2 connected points, similarly an ordered sequence of connected points will represent a more complex line (often called a polyline). A simple polygon will be modeled as an external ring, which is a special type of polyline where the first and last points are identical. In the case of lines and polygons we often speak of vertices to describe these points. Things can be a bit more complex, for example a polygon could have a hole which is modeled as an internal ring.
+
+The **Simple Feature** standard ([full documentation](https://portal.ogc.org/files/?artifact_id=25355){target="_blank"}) was developed to be sure that we all speak the same language when describing vector elements. The specification describes 18 geometry types, but don't worry only 7 of them will be useful for us. The following figure shows these 7 types (source: Lovelace *et al.*, 2019[@lovelace_geocomputation_2025]):
+
+![](figures/sf-classes.png)
+
+A feature represents a geographic entity modeled by one of these types. For example a building would be a single feature of type POLYGON, while the whole Hawaii archipelago would be a single feature of type MULTIPOLYGON (but you could of course also model each island separately as type POLYGON). A single feature using the MULTI\* types can have multiple elements but this is not mandatory. Most of the time we will use the default 2D version of these types. However it is possible to include additional numeric values such as the height of each point (Z values) or some kind of measurement error (M values). Note that many GIS software will ignore Z and M values for the vast majority of spatial analyses.
+
+::: callout-important
+The feature type is usually defined for the whole vector data set, and not per feature (actually `sf` lets you do that but this will brings you all sorts of troubles). For example, if you know that your data set will contain POLYGON and MULTIPOLYGON features, then you will have to use the MULTIPOLYGON type for all of them.
+:::
+
+In most GIS softwares (including R), simple features are internally encoded using the well-known binary (WKB) or well-known text (WKT) standards. As the name mentions, WKB is a binary format and hence not easily readable by normal humans. The WKT format is encoding exactly the same information as WKB, but in a more human friendly way. Here are some examples of WKT-encoded features (check the [Wikipedia page](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry){target="_blank"} if you need more):
+
+-   a point: `POINT (10 5)`
+-   a linestring made of 3 points: `LINESTRING (1 1, 2 4, 5 10)`
+-   a polygon (without a hole): `POLYGON ((10 5, 10 9, 5 8, 4 2, 10 5))`
+-   a multilinestring: `MULTILINESTRING ((1 1, 2 4, 5 10), (2 2, 5 2))`
+
+The geometry is of course essential in order to have a spatial information but the vector data model also allows storing non-spatial attributes (often called *attribute table*) for each feature. As we will see, these tables are stored as data frames in R and each column will store some property of the related feature (identification number, name, etc.). Each row relates to a single spatial feature (which can consist of several geometries if its type is MULTI\*). The following figure shows some examples (source: Tennekes & Nowosad, 2021[@tennekes_elegant_2025]):
+
+![](figures/vector-data-model-1.png){width="600"}
+
+
+## A first look at vector data in R
+
+Let's have a look at how R stores a vector data set. The main classes and methods needed to work with spatial vector data are defined in the `sf` package. We will also load the `tmap` package to have access to some spatial data sets.
+
+```{r}
+library(tmap)
+library(sf)
+```
+
+When you first load the `sf` package, it will provide you with version information about some important open-source GIS libraries it uses. In a few rare cases, some functions will only be available if you use recent version of these libraries. If you use `sf` on Windows or Mac and install it from CRAN, they will be included inside the `sf` package and there's no easy way to update them. These libraries are used in almost all open-source GIS software and even in some commercial ones. GDAL takes care of reading and writing your GIS files and can read 99.9% of all the existing GIS formats (the vector part of the GDAL library is often called OGR); GEOS is a Euclidean planar geometry engine and is used for all the common GIS analyses (intersection, union, buffer, etc.); PROJ is responsible for all the coordinate reference systems operations. The s2 library is a spherical geometry engine which is active by default for computations when using unprojected data.
+
+::: {.callout-important title="A bit of history"}
+The availability of the `sf` package was a massive change in the "R/GIS" ecosystem (often called R-Spatial). In the old days we used a combination of several packages to process GIS vector data in R. The spatial classes (and some functions) were defined in the `sp` package, the import/export of data was managed by the `rgdal` package, and the geometric operations were available in the `rgeos` package. You'll find a lot of code using these packages on the internet. Please refrain from using them since they are not maintained anymore. The packages `rgdal` and `rgeos` were removed from CRAN, `sp` is still available. Moreover the `sf` package is definitely more powerful and much faster.
+:::
+
+We will now inspect the `World` vector data set inside the `tmap` package and have a look at its structure.
+
+```{r}
+class(World)
+names(World)
+World
+```
+
+We see the `World` object is stored as a data frame with an additional geometry column (note that the name of the geometry column doesn't need to be 'geometry'). The content of the geometry column is displayed using the WKT format. A programmer would say these objects are instances of the `sf` class, and I will thus call them `sf` objects. R is also giving us more information, like the coordinate reference system used (more on that later) and the number of dimensions (i.e. XY, XYZ or XYZM).
+
+::: {.callout-note collapse="true" icon="false" title="Question: why is the MULTIPOLYGON type appropriate?"}
+Don't forget that each feature (i.e. each row of the data frame) represents a country, and some countries are made up of several distinct pieces of land (e.g., islands, exclaves). That's why we need the MULTIPOLYGON type. And since the type apply to the whole data set, even countries with a single geometry (like Switzerland) will need to be MULTIPOLYGONS.
+:::
+
+It is also easy to plot the data using the usual command.
+
+```{r}
+#| warning: false
+plot(World)
+```
+
+By default R will take the first 9 attributes of the `sf` object and plot them using the available geometries. Since these objects inherit from the data base class, you can use all the typical data frame functions such as `summary`, `head`, `merge`, `rbind`, etc. Subsetting is also possible using the standard `[]` operators. Therefore you can use the following code if you only want to plot the well-being index, for the whole world, only for countries with a high index, or just for Australia.
+
+```{r}
+plot(World[,"well_being"])
+plot(World[World$well_being > 6,"well_being"])
+plot(World[World$name == "Australia","well_being"])
+```
+
+Note that the color scale was adapted depending on the available values in the filtered data set. If you only need the geometries without any attributes, then you can use the `st_geometry()` function.
+
+```{r}
+plot(st_geometry(World))
+```
+
+::: callout-note
+We haven't done it here, but, as we will see later, it is better to first project everything using an appropriate projection when you want to plot global data (like the previous world maps).
+:::
+
+::: {.callout-note icon="false" title="Exercise (5 minutes)"}
+Play a little bit with the `World` data set, try different functions that you would normally use with a data frame. Import the `redlist` data from the file `red_list_index.csv` (source: <https://stats.oecd.org>{target="_blank"}) and join it to the `World` data frame to add new attributes. Plot a world map using one of the new attributes.
+
+```{r}
+#| eval: false
+#| code-fold: true
+redlist <- read.csv("data/red_list_index.csv")
+world2 <- merge(World, redlist, by.x = "iso_a3", by.y = "code")
+plot(world2[,"index_2020"])
+```
+:::
+
+
+## Structure of `sf` objects
+
+::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
+Run the following code to load and create everything you'll need to run the examples in this section.
+```{r}
+#| eval: false
+library(sf)
+```
+:::
+
+Most of the time you won't need to create your own `sf` objects from scratch since you'll import some existing GIS data. But if you need to, there are special functions to help you. This is also a good way to get a better understanding of the structure of `sf` objects. The standard process is shown in the following figure (source: Lovelace *et al.*, 2019[@lovelace_geocomputation_2025]):
+
+![](figures/02-sfdiagram.png){width="800"}
+
+You first need to create each feature geometry using some constructor functions. Each of these features will be of class `sfg` (simple feature geometry). Then you collect all these geometries in a list using the `st_sfc()` function. You get a new object of class `sfc` (simple feature list-column). After that you combine the newly created simple feature list-column with the attributes (stored as a data frame, or a tibble) using the `st_sf()` function in order to get an `sf` object.
+
+Since this is rather abstract, let's look at a simple example. Imagine we want to create a point data set containing three bird observations, and each observation will have the following attributes: species and sex. We start by creating our point geometries using x and y coordinates:
+
+```{r}
+pt1 <- st_point(c(2657000, 1219000))
+pt2 <- st_point(c(2658000, 1218000))
+pt3 <- st_point(c(2659000, 1217000))
+```
+
+Let's have a look at what we've just created:
+
+```{r}
+pt1
+class(pt1)
+typeof(pt1)
+str(pt1)
+```
+
+Our first object is a 2D point (otherwise we would see XYZ or XYZM) of class `sfg`. If we look a bit more into the details of the structure, we see that it is actually stored as vector of type `double` (with length 2).
+
+Now we need to collect our points inside an `sfc` object. This is simply a list of `sfg` objects with an associated coordinate reference system (CRS). Since we collected our data in Switzerland, we will use the standard Swiss coordinate reference system. As we will see later, most coordinate reference systems are identified by a specific number.
+
+```{r}
+pts <- st_sfc(pt1, pt2, pt3, crs = "EPSG:2056")
+```
+
+Let's have a look at our new creation:
+
+```{r}
+pts
+class(pts)
+typeof(pts)
+str(pts)
+```
+
+This confirms that our `sfc` object is actually a list, and this object will be the geometry column of the soon to be created `sf` object. Since our object is a list, it is easy to extract individual elements if needed:
+
+```{r}
+# Extract the second item of the list
+pts[[2]]
+class(pts[[2]])
+```
+
+The feature geometries (stored in an `sfc` object) are only half of what we need to create an `sf` object. We also need to define the attributes of each feature. We store them in a data frame using the same order as the geometries.
+
+```{r}
+pts_data <- data.frame(species = c("wallcreeper", "alpine chough", "kingfisher"),
+                       sex = c("male", "female", "female"))
+pts_data
+```
+
+And as a last step we combine the feature geometries with the related attributes using the `st_sf()` function. We now have a typical GIS data set stored as an `sf` object.
+
+```{r}
+pts_sf <- st_sf(pts_data, geometry = pts)
+pts_sf
+```
+
+Since everything is stored as lists, it is again easy to access individual elements of the `sf` object:
+
+```{r}
+# Extract the 3rd geometry
+pts_sf$geometry[[3]]
+```
+
+There's some sort of tradition to call geometry columns *geom* or *geometry*, but you're entirely free to chose another name. However, you need to be a bit careful since the `sf` package must always know the correct name. For example, using the standard `names()` function will not work for geometry columns since `sf` won't be informed of the change. To modify the name of the geometry column, always use the `st_geometry()` function.
+
+```{r}
+#| error: true
+names(pts_sf)[3] <- "my_beautiful_points"
+pts_sf
+st_geometry(pts_sf) <- "my_beautiful_points"
+pts_sf
+```
+
+
+::: callout-tip
+You can also create `sf` objects directly from a data frame containing a column of type `sfc` using the `st_as_sf()` function.
+
+```{r}
+pts_data$geometry <- pts
+pts_sf <- st_as_sf(pts_data)
+```
+:::
+
+::: callout-note
+You've now probably noticed that most functions in the `sf` package have an `st_` prefix. This is a reference (and probably homage) to PostGIS, an extension allowing to store and query GIS data in the PostgreSQL database management system. All PostGIS functions start with the `ST_` prefix, which stands for "Spatial Type".
+:::
+
+We process similarly to create other geometry types from scratch, the only difference is that we now need matrices to store the vertices of the lines and polygons instead of a simple vector, and for multilinestrings, (multi-)polygons and geometry collections, we need more lists to encapsulate everything. If you're not sure how to create geometries, the `sf` documentation provides examples for all the geometry types. Look for the following functions: `st_point()`, `st_linestring()`, `st_polygon()`, `st_multipoint()`, `st_multilinestring()`, `st_multipolygon()`, `st_geometrycollection()`. Here's a more complex example showing how to create a multipolygon (including one geometry with a hole) inside an `sfg` object. The next steps (collecting geometries in an `sfc` object, adding attributes and store as an `sf` object) are exactly the same as before.
+
+```{r}
+# rbind creates matrices and makes the coding easier
+pol1_border <- rbind(c(1, 5), c(2, 2), c(4, 1), c(4, 4), c(1, 5))
+pol1_hole <- rbind(c(2, 4), c(3, 4), c(3, 3), c(2, 3), c(2, 4))
+pol1 <- list(pol1_border, pol1_hole)
+pol2 <- list(rbind(c(0, 2), c(1, 2), c(1, 3), c(0, 3), c(0, 2)))
+multipolygon_list <- list(pol1, pol2)
+multipol <- st_multipolygon(multipolygon_list)
+multipol
+```
+```{r}
+#| eval: false
+plot(multipol, col = "navy")
+```
+```{r}
+#| echo: false
+#| fig-height: 3
+par(mar = c(0, 0, 1, 0))
+plot(multipol, col = "navy")
+```
+
+::: callout-tip
+You can also create `sfc` and `sf` objects from scratch using the WKT format and the `st_as_sfc()` and `st_as_sf()` functions. The following example creates an `sfc` object using a character vector, without needing to create an `sfg` object first.
+
+```{r}
+pts <- st_as_sfc(c("POINT(2657000 1219000)", "POINT(2658000 1218000)", "POINT(2659000 1217000)"), crs = "EPSG:2056")
+```
+
+And you can use a similar approach to create an `sf` object. In this case we add a new column (as a character vector) to the data frame containing the attributes. Note the use of the `wkt` argument inside the `st_as_sf()` function.
+
+```{r}
+pts_data$geometry <- c("POINT(2657000 1219000)", "POINT(2658000 1218000)", "POINT(2659000 1217000)")
+pts_sf <- st_as_sf(pts_data, wkt = "geometry", crs = "EPSG:2056")
+```
+:::
+
+::: {.callout-note icon="false" title="Exercise (5 minutes)"}
+Try to build your own `sfc` and `sf` objects using either `st_sfc()` and `st_sf()` or `st_as_sfc()` and `st_as_sf()`.
+:::

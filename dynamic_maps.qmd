@@ -1,0 +1,415 @@
+---
+toc: true
+toc-depth: 3
+toc-title: ""
+---
+
+```{r}
+#| echo: false
+#| output: false
+Sys.setenv(PROJ_LIB = "")
+library(sf)
+library(terra)
+library(tmap)
+muni <- st_read("data/geodata.gpkg", "municipalities", quiet = TRUE)
+muni$area <- st_area(muni)
+obs <- read.csv("data/observations.csv")
+obs <- st_as_sf(obs, coords = c("x", "y"), crs = "EPSG:2056")
+soi <- st_as_sfc("POINT(2657271 1219754)", crs = "EPSG:2056")
+elev <- rast("data/dem.tif")
+```
+
+# Dynamic maps
+
+Dynamic maps are amazing tools for data exploration and can also greatly help communicating some results. Several R packages are available to produce such maps. Some of them will do most of the hard job in the background (e.g., `mapview`, `tmap`) while others will offer more flexibility at the cost of more coding (e.g., `leaflet`[@cheng_leaflet_2023]).
+
+::: callout-important
+Nowadays, almost all dynamic maps on the web uses what is called the Pseudo-Mercator (or Web-Mercator) coordinate reference system (EPSG:3857). That's why your data will be automatically projected to this CRS when using the packages in this section. Remember that this CRS is not appropriate for analyses due to the massive deformations. Use it only for visualization purposes.
+:::
+
+
+## mapview
+
+::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
+Run the following code to load and create everything you'll need to run the examples in this section.
+```{r}
+#| eval: false
+library(sf)
+library(terra)
+muni <- st_read("data/geodata.gpkg", "municipalities", quiet = TRUE)
+obs <- read.csv("data/observations.csv")
+obs <- st_as_sf(obs, coords = c("x", "y"), crs = "EPSG:2056")
+elev <- rast("data/dem.tif")
+```
+:::
+
+The mapview package provide a really simple interface to quickly create dynamic maps and it is thus my favorite for data exploration. It uses the `leaflet` package (which uses the leaflet JavaScript library) to do all the rendering. As we will see later it's also more efficient than other packages when you have large data sets.
+
+One of the default options (`fgb`) of the `mapview` package will cause some problems with several examples in this tutorial. We will thus deactivate it.
+
+```{r}
+library(mapview)
+mapviewOptions(fgb = FALSE)
+```
+
+### Simple maps
+
+The main function used to create maps is simply called `mapview()`. It will accept any `sf` or `sfc` object.
+
+```{r}
+#| classes: map-padding
+mapview(muni)
+```
+
+If you don't like the default color, you can change it using the `color.regions` argument. It is also possible to specify the name of an attribute that will be shown on mouseover using the `label` argument. Here we will use the name of the municipalities.
+
+```{r}
+#| classes: map-padding
+mapview(muni, col.regions = "purple", label = "name")
+```
+
+You can also easily plot multiple data sets using a list or by adding `mapview` objects together. Note how it's possible to show/hide layers in the map.
+
+```{r}
+#| eval: false
+mapview(list(muni, obs))
+mapview(muni) + mapview(obs)
+mapview(muni) + obs
+```
+
+```{r}
+#| echo: false
+#| classes: map-padding
+mapview(list(muni, obs))
+```
+
+If you use a list to combine several data sets, you can easily customize some arguments per data set (also using lists).
+
+```{r}
+#| classes: map-padding
+mapview(list(muni, obs), legend = list(FALSE, TRUE), homebutton = list(TRUE, FALSE))
+```
+
+If you want to produce a map for a specific data set but use the extent of another data set, you can use the `hide = TRUE` argument for the data set defining the extent.
+
+```{r}
+#| classes: map-padding
+mapview(muni[muni$name == "Sursee",], layer.name = "Sursee") + mapview(muni, hide = TRUE)
+```
+
+For data exploration, it can sometimes be useful to "explode" a data set by columns. This is possible thanks to the `burst` argument. The result will be a map with one layer per attribute.
+
+```{r}
+#| classes: map-padding
+mapview(muni, burst = TRUE)
+```
+
+Sometimes it's more interesting to burst a data set by rows. For example if you have a data set containing data for several species, you can easily produce a map with one layer per species. To do that, the `burst` argument must be equal to the name of the splitting attribute (or you must specify something for the `zcol` argument).
+
+```{r}
+#| eval: false
+mapview(obs, burst = "name")
+# Equivalent
+mapview(obs, zcol = "name", burst = TRUE)
+```
+
+```{r}
+#| echo: false
+#| classes: map-padding
+mapview(obs, burst = "name")
+```
+
+The `mapview` package can also plot raster data sets. It will accept `terra` and `stars` objects. Transparency should be possible but it's currently not working (at least on my computer). Since the raster will be reprojected, you need to choose the resampling algorithm carefully (e.g., bilinear for continuous rasters and nearest neighbor for discrete ones). You can specify it using the `method` argument.
+
+```{r}
+#| classes: map-padding
+mapview(elev, alpha.regions = 0.5)
+```
+
+You can easily change the available background maps using the `map.types` argument. All the available basemaps with their respective names are shown on the following website: <https://leaflet-extras.github.io/leaflet-providers/preview>{target="_blank"}. You can also get the full list by calling the function `names(leaflet::providers)`. It is for example possible to use the Swiss national maps and orthophotos.
+
+```{r}
+#| classes: map-padding
+mapview(obs, map.types = c("SwissFederalGeoportal.NationalMapColor",
+                           "SwissFederalGeoportal.NationalMapGrey",
+                           "SwissFederalGeoportal.SWISSIMAGE"))
+```
+
+If you want to have the Swiss maps by default when using `mapview`, you can change the options for the current R session using the `basemaps` argument of the `mapviewOptions()` function. Restoring the default options is also possible.
+
+```{r}
+mapviewOptions(basemaps = c("SwissFederalGeoportal.NationalMapColor",
+                            "SwissFederalGeoportal.NationalMapGrey",
+                            "SwissFederalGeoportal.SWISSIMAGE"))
+mapview(muni)
+# Restore defaults
+mapviewOptions(default = TRUE)
+```
+
+### Choropleth maps
+
+Producing choropleth maps is also possible. You need to specify the attributes using the `zcol` argument.
+
+```{r}
+#| classes: map-padding
+mapview(muni, zcol = "popsize")
+```
+
+You can specify your own values for the breakpoints used for the visualization. Here we use the `classInt` package to compute the breakpoints based on the quantiles of one variable. Check the help page of the `classIntervals()` function to see all the available breakpoint types.
+
+```{r}
+#| classes: map-padding
+library(classInt)
+breaks <- classIntervals(muni$popsize, n = 4, style = "quantile")
+mapview(muni, zcol = "popsize", at = breaks$brks)
+```
+
+Use a list for the `zcol` argument if you need to visualize several data sets together but using different attributes for the symbology.
+
+```{r}
+mapview(list(muni, obs), zcol = list("popsize", "name"))
+```
+
+### Customize popups
+
+You can easily change the attribute that is shown for mouseovers when using a vector data set. Just set the `label` argument to the name of the attribute.
+
+```{r}
+#| classes: map-padding
+mapview(muni, zcol = "popsize", label = "name")
+```
+
+It is also possible to restrict the number of attributes shown when clicking on a feature thanks to the `popup` argument.
+
+```{r}
+#| classes: map-padding
+mapview(muni, popup = c("name", "popsize"))
+```
+
+It is also possible to completely change the display of the popup with the help of the `leafpop` package. Here's one example where we display a photo of the species for some bird sightings in our data set.
+
+```{r}
+library(leafpop)
+
+obs2 <- obs[20:40,]
+
+blackbird_img <- "https://www.vogelwarte.ch/wp-content/assets/images/bird/species/4240_1.jpg"
+bluetit_img <- "https://www.vogelwarte.ch/wp-content/assets/images/bird/species/3800_1.jpg"
+wagtail_img <- "https://www.vogelwarte.ch/wp-content/assets/images/bird/species/5030_1.jpg"
+imgs <- c(blackbird_img, bluetit_img, wagtail_img)
+
+imgs <- character(nrow(obs2))
+imgs[which(obs2$name == "Eurasian Blackbird")] <- blackbird_img
+imgs[which(obs2$name == "Eurasian Blue Tit")] <- bluetit_img
+imgs[which(obs2$name == "White Wagtail")] <- wagtail_img
+
+mapview(obs2, popup = popupImage(imgs, src = "remote"))
+```
+
+### Compare maps
+
+If you want to compare maps or data sets, you can use two interesting packages in combination with `mapview` (and `leaflet`) objects.
+
+The first possibility consists of adding a slider to switch between two maps. In the following example, we first create two new data sets using the municipalities. The first one has an attribute showing the number of bird sightings in April, and the second one has an attribute for the number of sightings in July.
+
+```{r}
+obs$date <- as.Date(obs$date)
+obs$month <- as.numeric(format(obs$date, "%m"))
+
+counts_muni_april <- st_as_sf(data.frame(counts = lengths(st_intersects(muni, obs[obs$month == 4,])), geometry = muni))
+counts_muni_july <- st_as_sf(data.frame(counts = lengths(st_intersects(muni, obs[obs$month == 7,])), geometry = muni))
+```
+
+We can now create the two `mapview` objects and compare them thanks to the `|` operator of the `leaflet.extras2` package. Note that we need to manually specify the breakpoints to be sure that both data sets have the same ones.
+
+```{r}
+#| classes: map-padding
+library(leaflet.extras2)
+
+maxcounts <- max(max(counts_muni_april$counts), max(counts_muni_july$counts))
+
+m1 <- mapview(counts_muni_april, zcol = "counts", at = pretty(0:maxcounts))
+m2 <- mapview(counts_muni_july, zcol = "counts", at = pretty(0:maxcounts))
+
+m1|m2
+```
+
+The other possibility consists of displaying the maps side by side and synchronizing them using the `sync()` function of the `leafsync` package. Instead of using two data sets, we will now use the same data set but with two different background maps.
+
+```{r}
+#| classes: map-padding
+library(leafsync)
+
+m1 <- mapview(counts_muni_april, zcol = "counts", map.types = "CartoDB.Positron")
+m2 <- mapview(counts_muni_april, zcol = "counts", map.types = "Esri.WorldImagery")
+sync(m1, m2)
+```
+
+If the extent of the two data sets you want to compare is different, be sure to use the `hide=TRUE` argument (see example above) to force an initial common extent for the two maps.
+
+```{r}
+m1 <- mapview(muni[muni$name == "Sursee",], layer.name = "Sursee") + mapview(muni, hide = TRUE)
+m2 <- mapview(muni[muni$name == "Eich",], layer.name = "Eich") + mapview(muni, hide = TRUE)
+sync(m1, m2)
+```
+
+### Large data sets
+
+If you have large data sets with thousands of points or hundreds of complex polygons, the default `leaflet` library will probably not be able to render your data. In this case you can change the rendering engine to use the `leafgl` package (based on the `Leaflet.glify` library extending `leaflet`). In this case it is recommended to deactivate the map viewer in RStudio since it can cause some crashes. The map will be displayed in a new browser window.
+
+```{r}
+mapviewOptions(platform = "leafgl", viewer.suppress = TRUE)
+pts <- st_sample(muni, 100000)
+pts <- st_intersection(muni, pts)
+mapview(pts)
+# Restore defaults
+mapviewOptions(default = TRUE)
+```
+
+### Customize zoom/extent
+
+Unfortunately it is not possible to limit the zoom factors and/or the map extent directly in the `mapview()` function. However, since `mapview` also produces a `leaflet` object, there are indirect solutions. It is possible to either first create a custom-made `leaflet` object and assign it to our `mapview` object. Or we can first create our `mapview` object and then manually hack the `leaflet` object inside.
+
+Here we limit only the zooming.
+
+```{r}
+#| classes: map-padding
+map <- leaflet::leaflet(options = leafletOptions(minZoom = 10, maxZoom = 12)) |> addTiles()
+mapview(muni, map = map)
+```
+
+We can also produce a semi-static map. No dragging or zooming is allowed but the map is still interactive.
+
+```{r}
+#| classes: map-padding
+map <- leaflet::leaflet(options = leafletOptions(zoomControl = FALSE, minZoom = 12, maxZoom = 12, dragging = FALSE)) |> addTiles()
+mapview(muni, map = map)
+```
+
+If we need to limit the zoom factors and the extent, we do the following.
+
+```{r}
+#| classes: map-padding
+map <- leaflet::leaflet(options = leafletOptions(minZoom = 10, maxZoom = 12)) |> addTiles() |> setMaxBounds(lng1 = 8, lat1 = 47, lng2 = 8.5, lat2 = 47.3)
+mapview(muni, map = map)
+```
+
+Here's how we can hack the `leaflet` object after creating the `mapview` object.
+
+```{r}
+#| classes: map-padding
+m <- mapview(muni)
+m@map <- leaflet::setMaxBounds(m@map, lng1 = 8, lat1 = 47, lng2 = 8.5, lat2 = 47.3)
+m@map$x$options$minZoom <- 10
+m@map$x$options$maxZoom <- 12
+m
+```
+
+The following hack produces the same result for the extent (instead of using the `setMaxBound()` function).
+
+```{r}
+#| eval: false
+m <- mapview(muni)
+m@map$x$options$maxBounds <- list(list(c(47, 8)), list(c(47.3, 8.5)))
+```
+
+### Saving maps
+
+Once you're happy with your map, you can export an HTML file using the `mapshot()` function. It should also be possible to export your map as a static image using the `file` argument instead of `url`. Unfortunately it doesn't seem to work with the current version of `mapview`. If you manage to make it work, you can decide which controls should be removed (or not, typically the scale bar) using the `remove_controls` argument.
+
+```{r}
+#| eval: false
+map <- mapview(muni, col.regions = "purple", label = "name")
+mapshot(map, url = "export/testmap.html")
+```
+
+
+## tmap
+
+::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
+Run the following code to load and create everything you'll need to run the examples in this section.
+```{r}
+#| eval: false
+library(sf)
+library(terra)
+library(tmap)
+muni <- st_read("data/geodata.gpkg", "municipalities", quiet = TRUE)
+muni$area <- st_area(muni)
+obs <- read.csv("data/observations.csv")
+obs <- st_as_sf(obs, coords = c("x", "y"), crs = "EPSG:2056")
+soi <- st_as_sfc("POINT(2657271 1219754)", crs = "EPSG:2056")
+elev <- rast("data/dem.tif")
+```
+:::
+
+::: callout-important
+This tutorial was written for `tmap` version 4.x. It will not work with older versions of `tmap`.
+:::
+
+The `tmap` package is not only amazing for static maps, you can also produce dynamic maps using the same code. You need to switch the `tmap`mode using `tmap_mode("view")`. If you want to produce static maps, you can switch back to the standard mode using `tmap_mode("plot")`. To quickly switch between the two modes, you can also use the `ttm()` function (without argument). Most of the functions and parameters are also available for dynamic maps. Similarly to `mapview`, the data is automatically projected to the Pseudo-Mercator CRS.
+
+```{r}
+#| classes: map-padding
+tmap_mode("view")
+tm_shape(muni) + tm_polygons(fill = "popsize",
+                             fill.scale = tm_scale_intervals(style = "quantile", values = "viridis"),
+                             fill.legend = tm_legend("Population size"),
+                             col = "white", lwd = 0.5)
+```
+
+It if of course possible to combine different data sets and use rasters. Once again, this is the same code we would have used for a static map.
+
+```{r}
+#| classes: map-padding
+tm_shape(elev) +
+    tm_raster(col.scale = tm_scale_continuous()) +
+tm_shape(muni) +
+    tm_borders() +
+tm_shape(obs) +
+    tm_dots(size = 0.4, fill = "violet")
+```
+
+If you plot two maps side by side, they will be synchronized.
+
+```{r}
+#| classes: map-padding
+tm_shape(muni) + tm_polygons(fill = c("popsize", "area"),
+                             fill.scale = tm_scale(values = "brewer.oranges"))
+```
+
+If you need other background maps, you can use the `tm_basemap()` function. Like with `mapview`, it is of course also possible to use the Swiss topographic maps or the orthophotos provided by Swisstopo. All the available basemaps with their respective names are shown on the following website: <https://leaflet-extras.github.io/leaflet-providers/preview>{target="_blank"}. You can also get the full list by calling the function `names(leaflet::providers)`. If your favorite map is not listed there but you know the URL of a tile server (such as WMTS), you can also use it inside the `tm_basemap()` function (e.g., for the Swiss grey map, you would use the following: `tm_basemap("https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg")`).
+
+```{r}
+#| classes: map-padding
+m1 <- tm_shape(soi) + tm_dots(fill = "red", size = 1.5) + tm_basemap("SwissFederalGeoportal.NationalMapColor")
+m1
+```
+
+When using dynamic maps, you can specify additional options that are not available for static maps using the `tm_view()` function. For example you can limit the zoom factors and the available extent.
+
+```{r}
+#| classes: map-padding
+m1 + tm_view(set_zoom_limits = c(10, 12), set_bounds = c(8, 47, 8.5, 47.3))
+```
+
+Similarly to `mapview`, you can also change the default basemaps using the `basemaps` argument of the `tmap_options()` function.
+
+```{r}
+opts <- tmap_options(basemap.server = c(NationalMapColor = "SwissFederalGeoportal.NationalMapColor",
+                                        NationalMapGrey = "SwissFederalGeoportal.NationalMapGrey",
+                                        SWISSIMAGE = "SwissFederalGeoportal.SWISSIMAGE"))
+
+tm_shape(soi) + tm_dots(fill = "red", size = 1.5)
+# Restore defaults
+tmap_options(opts)
+```
+
+
+## leaflet
+
+On the to-do list...
+
+
+## mapgl
+
+On the to-do list...

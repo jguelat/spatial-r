@@ -1,0 +1,73 @@
+---
+author:
+  - name: Jérôme Guélat
+    degrees: PhD
+    orcid: 0000-0003-1438-4378
+    affiliation:
+      - name: Swiss Ornithological Institute
+        url: https://www.vogelwarte.ch/en
+
+keywords:
+  - GIS
+  - R Spatial
+  - Spatial analyses
+  - Geoprocessing
+  - Cartography
+  - Static maps
+  - Dynamic maps
+
+title-block-banner: "#2271B1"
+title-block-banner-color: white
+
+toc: true
+toc-depth: 3
+toc-title: ""
+---
+
+# Preface {.unnumbered}
+
+The first version of this tutorial was created for a course given at the [Swiss Ornithological Institute](https://www.vogelwarte.ch/en){target="_blank"} in 2023. Researchers and students in ecology were the original audience but the whole material can be used by anybody who wants to learn more about how to perform GIS analyses and design maps with the R statistical programming language. The tutorial was heavily updated in 2025.
+
+My goal was to combine a very general and basic introduction to GIS with some sort of cookbook showing how to perform common GIS analyses and create maps with R. The introductory sections should provide enough information for readers with no or little GIS experience in order to understand the rest of the material. You're welcome to skip them, especially if you understand GIS data models and how GIS data is stored in R.
+
+The cookbook part of the tutorial is a collection of analyses and mapping techniques that I regularly use in my job. Most of them are standard GIS procedures, but you'll also find more advanced topics. There are two ways to run the code snippets in this tutorial. You can either run everything, starting with the first section and continuing with the others. Or, if you prefer the cookbook approach, I also included a collapsible code snippet at the start of each section that will allow you to get all the required data and load packages for this section only.
+
+You will notice that the amount of content (examples, explanations, exercises, etc.) can be variable depending on the section. I'm sorry for this, this is purely due to a lack of time on my side... I promise to do my best to add more content soon (hopefully).
+
+None of this could have been written without the incredible work done by the R-spatial community. I'd especially like to thank all the software developers who created and are maintaining the R software, the R packages and the open-source libraries used in these packages!
+
+
+# Getting ready {.unnumbered}
+
+You'll need the following packages to run the examples in this book. You can use the following code to install them. All the required dependencies will be automatically installed. The most important ones are `sf`[@pebesma_simple_2018], `terra`[@hijmans_terra_2023], `tmap`[@tennekes_tmap_2023] and `mapview`[@appelhans_mapview_2023].
+
+::: callout-important
+Please also update to the latest version of R, otherwise you may get packages that are not fully up-to-date.
+:::
+
+``` r
+install.packages("sf")
+install.packages("terra")
+install.packages("lwgeom")
+install.packages("spatstat.random")
+install.packages("spdep")
+install.packages("httr2")
+install.packages("tmap")
+install.packages("mapview")
+install.packages("tmaptools")
+install.packages("classInt")
+install.packages("leaflet.extras2")
+install.packages("leafsync")
+install.packages("qgisprocess")
+```
+
+The required data is available on the GitHub repository (<https://github.com/jguelat/R-GIS>{target="_blank"}). You'll also find all the code needed to re-create the whole book.
+
+
+# Changelog {.unnumbered}
+
+Only the big updates are listed here... Typo and bug fixes are not listed... Make a table
+
+- 2025-02-25: Update of the `tmap` subsections (static and dynamic maps), compatibility with `tmap 4`, more explanation and map examples.
+- 2025-02-07: Large update of the "Tips and tricks for vectors" and "Dynamic maps" sections, second workshop in Sempach.
+- 2023-01-20: First version of the book for the workshop in Sempach.

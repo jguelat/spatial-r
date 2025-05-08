@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+.DS_Store
+export/birds.csv
+export/birds.gpkg
+export/dem.csv
+export/dem1.tif
+export/dem2.tif
+export/municipalities.csv
+/.quarto/
+_book/

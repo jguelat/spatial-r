@@ -1,0 +1,48 @@
+project:
+  type: book
+
+book:
+  title: "Spatial Data Processing with R"
+  author: "Jérôme Guélat"
+  date: today
+  chapters:
+    - index.qmd
+    - introduction.qmd
+    - vector_data.qmd
+    - raster_data.qmd
+    - coordinate_reference_systems.qmd
+    - vectors_tips.qmd
+    - rasters_tips.qmd
+    - static_maps.qmd
+    - dynamic_maps.qmd
+    - r_and_qgis.qmd
+    - getting_data.qmd
+    - more_help.qmd
+    - references.qmd
+  sidebar:
+    tools:
+      - icon: github
+        href: https://github.com/jguelat/spatial-r
+  #repo-url: https://github.com/quarto-dev/quarto-demo
+  #repo-actions: [edit, source, issue]
+  page-footer:
+    center: "Copyright 2025, Jérôme Guélat"
+    border: true
+  license: "CC BY-NC-ND 4.0"
+
+bibliography: references.bib
+csl: american-medical-association.csl
+
+format:
+  html:
+    theme: cosmo
+    grid: 
+      sidebar-width: 250px
+      body-width: 1000px
+      margin-width: 250px
+      gutter-width: 1.5rem
+
+include-in-header: 
+  - text: |
+      <style>a {text-decoration:none;}
+      .map-padding { padding: 0 0 2em 0; }</style
