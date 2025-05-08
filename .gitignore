@@ -11,4 +11,5 @@ export/dem1.tif
 export/dem2.tif
 export/municipalities.csv
 /.quarto/
-_book/
+/_book/
+/_site/
