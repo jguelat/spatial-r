@@ -57,17 +57,19 @@ install.packages("mapview")
 install.packages("tmaptools")
 install.packages("classInt")
 install.packages("leaflet.extras2")
+install.packages("leafpop")
 install.packages("leafsync")
 install.packages("qgisprocess")
 ```
 
-The required data is available on the GitHub repository (<https://github.com/jguelat/R-GIS>{target="_blank"}). You'll also find all the code needed to re-create the whole book.
+The required data is available on the GitHub repository (<https://github.com/jguelat/spatial-r>{target="_blank"}). You'll also find all the code needed to re-create the whole book.
 
 
 # Changelog {.unnumbered}
 
 Only the big updates are listed here... Typo and bug fixes are not listed... Make a table
 
-- 2025-02-25: Update of the `tmap` subsections (static and dynamic maps), compatibility with `tmap 4`, more explanation and map examples.
+- 2025-05-08: The course was converted to a Quarto book and is available as a GitHub website: <https://jguelat.github.io/spatial-r>{target="_blank"}
+- 2025-02-25: Update of the `tmap` subsections (static and dynamic maps), compatibility with version 4.x, more explanations and map examples.
 - 2025-02-07: Large update of the "Tips and tricks for vectors" and "Dynamic maps" sections, second workshop in Sempach.
 - 2023-01-20: First version of the book for the workshop in Sempach.
