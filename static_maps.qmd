@@ -7,7 +7,9 @@ toc-title: ""
 ```{r}
 #| echo: false
 #| output: false
-Sys.setenv(PROJ_LIB = "")
+if (.Platform$OS.type == "windows" && Sys.getenv("PROJ_LIB") != ""){
+  Sys.setenv(PROJ_LIB = "")
+}
 library(sf)
 library(terra)
 library(tmap)

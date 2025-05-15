@@ -7,7 +7,9 @@ toc-title: ""
 ```{r}
 #| echo: false
 #| output: false
-Sys.setenv(PROJ_LIB = "")
+if (.Platform$OS.type == "windows" && Sys.getenv("PROJ_LIB") != ""){
+  Sys.setenv(PROJ_LIB = "")
+}
 library(sf)
 muni <- st_read("data/geodata.gpkg", "municipalities", quiet = TRUE)
 sempach <- muni[muni$name == "Sempach",]
@@ -22,16 +24,6 @@ if(file.exists("export/dem2.tif")) {file.remove("export/dem2.tif")}
 ```
 
 # Tips and tricks for rasters
-
-::: callout-important
-The `terra` package currently has a bug causing some troubles finding the PROJ library if you manually installed another PROJ instance (e.g. this is happening when you install PostGIS). In this case you'll often see warnings referring to `PROJ: proj_create_from_database`. To solve this problem, run the following code *before* loading `terra`:
-
-```{r}
-#| eval: false
-Sys.setenv(PROJ_LIB = "")
-```
-:::
-
 
 ## Reading and writing raster data
 
@@ -60,6 +52,17 @@ crs(landcover) <- "EPSG:2056"
 landcover <- as.factor(landcover)
 plot(landcover)
 ```
+
+::: callout-important
+If you got a warning when setting the CRS of the landcover raster, please read the next lines carefully!
+
+The `terra` package currently has a bug causing some troubles finding the PROJ library if you manually installed another PROJ instance on Windows (e.g. this is happening when you install PostGIS). In this case you'll often see warnings referring to `PROJ: proj_create_from_database` and all CRS operations will fail. To solve this problem, run the following code *before* loading `terra` (do this ONLY if you get these warnings, otherwise this may cause other problems):
+
+```{r}
+#| eval: false
+Sys.setenv(PROJ_LIB = "")
+```
+:::
 
 If a raster data set is stored online, you can also directly use it without needing to download the full data set. This works especially well with rasters stored as Cloud Optimized GeoTiff (COG) files. A COG file is a regular GeoTiff file, aimed at being hosted on a HTTP file server, with an internal organization that enables more efficient workflows on the cloud. To read such rasters, you'll need to the `vsi = TRUE` argument inside the `rast()` function.
 
