@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,10 +90,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-17a3278685664306fedb48a9f62c2a33.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -973,14 +973,14 @@ Exercise (5 minutes)
 </div>
 </div>
 </div>
-<p>In the next example we customize two maps in the same plotting window. We also use the <code>tm_title()</code> function to add nicer titles and the <code>tm_credits()</code> function to add some copyright information. Note the difference when using lowercase vs.&nbsp;uppercase for the positioning of the map components. We also tell <code>tmap</code> to remove the automatic title panels using the <code>panel.show = FALSE</code> argument inside the <code>tm_layout()</code> function. Lastly, note how we change the colors and the title of the legends for the two maps using <code>list</code> objects, and the use of an expression to properly display the units.</p>
+<p>In the next example we customize two maps in the same plotting window. We also use the <code>tm_title()</code> function to add nicer titles and the <code>tm_credits()</code> function to add some copyright information. Note the difference when using lowercase vs.&nbsp;uppercase for the positioning of the map components. We also tell <code>tmap</code> to remove the automatic title panels using the <code>panel.show = FALSE</code> argument inside the <code>tm_layout()</code> function. Lastly, note how we change the colors and the title of the legends for the two maps using <code>list</code> objects, and the use of an expression to properly display the units. The <code>meta.margins</code> inside <code>tm_layout()</code> is needed when using version 4.1 of <code>tmap</code>, otherwise the margins are suboptimal (this is a bug that should be corrected in the next version).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(muni) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"popsize"</span>, <span class="st">"area"</span>),</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">fill.scale =</span> <span class="fu">list</span>(<span class="fu">tm_scale</span>(<span class="at">values =</span> <span class="st">"brewer.reds"</span>), <span class="fu">tm_scale</span>(<span class="at">values =</span> <span class="st">"brewer.blues"</span>)),</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">fill.legend =</span> <span class="fu">list</span>(<span class="fu">tm_legend</span>(<span class="st">"Population size"</span>), <span class="fu">tm_legend</span>(<span class="fu">expression</span>(<span class="st">"Area [m"</span><span class="sc">^</span><span class="dv">2</span><span class="sc">*</span><span class="st">"]"</span>)))) <span class="sc">+</span></span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="fu">c</span>(<span class="st">"Population size"</span>, <span class="st">"Area"</span>), <span class="at">size =</span> <span class="fl">1.1</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"top"</span>)) <span class="sc">+</span> </span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_credits</span>(<span class="st">"Data © swisstopo"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"LEFT"</span>, <span class="st">"BOTTOM"</span>)) <span class="sc">+</span></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">panel.show =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">panel.show =</span> <span class="cn">FALSE</span>, <span class="at">meta.margins =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1275,8 +1275,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1387,7 +1385,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

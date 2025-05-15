@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-17a3278685664306fedb48a9f62c2a33.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -296,36 +296,17 @@ window.Quarto = {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The <code>terra</code> package currently has a bug causing some troubles finding the PROJ library if you manually installed another PROJ instance (e.g.&nbsp;this is happening when you install PostGIS). In this case you’ll often see warnings referring to <code>PROJ: proj_create_from_database</code>. To solve this problem, run the following code <em>before</em> loading <code>terra</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">PROJ_LIB =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
 <section id="reading-and-writing-raster-data" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="reading-and-writing-raster-data"><span class="header-section-number">6.1</span> Reading and writing raster data</h2>
 <p>As we saw earlier, we are going to use another package to import raster data sets. The <code>rast()</code> function from the <code>terra</code> package is what we need. It doesn’t matter if our raster is continuous, discrete, or contains several bands, the <code>rast()</code> function will create the correct <code>terra</code> object. Calling the object will display some basic information about the data set. However don’t forget that it’s only a pointer to the data set, the full raster will not be imported into memory.</p>
 <p>The digital elevation model is an extract of the <a href="https://www.swisstopo.admin.ch/en/height-model-dhm25" target="_blank">DHM25</a> data set provided by Swisstopo, the orthophoto is an extract of the <a href="https://www.swisstopo.admin.ch/en/orthoimage-swissimage-10" target="_blank">SWISSIMAGE</a> data set also provided by Swisstopo.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'terra' was built under R version 4.4.3</code></pre>
+<pre><code>terra 1.8.50</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>terra 1.8.42</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>elev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>elev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 604, 840, 1  (nrow, ncol, nlyr)
@@ -335,16 +316,16 @@ coord. ref. : CH1903+ / LV95 (EPSG:2056)
 source      : dem.tif 
 name        : dem </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="rasters_tips_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="rasters_tips_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ortho <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/sempach_ortho.tif"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ortho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ortho <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/sempach_ortho.tif"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ortho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 1427, 1996, 3  (nrow, ncol, nlyr)
@@ -355,11 +336,11 @@ source      : sempach_ortho.tif
 colors RGB  : 1, 2, 3 
 names       : sempach_ortho_1, sempach_ortho_2, sempach_ortho_3 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ortho)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ortho)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="rasters_tips_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="rasters_tips_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -367,8 +348,8 @@ names       : sempach_ortho_1, sempach_ortho_2, sempach_ortho_3 </code></pre>
 <p>Note that the orthophoto was plotted in a different way (no axes, no legend). The <code>terra</code> package automatically detected that the raster had 3 bands and made the assumption that the bands corresponded to red, green and blue intensity values. If this assumption is not correct, you can use the <code>plotRGB()</code> function and specify the RGB bands manually to get the desired plot.</p>
 <p>Similarly we can import a raster containing discrete values, such as a landcover/landuse data set. The following one is an extract from the <a href="https://www.bfs.admin.ch/bfs/en/home/services/geostat/swiss-federal-statistics-geodata/land-use-cover-suitability/swiss-land-use-statistics.html" target="_blank">Swiss Land Use Statistics</a>, provided by the Federal Statistical Office. Note that the CRS is not defined, this will happen more often with raster data found in the wild than with vector data. Fortunately we know which CRS was used and we can add this information to the data set. Moreover, <code>terra</code> is not recognizing automatically that we’re processing a discrete raster. That’s why we need to use the <code>as.factor()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>landcover</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>landcover</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 151, 210, 1  (nrow, ncol, nlyr)
@@ -380,22 +361,39 @@ name        :  X
 min value   :  1 
 max value   : 26 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="rasters_tips_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="rasters_tips_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you got a warning when setting the CRS of the landcover raster, please read the next lines carefully!</p>
+<p>The <code>terra</code> package currently has a bug causing some troubles finding the PROJ library if you manually installed another PROJ instance on Windows (e.g.&nbsp;this is happening when you install PostGIS). In this case you’ll often see warnings referring to <code>PROJ: proj_create_from_database</code> and all CRS operations will fail. To solve this problem, run the following code <em>before</em> loading <code>terra</code> (do this ONLY if you get these warnings, otherwise this may cause other problems):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">PROJ_LIB =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 <p>If a raster data set is stored online, you can also directly use it without needing to download the full data set. This works especially well with rasters stored as Cloud Optimized GeoTiff (COG) files. A COG file is a regular GeoTiff file, aimed at being hosted on a HTTP file server, with an internal organization that enables more efficient workflows on the cloud. To read such rasters, you’ll need to the <code>vsi = TRUE</code> argument inside the <code>rast()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>url_swissimage <span class="ot">&lt;-</span> <span class="st">"https://data.geo.admin.ch/ch.swisstopo.swissimage-dop10/swissimage-dop10_2021_2666-1211/swissimage-dop10_2021_2666-1211_0.1_2056.tif"</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ortho_web <span class="ot">&lt;-</span> <span class="fu">rast</span>(url_swissimage, <span class="at">vsi =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ortho_web)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>url_swissimage <span class="ot">&lt;-</span> <span class="st">"https://data.geo.admin.ch/ch.swisstopo.swissimage-dop10/swissimage-dop10_2021_2666-1211/swissimage-dop10_2021_2666-1211_0.1_2056.tif"</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ortho_web <span class="ot">&lt;-</span> <span class="fu">rast</span>(url_swissimage, <span class="at">vsi =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ortho_web)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -406,8 +404,8 @@ max value   : 26 </code></pre>
 </div>
 <p>Rasters are nice objects to work with but it’s sometimes nice to have more familiar R objects. You can easily convert <code>SpatRaster</code> objects to data frames containing the geographic coordinates of all pixels and the related pixel values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>elev_vals <span class="ot">&lt;-</span> <span class="fu">values</span>(elev)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elev_vals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>elev_vals <span class="ot">&lt;-</span> <span class="fu">values</span>(elev)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elev_vals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     dem
 [1,] 544
@@ -417,8 +415,8 @@ max value   : 26 </code></pre>
 [5,] 545
 [6,] 546</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>elev_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(elev, <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elev_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>elev_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(elev, <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(elev_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        x       y dem
 1 2644000 1228000 544
@@ -428,14 +426,14 @@ max value   : 26 </code></pre>
 5 2644100 1228000 545
 6 2644125 1228000 546</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(elev_df, <span class="st">"export/dem.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(elev_df, <span class="st">"export/dem.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Similarly, if you have a data frame containing geographic coordinates located on a regular grid and associated values, you can easily convert it to a <code>terra</code> object with the help of the <code>rast()</code> function, by adding the argument <code>type = "xyz"</code>. This is often useful if you want to plot the predictions of a statistical model on a map, for example the distribution of a species. Here we add a new column to some data frame filled with random values and we convert it to a 2-band raster.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>elev_df<span class="sc">$</span>rand <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(elev_df))</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>elev2 <span class="ot">&lt;-</span> <span class="fu">rast</span>(elev_df, <span class="at">type =</span> <span class="st">"xyz"</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>elev2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>elev_df<span class="sc">$</span>rand <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(elev_df))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>elev2 <span class="ot">&lt;-</span> <span class="fu">rast</span>(elev_df, <span class="at">type =</span> <span class="st">"xyz"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>elev2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 604, 840, 2  (nrow, ncol, nlyr)
@@ -444,10 +442,10 @@ extent      : 2643988, 2664988, 1212913, 1228013  (xmin, xmax, ymin, ymax)
 coord. ref. :  
 source(s)   : memory
 names       : dem,      rand 
-min values  : 425, -4.545665 
-max values  : 930,  4.835640 </code></pre>
+min values  : 425, -4.402829 
+max values  : 930,  4.394556 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev2, <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev2, <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -458,13 +456,13 @@ max values  : 930,  4.835640 </code></pre>
 </div>
 <p>Exporting a raster data set is really easy thanks to the <code>writeRaster()</code> function. The format will be automatically recognized based on the file name extension. As we saw in the introduction, the GeoTiff format is almost always the format we should use.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(elev, <span class="st">"export/dem1.tif"</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(elev2, <span class="st">"export/dem2.tif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(elev, <span class="st">"export/dem1.tif"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(elev2, <span class="st">"export/dem2.tif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Remember that the first raster was a single band raster and the second one had two bands. If you want to only export a single band, you can subset the raster data set using <code>[[]]</code>, either using the band number or name.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(elev2[[<span class="dv">1</span>]], <span class="st">"export/dem2.tif"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(elev2[[<span class="st">"dem"</span>]], <span class="st">"export/dem2.tif"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(elev2[[<span class="dv">1</span>]], <span class="st">"export/dem2.tif"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(elev2[[<span class="st">"dem"</span>]], <span class="st">"export/dem2.tif"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="summarize-rasters" class="level2" data-number="6.2">
@@ -483,23 +481,23 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>In the GIS world, functions acting on the whole raster (using all pixels) to produce some output are called global functions. They are mostly used to produce some descriptive statistics on the data set. It is therefore not so surprising that <code>terra</code> provides such a function. If you prefer plots, the <code>hist()</code> and <code>boxplot()</code> functions have also been extended to support <code>SpatRaster</code> objects.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">global</span>(elev, <span class="at">fun =</span> <span class="st">"max"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">global</span>(elev, <span class="at">fun =</span> <span class="st">"max"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    max
 dem 930</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -507,7 +505,7 @@ dem 930</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: [boxplot] taking a sample of 1e+05 cells</code></pre>
 </div>
@@ -522,7 +520,7 @@ dem 930</code></pre>
 <p>You can define you own function when using the <code>global()</code> function. However they will be much slower than the standard functions provided by <code>terra</code>, or may even fail.</p>
 <p>For discrete rasters, you can easily get the frequency distribution of all the available categories.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   layer value count
 1      1     1   506
@@ -567,19 +565,19 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>muni <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/geodata.gpkg"</span>, <span class="st">"municipalities"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>sempach <span class="ot">&lt;-</span> muni[muni<span class="sc">$</span>name <span class="sc">==</span> <span class="st">"Sempach"</span>,]</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>muni <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/geodata.gpkg"</span>, <span class="st">"municipalities"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>sempach <span class="ot">&lt;-</span> muni[muni<span class="sc">$</span>name <span class="sc">==</span> <span class="st">"Sempach"</span>,]</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>If you need to spatially subset a raster, you can either use another raster defining the zone you want to extract, or a polygon enclosing the area. First we’ll have a look at the former. We first import our raster mask.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>rmask <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/sempach_raster.tif"</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rmask, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>rmask <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/sempach_raster.tif"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rmask, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -591,10 +589,10 @@ If you start from here…
 <p>Don’t forget that regular raster data sets are always rectangular. The raster mask we’re now using is the municipality of Sempach. We see its shape, but the data set is still a rectangle. All the other pixels in the raster extent are NAs (you can quickly check it using the <code>values()</code> function).</p>
 <p>First we need to use the <code>crop()</code> function, which will crop our DEM raster to the extent of the mask. This will also work if the mask is not perfectly align with the other raster, but in this case <code>terra</code> will perform a slight shift of the extent of the mask so that everything is aligned.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>elev_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(elev, rmask)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Identical to</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>elev_crop <span class="ot">&lt;-</span> elev[rmask, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_crop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>elev_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(elev, rmask)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Identical to</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>elev_crop <span class="ot">&lt;-</span> elev[rmask, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_crop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -605,8 +603,8 @@ If you start from here…
 </div>
 <p>We can then perform the masking once we have two rasters with the same extent and alignment. If your mask is not perfectly aligned, you’ll need to shift (have a look at the <code>shift()</code> function) it or even resample it (see next section).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>elev_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(elev_crop, rmask)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_mask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>elev_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(elev_crop, rmask)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_mask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -617,8 +615,8 @@ If you start from here…
 </div>
 <p>Now let’s have a look at the second possibility: masking and cropping using a vector data set. This is considerably easier since you don’t need to have perfect alignment but this can be a bit slower for complex masks.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>elev_crop2 <span class="ot">&lt;-</span> <span class="fu">crop</span>(elev, sempach)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_crop2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>elev_crop2 <span class="ot">&lt;-</span> <span class="fu">crop</span>(elev, sempach)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_crop2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -626,8 +624,8 @@ If you start from here…
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>elev_mask2 <span class="ot">&lt;-</span> <span class="fu">mask</span>(elev, sempach)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_mask2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>elev_mask2 <span class="ot">&lt;-</span> <span class="fu">mask</span>(elev, sempach)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_mask2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -638,8 +636,8 @@ If you start from here…
 </div>
 <p>With vector data, you can directly use the <code>mask()</code> function, without clipping the extent with the <code>crop()</code> function first. However you’ll still get the original extent, which means a lot of pixels with NAs. The <code>trim()</code> function allows cleaning things a bit by removing outer rows and columns full of NAs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>elev_mask2 <span class="ot">&lt;-</span> <span class="fu">trim</span>(elev_mask2)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_mask2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>elev_mask2 <span class="ot">&lt;-</span> <span class="fu">trim</span>(elev_mask2)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_mask2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -665,19 +663,19 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>Sometimes you will need to reduce the resolution of your rasters (e.g., if they’re too large to be processed efficiently). This can be easily achieved using the <code>aggregate()</code> function. The <code>fact</code> argument is the aggregation factor. For example a value of 2 means 2 pixels in the horizontal direction and 2 pixels in the vertical direction, so that 4 pixels will be aggregated into one. If you need to disaggregate a raster, have a look at the <code>disagg()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>elev_agg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(elev, <span class="at">fact =</span> <span class="dv">20</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_agg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>elev_agg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(elev, <span class="at">fact =</span> <span class="dv">20</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_agg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -688,8 +686,8 @@ If you start from here…
 </div>
 <p>By default the <code>aggregate()</code> function will use the arithmetic mean to merge the pixel values, but you’re free to use other functions (including your own ones). As you can guess, we need to be a bit careful when using discrete rasters since most functions won’t make any sense. The following one (<code>fun = "modal"</code>) will use the most frequent category as the new pixel value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>landcover_agg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(landcover, <span class="at">fact =</span> <span class="dv">5</span>, <span class="at">fun =</span> <span class="st">"modal"</span>)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landcover_agg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>landcover_agg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(landcover, <span class="at">fact =</span> <span class="dv">5</span>, <span class="at">fun =</span> <span class="st">"modal"</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landcover_agg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -701,8 +699,8 @@ If you start from here…
 <p>Combining rasters is really easy when they’re perfectly aligned (same extent, same resolution). However most of the times we get data sets that don’t satisfy this condition. If possible we should first try to slightly shift and/or aggregate the rasters (or maybe crop/extend the extents). If the differences are too big, we need to transform the raster in a more radical way, we need resampling. This means taking the values of our original raster and calculate new values for our target extent and resolution.</p>
 <p>The first argument of the <code>resample()</code> function is the raster that needs to be resampled, the second argument is used to provide the target extent and resolution, and the third one is used to indicate the method that will be used for the interpolation of the new values. The bilinear interpolation is the default and is appropriate for continuous rasters. It assigns a weighted average of the four nearest cells of the original raster to the cell of the target one. Other interpolation algorithms are available for continuous rasters (e.g.&nbsp;cubic, cubic spline, etc.). However all of this don’t make any sense when we need to resample a discrete raster. For them we need to use the nearest neighbor interpolation. It assigns the value of the nearest cell of the original raster to the cell of the target one.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>elev_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(elev, landcover, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>elev_resample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>elev_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(elev, landcover, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>elev_resample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 151, 210, 1  (nrow, ncol, nlyr)
@@ -715,12 +713,12 @@ name        :      dem
 min value   : 427.0625 
 max value   : 920.8250 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareGeom</span>(elev_resample, landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareGeom</span>(elev_resample, landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>landcover_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(landcover, elev, <span class="at">method =</span> <span class="st">"near"</span>)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>landcover_resample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>landcover_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(landcover, elev, <span class="at">method =</span> <span class="st">"near"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>landcover_resample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 604, 840, 1  (nrow, ncol, nlyr)
@@ -734,7 +732,7 @@ name        :  X
 min value   :  1 
 max value   : 26 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareGeom</span>(landcover_resample, elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareGeom</span>(landcover_resample, elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -757,22 +755,22 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>Sometimes you’ll need to classify/reclassify rasters. For a continuous raster we can easily do this by hand, but as we will see <code>terra</code> is providing more efficient functions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>elev_recl <span class="ot">&lt;-</span> elev</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>elev_recl[elev_recl <span class="sc">&lt;=</span> <span class="dv">500</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>elev_recl[elev_recl <span class="sc">&gt;</span> <span class="dv">500</span> <span class="sc">&amp;</span> elev_recl <span class="sc">&lt;=</span> <span class="dv">700</span>] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>elev_recl[elev_recl <span class="sc">&gt;</span> <span class="dv">700</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_recl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>elev_recl <span class="ot">&lt;-</span> elev</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>elev_recl[elev_recl <span class="sc">&lt;=</span> <span class="dv">500</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>elev_recl[elev_recl <span class="sc">&gt;</span> <span class="dv">500</span> <span class="sc">&amp;</span> elev_recl <span class="sc">&lt;=</span> <span class="dv">700</span>] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>elev_recl[elev_recl <span class="sc">&gt;</span> <span class="dv">700</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_recl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -783,8 +781,8 @@ If you start from here…
 </div>
 <p>This is much easier if we use the <code>classify()</code> function. For a continuous raster, we just need to define the breaks. The last argument means that the pixels having a value equal to the lowest break will be included in the first class. This usually makes sense when categorizing continuous rasters (but this is not the default option). The output of the <code>classify()</code> function also provides better labels for the classes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>elev_recl <span class="ot">&lt;-</span> <span class="fu">classify</span>(elev, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">700</span>, <span class="cn">Inf</span>), <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_recl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>elev_recl <span class="ot">&lt;-</span> <span class="fu">classify</span>(elev, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">700</span>, <span class="cn">Inf</span>), <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_recl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -795,11 +793,11 @@ If you start from here…
 </div>
 <p>If we need to reclassify a discrete raster, we need to create a matrix with 2 columns, with the first column containing the old values and the second column containing the corresponding new values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>reclMat_landcover <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">11</span>, <span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">2</span>,</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">13</span>, <span class="dv">2</span>, <span class="dv">14</span>, <span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">2</span>, <span class="dv">16</span>, <span class="dv">2</span>, <span class="dv">17</span>, <span class="dv">2</span>, <span class="dv">18</span>, <span class="dv">2</span>, <span class="dv">19</span>, <span class="dv">3</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">21</span>, <span class="dv">3</span>, <span class="dv">22</span>, <span class="dv">3</span>, <span class="dv">23</span>, <span class="dv">4</span>,</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">24</span>, <span class="dv">4</span>, <span class="dv">25</span>, <span class="dv">4</span>, <span class="dv">26</span>, <span class="dv">4</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>landcover_recl <span class="ot">&lt;-</span> <span class="fu">classify</span>(landcover, reclMat_landcover)</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landcover_recl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>reclMat_landcover <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">11</span>, <span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">2</span>,</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">13</span>, <span class="dv">2</span>, <span class="dv">14</span>, <span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">2</span>, <span class="dv">16</span>, <span class="dv">2</span>, <span class="dv">17</span>, <span class="dv">2</span>, <span class="dv">18</span>, <span class="dv">2</span>, <span class="dv">19</span>, <span class="dv">3</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">21</span>, <span class="dv">3</span>, <span class="dv">22</span>, <span class="dv">3</span>, <span class="dv">23</span>, <span class="dv">4</span>,</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">24</span>, <span class="dv">4</span>, <span class="dv">25</span>, <span class="dv">4</span>, <span class="dv">26</span>, <span class="dv">4</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>landcover_recl <span class="ot">&lt;-</span> <span class="fu">classify</span>(landcover, reclMat_landcover)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landcover_recl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -810,9 +808,9 @@ If you start from here…
 </div>
 <p>With a discrete raster, we can easily create a new raster data set containing separate binary layers based on the categories. This process is often called one-hot encoding or dummy encoding (and is totally similar to what R is doing when you fit a linear model with a discrete variable).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>landcover_layers <span class="ot">&lt;-</span> <span class="fu">segregate</span>(landcover_recl)</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landcover_layers) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"settlements"</span>, <span class="st">"agriculture"</span>, <span class="st">"forest"</span>, <span class="st">"unproductive"</span>)</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landcover_layers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>landcover_layers <span class="ot">&lt;-</span> <span class="fu">segregate</span>(landcover_recl)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landcover_layers) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"settlements"</span>, <span class="st">"agriculture"</span>, <span class="st">"forest"</span>, <span class="st">"unproductive"</span>)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landcover_layers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -835,8 +833,8 @@ Exercise (5 minutes)
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>forests <span class="ot">&lt;-</span> landcover_layers[[<span class="st">"forest"</span>]]</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>forests_agg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(forests, <span class="dv">10</span>, <span class="at">fun =</span> <span class="cf">function</span>(i) {<span class="fu">sum</span>(i) <span class="sc">/</span> <span class="dv">100</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>forests <span class="ot">&lt;-</span> landcover_layers[[<span class="st">"forest"</span>]]</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>forests_agg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(forests, <span class="dv">10</span>, <span class="at">fun =</span> <span class="cf">function</span>(i) {<span class="fu">sum</span>(i) <span class="sc">/</span> <span class="dv">100</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -858,16 +856,16 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/observations.csv"</span>)</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(obs, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>obs_buff <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(obs[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>),], <span class="at">dist =</span> <span class="dv">80</span>)</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>elev_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(elev, landcover, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/observations.csv"</span>)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(obs, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>obs_buff <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(obs[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>),], <span class="at">dist =</span> <span class="dv">80</span>)</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>elev_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(elev, landcover, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -875,21 +873,21 @@ If you start from here…
 <p>Before doing a statistical analysis, it is quite common to collect all the covariates as GIS layers. We’ve already seen how to extract information from vector data sets using spatial joins. There is a similar procedure for raster data sets. The most common operation consists of extracting raster values at some given points/sites.</p>
 <p>Note that <code>terra</code> is using its own data model to store and process vector data (it doesn’t use the classes defined by <code>sf</code>). Hence, most <code>terra</code> functions expecting a vector data set won’t accept <code>sf</code> objects. The <code>terra</code> class for vector data is called <code>SpatVector</code>. Fortunately it is very easy to convert <code>sf</code> objects to <code>SpatVector</code> objects using the <code>vect()</code> function (actually the <code>extract()</code> function is an exception and is also accepting <code>sf</code> objects). If you need to convert a <code>SpatVector</code> object to <code>sf</code>, you can use the <code>st_as_sf()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">extract</span>(elev, <span class="fu">vect</span>(obs), <span class="at">ID =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>obs2 <span class="ot">&lt;-</span> obs</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>obs2<span class="sc">$</span>elev <span class="ot">&lt;-</span> vals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">extract</span>(elev, <span class="fu">vect</span>(obs), <span class="at">ID =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>obs2 <span class="ot">&lt;-</span> obs</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>obs2<span class="sc">$</span>elev <span class="ot">&lt;-</span> vals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The output of the <code>extract()</code> function is a standard data frame. The order of the data frame is the same as the order of the vector data set used to extract the data, you can therefore easily append the extracted values to the <code>sf</code> point object.</p>
 <p>If you’re lucky enough to have properly aligned rasters, you can combine them in a multiband data set and use the <code>extract()</code> function on this new data set. You’ll also get a data frame, with one column for each band.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>covariates <span class="ot">&lt;-</span> <span class="fu">c</span>(landcover, elev_resample)</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covariates) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"landcover"</span>, <span class="st">"elevation"</span>)</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">extract</span>(covariates, <span class="fu">vect</span>(obs), <span class="at">ID =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>covariates <span class="ot">&lt;-</span> <span class="fu">c</span>(landcover, elev_resample)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covariates) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"landcover"</span>, <span class="st">"elevation"</span>)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">extract</span>(covariates, <span class="fu">vect</span>(obs), <span class="at">ID =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You’re actually not restricted to using points to extract information from rasters. For example using a line you can easily compute an elevation profile. Using polygons is even more powerful and allow performing what is usually called zonal analyses. By default the <code>extract()</code> function will extract all the pixels whose centroid is within the polygons.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">extract</span>(elev, <span class="fu">vect</span>(obs_buff))</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(vals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">extract</span>(elev, <span class="fu">vect</span>(obs_buff))</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(vals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  ID dem
 1  1 558
@@ -902,7 +900,7 @@ If you start from here…
 </div>
 <p>The <code>ID</code> values corresponds to the ordering of the polygons of the <code>sf</code> object. This means that all rows with <code>ID=1</code> are pixels intersection the first polygon. You’re then free to use these values, for example to characterize some habitat. If you only need some summary statistic for each polygon, you can use the <code>fun</code> argument to specify some aggregating function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>vals_avg <span class="ot">&lt;-</span> <span class="fu">extract</span>(elev, <span class="fu">vect</span>(obs_buff), <span class="at">fun =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>vals_avg <span class="ot">&lt;-</span> <span class="fu">extract</span>(elev, <span class="fu">vect</span>(obs_buff), <span class="at">fun =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The <code>extract()</code> function is really powerful (and fast) and has a lot of additional possibilities. Don’t hesitate to have a look at its help file.</p>
 </section>
@@ -922,34 +920,34 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span>
-<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>reclMat_landcover <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">11</span>, <span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">2</span>,</span>
-<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">13</span>, <span class="dv">2</span>, <span class="dv">14</span>, <span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">2</span>, <span class="dv">16</span>, <span class="dv">2</span>, <span class="dv">17</span>, <span class="dv">2</span>, <span class="dv">18</span>, <span class="dv">2</span>, <span class="dv">19</span>, <span class="dv">3</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">21</span>, <span class="dv">3</span>, <span class="dv">22</span>, <span class="dv">3</span>, <span class="dv">23</span>, <span class="dv">4</span>,</span>
-<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">24</span>, <span class="dv">4</span>, <span class="dv">25</span>, <span class="dv">4</span>, <span class="dv">26</span>, <span class="dv">4</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>landcover_recl <span class="ot">&lt;-</span> <span class="fu">classify</span>(landcover, reclMat_landcover)</span>
-<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>landcover_layers <span class="ot">&lt;-</span> <span class="fu">segregate</span>(landcover_recl)</span>
-<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landcover_layers) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"settlements"</span>, <span class="st">"agriculture"</span>, <span class="st">"forest"</span>, <span class="st">"unproductive"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>reclMat_landcover <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">11</span>, <span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">2</span>,</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">13</span>, <span class="dv">2</span>, <span class="dv">14</span>, <span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">2</span>, <span class="dv">16</span>, <span class="dv">2</span>, <span class="dv">17</span>, <span class="dv">2</span>, <span class="dv">18</span>, <span class="dv">2</span>, <span class="dv">19</span>, <span class="dv">3</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">21</span>, <span class="dv">3</span>, <span class="dv">22</span>, <span class="dv">3</span>, <span class="dv">23</span>, <span class="dv">4</span>,</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">24</span>, <span class="dv">4</span>, <span class="dv">25</span>, <span class="dv">4</span>, <span class="dv">26</span>, <span class="dv">4</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>landcover_recl <span class="ot">&lt;-</span> <span class="fu">classify</span>(landcover, reclMat_landcover)</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>landcover_layers <span class="ot">&lt;-</span> <span class="fu">segregate</span>(landcover_recl)</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landcover_layers) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"settlements"</span>, <span class="st">"agriculture"</span>, <span class="st">"forest"</span>, <span class="st">"unproductive"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>We’ve already seen that, if they’re properly aligned and have the same extent, you can combine different rasters in a multiband raster data set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>layers <span class="ot">&lt;-</span> <span class="fu">c</span>(landcover_layers[[<span class="dv">1</span>]], landcover_layers[[<span class="dv">3</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>layers <span class="ot">&lt;-</span> <span class="fu">c</span>(landcover_layers[[<span class="dv">1</span>]], landcover_layers[[<span class="dv">3</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can also combine the pixel values of different rasters, but again, they need to be perfectly aligned and have the same extent. For this kind of analyses, it is easier to imagine all the rasters as overlapping layers, and some function is then applied to all the overlapping pixels to generate one or several new layers. These analyses are often called local analyses since they consider each pixel value within a raster separately.</p>
 <p>For example we can easily find the areas with either forests or settlements by summing the two rasters. If we’d like to give more weights to the forests, this is also possible. The <code>terra</code> package extends most arithmetic functions to support <code>SpatRaster</code> objects.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>settlements <span class="ot">&lt;-</span> landcover_layers[[<span class="dv">1</span>]]</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>forests <span class="ot">&lt;-</span> landcover_layers[[<span class="dv">3</span>]]</span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>combn <span class="ot">&lt;-</span> settlements <span class="sc">+</span> forests</span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>combn2 <span class="ot">&lt;-</span> settlements <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> forests</span>
-<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combn2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>settlements <span class="ot">&lt;-</span> landcover_layers[[<span class="dv">1</span>]]</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>forests <span class="ot">&lt;-</span> landcover_layers[[<span class="dv">3</span>]]</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>combn <span class="ot">&lt;-</span> settlements <span class="sc">+</span> forests</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>combn2 <span class="ot">&lt;-</span> settlements <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> forests</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combn2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -960,17 +958,17 @@ If you start from here…
 </div>
 <p>If you use multiband rasters, you can use the <code>app()</code> function to get the same result. You can also specify your own function. Note that the third example will produce a raster with 2 bands.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>combn3 <span class="ot">&lt;-</span> <span class="fu">app</span>(layers, <span class="st">"sum"</span>)</span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>combn4 <span class="ot">&lt;-</span> <span class="fu">app</span>(layers, <span class="st">"max"</span>)</span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>combn5 <span class="ot">&lt;-</span> <span class="fu">app</span>(layers, <span class="cf">function</span>(i) {pi <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">2</span> <span class="sc">*</span> i)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>combn3 <span class="ot">&lt;-</span> <span class="fu">app</span>(layers, <span class="st">"sum"</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>combn4 <span class="ot">&lt;-</span> <span class="fu">app</span>(layers, <span class="st">"max"</span>)</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>combn5 <span class="ot">&lt;-</span> <span class="fu">app</span>(layers, <span class="cf">function</span>(i) {pi <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">2</span> <span class="sc">*</span> i)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Sometimes you’ll need to combine 2 or more discrete rasters but you’ll still want to be able to see the original categories in the output raster. You can use a simple trick to do that. First reclassify the first raster and use the following numbers as categories: 10, 20, 30, etc. Then reclassify the second raster, and use the following numbers as categories: 1, 2, 3, etc. After adding the two rasters, you’ll know immediately that, for example, a value of 24 means that you’re in an area within the second category of the first raster and fourth category of the second. If you have three rasters you simply need to use an higher order of magnitude for one of the rasters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>reclMat_elev <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">700</span>, <span class="dv">200</span>, <span class="dv">700</span>, <span class="cn">Inf</span>, <span class="dv">300</span>), <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>elev_recl2 <span class="ot">&lt;-</span> <span class="fu">classify</span>(elev, reclMat_elev, <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>landcover_recl2 <span class="ot">&lt;-</span> <span class="fu">classify</span>(landcover_resample, reclMat_landcover)</span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>elev_land <span class="ot">&lt;-</span> elev_recl2 <span class="sc">+</span> landcover_recl2</span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.factor</span>(elev_land))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>reclMat_elev <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">700</span>, <span class="dv">200</span>, <span class="dv">700</span>, <span class="cn">Inf</span>, <span class="dv">300</span>), <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>elev_recl2 <span class="ot">&lt;-</span> <span class="fu">classify</span>(elev, reclMat_elev, <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>landcover_recl2 <span class="ot">&lt;-</span> <span class="fu">classify</span>(landcover_resample, reclMat_landcover)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>elev_land <span class="ot">&lt;-</span> elev_recl2 <span class="sc">+</span> landcover_recl2</span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.factor</span>(elev_land))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -996,19 +994,19 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>ortho <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/sempach_ortho.tif"</span>)</span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
-<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
-<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span>
-<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>reclMat_landcover <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">11</span>, <span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">2</span>,</span>
-<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">13</span>, <span class="dv">2</span>, <span class="dv">14</span>, <span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">2</span>, <span class="dv">16</span>, <span class="dv">2</span>, <span class="dv">17</span>, <span class="dv">2</span>, <span class="dv">18</span>, <span class="dv">2</span>, <span class="dv">19</span>, <span class="dv">3</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">21</span>, <span class="dv">3</span>, <span class="dv">22</span>, <span class="dv">3</span>, <span class="dv">23</span>, <span class="dv">4</span>,</span>
-<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">24</span>, <span class="dv">4</span>, <span class="dv">25</span>, <span class="dv">4</span>, <span class="dv">26</span>, <span class="dv">4</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>landcover_recl <span class="ot">&lt;-</span> <span class="fu">classify</span>(landcover, reclMat_landcover)</span>
-<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a>landcover_layers <span class="ot">&lt;-</span> <span class="fu">segregate</span>(landcover_recl)</span>
-<span id="cb68-12"><a href="#cb68-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landcover_layers) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"settlements"</span>, <span class="st">"agriculture"</span>, <span class="st">"forest"</span>, <span class="st">"unproductive"</span>)</span>
-<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a>forests <span class="ot">&lt;-</span> landcover_layers[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>ortho <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/sempach_ortho.tif"</span>)</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>reclMat_landcover <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">11</span>, <span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">2</span>,</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">13</span>, <span class="dv">2</span>, <span class="dv">14</span>, <span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">2</span>, <span class="dv">16</span>, <span class="dv">2</span>, <span class="dv">17</span>, <span class="dv">2</span>, <span class="dv">18</span>, <span class="dv">2</span>, <span class="dv">19</span>, <span class="dv">3</span>, <span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">21</span>, <span class="dv">3</span>, <span class="dv">22</span>, <span class="dv">3</span>, <span class="dv">23</span>, <span class="dv">4</span>,</span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">24</span>, <span class="dv">4</span>, <span class="dv">25</span>, <span class="dv">4</span>, <span class="dv">26</span>, <span class="dv">4</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>landcover_recl <span class="ot">&lt;-</span> <span class="fu">classify</span>(landcover, reclMat_landcover)</span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>landcover_layers <span class="ot">&lt;-</span> <span class="fu">segregate</span>(landcover_recl)</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landcover_layers) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"settlements"</span>, <span class="st">"agriculture"</span>, <span class="st">"forest"</span>, <span class="st">"unproductive"</span>)</span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>forests <span class="ot">&lt;-</span> landcover_layers[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1018,9 +1016,9 @@ If you start from here…
 <p>Note that the output raster will usually be smaller than the original one (if the moving window is a <span class="math inline">\(m\)</span>x<span class="math inline">\(n\)</span> matrix, the output will have <span class="math inline">\((m-1)\)</span> less rows and <span class="math inline">\((n-1)\)</span> less columns). If you want a raster with the same size as the original, you’ll need to ignore the NA values, hence the window will be smaller in the margins of the raster.</p>
 <p>In the next example we perform a smoothing of our DEM using a square moving window of size 21 (pixels) and the arithmetic mean as aggregating function. Note that the size of the moving window has to be an odd number.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>elev_focal_mean <span class="ot">&lt;-</span> <span class="fu">focal</span>(elev, <span class="at">w =</span> <span class="dv">21</span>, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>elev_focal_mean2 <span class="ot">&lt;-</span> <span class="fu">focal</span>(elev, <span class="at">w =</span> <span class="dv">21</span>, <span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(elev, elev_focal_mean), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>elev_focal_mean <span class="ot">&lt;-</span> <span class="fu">focal</span>(elev, <span class="at">w =</span> <span class="dv">21</span>, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>elev_focal_mean2 <span class="ot">&lt;-</span> <span class="fu">focal</span>(elev, <span class="at">w =</span> <span class="dv">21</span>, <span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(elev, elev_focal_mean), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1031,8 +1029,8 @@ If you start from here…
 </div>
 <p>Focal analyses are really interesting to characterize the habitat of a site since you also get information about the neighboring areas. Using a discrete raster we can for example compute the number of forest pixels in the neighborhood of each pixel.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>forests_focal_sum <span class="ot">&lt;-</span> <span class="fu">focal</span>(forests, <span class="dv">5</span>, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(forests, forests_focal_sum))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>forests_focal_sum <span class="ot">&lt;-</span> <span class="fu">focal</span>(forests, <span class="dv">5</span>, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(forests, forests_focal_sum))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1043,7 +1041,7 @@ If you start from here…
 </div>
 <p>In R, moving windows are stored as matrices whose values represents the weights of the neighbors. Until now we only used moving windows where all pixels in the neighborhood had the same weight. Changing these weights allows you to define your own kind of moving windows. The shape (rectangle or circle) usually doesn’t have a big influence but adjusting the weights allows all kind of different results (smoothing, sharpening, edge detection, etc.). The <code>terra</code> package provides the <code>focalMat()</code> function if you need to create specific windows. The first argument is the raster on which the focal analysis will be computed, the second is the size of the moving window (in the units of the CRS, not in pixels), and then you can specify the type. By default <code>focalMat()</code> will produce a matrix whose values sum to 1, this means that using the sum with these weights as aggregating function will actually compute the arithmetic mean. If we really want to compute the sum, we need to adjust the weights ourselves and set all non-zero values to 1.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>(fwin_rect <span class="ot">&lt;-</span> <span class="fu">focalMat</span>(forests, <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">200</span>), <span class="at">type =</span> <span class="st">"rectangle"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>(fwin_rect <span class="ot">&lt;-</span> <span class="fu">focalMat</span>(forests, <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">200</span>), <span class="at">type =</span> <span class="st">"rectangle"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4] [,5]
 [1,] 0.04 0.04 0.04 0.04 0.04
@@ -1052,13 +1050,13 @@ If you start from here…
 [4,] 0.04 0.04 0.04 0.04 0.04
 [5,] 0.04 0.04 0.04 0.04 0.04</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>fwin_rect[fwin_rect <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>forests_focal_sum2 <span class="ot">&lt;-</span> <span class="fu">focal</span>(forests, fwin_rect, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
-<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(<span class="fu">values</span>(forests_focal_sum), <span class="fu">values</span>(forests_focal_sum2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>fwin_rect[fwin_rect <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>forests_focal_sum2 <span class="ot">&lt;-</span> <span class="fu">focal</span>(forests, fwin_rect, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(<span class="fu">values</span>(forests_focal_sum), <span class="fu">values</span>(forests_focal_sum2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>(fwin_circle <span class="ot">&lt;-</span> <span class="fu">focalMat</span>(forests, <span class="dv">200</span>, <span class="at">type =</span> <span class="st">"circle"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>(fwin_circle <span class="ot">&lt;-</span> <span class="fu">focalMat</span>(forests, <span class="dv">200</span>, <span class="at">type =</span> <span class="st">"circle"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           [,1]       [,2]       [,3]       [,4]       [,5]
 [1,] 0.00000000 0.00000000 0.07692308 0.00000000 0.00000000
@@ -1067,9 +1065,9 @@ If you start from here…
 [4,] 0.00000000 0.07692308 0.07692308 0.07692308 0.00000000
 [5,] 0.00000000 0.00000000 0.07692308 0.00000000 0.00000000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>fwin_circle[fwin_circle <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>forests_focal_sum3 <span class="ot">&lt;-</span> <span class="fu">focal</span>(forests, fwin_circle, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
-<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(forests_focal_sum, forests_focal_sum3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>fwin_circle[fwin_circle <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>forests_focal_sum3 <span class="ot">&lt;-</span> <span class="fu">focal</span>(forests, fwin_circle, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(forests_focal_sum, forests_focal_sum3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1080,10 +1078,10 @@ If you start from here…
 </div>
 <p>With focal analyses, we can actually perform standard image processing tasks similar to the ones you would find in Photoshop. For example we can easily apply a Gaussian blur to an orthophoto (here we only use the red band). The weights of a Gaussian moving window are based on the bivariate normal distribution, and in this case the second argument of the <code>focalMat()</code> function is the standard deviation of the distribution.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>ortho_red <span class="ot">&lt;-</span> ortho[[<span class="dv">1</span>]]</span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>fwin_gauss <span class="ot">&lt;-</span> <span class="fu">focalMat</span>(ortho_red, <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"Gauss"</span>)</span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>ortho_red_focal <span class="ot">&lt;-</span> <span class="fu">focal</span>(ortho_red, fwin_gauss, <span class="at">type =</span> <span class="st">"sum"</span>)</span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(ortho_red, ortho_red_focal), <span class="at">col =</span> <span class="fu">grey.colors</span>(<span class="dv">256</span>), <span class="at">legend =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>ortho_red <span class="ot">&lt;-</span> ortho[[<span class="dv">1</span>]]</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>fwin_gauss <span class="ot">&lt;-</span> <span class="fu">focalMat</span>(ortho_red, <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"Gauss"</span>)</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>ortho_red_focal <span class="ot">&lt;-</span> <span class="fu">focal</span>(ortho_red, fwin_gauss, <span class="at">type =</span> <span class="st">"sum"</span>)</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(ortho_red, ortho_red_focal), <span class="at">col =</span> <span class="fu">grey.colors</span>(<span class="dv">256</span>), <span class="at">legend =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1110,23 +1108,23 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
-<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/observations.csv"</span>)</span>
-<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(obs, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
-<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>muni <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/geodata.gpkg"</span>, <span class="st">"municipalities"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>sempach <span class="ot">&lt;-</span> muni[muni<span class="sc">$</span>name <span class="sc">==</span> <span class="st">"Sempach"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/observations.csv"</span>)</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(obs, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>muni <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/geodata.gpkg"</span>, <span class="st">"municipalities"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>sempach <span class="ot">&lt;-</span> muni[muni<span class="sc">$</span>name <span class="sc">==</span> <span class="st">"Sempach"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>The <code>terra</code> package is also really good at generating new covariates. For example you can use the <code>terrain()</code> function to compute terrain characteristics from elevation data. The available outputs are: slope, aspect, TPI, TRI, roughness and flow direction.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">terrain</span>(elev, <span class="st">"slope"</span>, <span class="at">unit =</span> <span class="st">"degrees"</span>)</span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>aspect <span class="ot">&lt;-</span> <span class="fu">terrain</span>(elev, <span class="st">"aspect"</span>, <span class="at">unit =</span> <span class="st">"degrees"</span>)</span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(slope, aspect), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">terrain</span>(elev, <span class="st">"slope"</span>, <span class="at">unit =</span> <span class="st">"degrees"</span>)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>aspect <span class="ot">&lt;-</span> <span class="fu">terrain</span>(elev, <span class="st">"aspect"</span>, <span class="at">unit =</span> <span class="st">"degrees"</span>)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(slope, aspect), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1138,11 +1136,11 @@ If you start from here…
 <p>If we look at the lake of Sempach, we see that the <code>terrain()</code> function is using an aspect value of 90° for all flat areas.</p>
 <p>Aspect can be a bit tricky to work with because it is circular (a value of 355 is very similar to a value of 5). You’ll need to use circular statistics techniques to process it. Another solution that is often used is to decompose aspect in two orthogonal components: eastness and northness. Eastness is an index going from -1 to 1 representing the west-east component of aspect, while northness (also an index from -1 to 1) is representing the north-south component. To compute these values we use the sine and cosine functions on the aspect values, but these have to be in radians!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>aspect_rad <span class="ot">&lt;-</span> <span class="fu">terrain</span>(elev, <span class="st">"aspect"</span>, <span class="at">unit =</span> <span class="st">"radians"</span>)</span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>eastness <span class="ot">&lt;-</span> <span class="fu">sin</span>(aspect_rad)</span>
-<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>northness <span class="ot">&lt;-</span> <span class="fu">cos</span>(aspect_rad)</span>
-<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(eastness, northness), <span class="at">main =</span> <span class="fu">c</span>(<span class="st">"eastness"</span>, <span class="st">"northness"</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>aspect_rad <span class="ot">&lt;-</span> <span class="fu">terrain</span>(elev, <span class="st">"aspect"</span>, <span class="at">unit =</span> <span class="st">"radians"</span>)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>eastness <span class="ot">&lt;-</span> <span class="fu">sin</span>(aspect_rad)</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>northness <span class="ot">&lt;-</span> <span class="fu">cos</span>(aspect_rad)</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(eastness, northness), <span class="at">main =</span> <span class="fu">c</span>(<span class="st">"eastness"</span>, <span class="st">"northness"</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1165,17 +1163,17 @@ Exercise (5 minutes)
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>flat_slope <span class="ot">&lt;-</span> slope</span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>flat_slope[flat_slope <span class="sc">&lt;</span> <span class="fl">0.1</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>eastness_corr <span class="ot">&lt;-</span> <span class="fu">mask</span>(eastness, flat_slope, <span class="at">updatevalue =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>flat_slope <span class="ot">&lt;-</span> slope</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>flat_slope[flat_slope <span class="sc">&lt;</span> <span class="fl">0.1</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>eastness_corr <span class="ot">&lt;-</span> <span class="fu">mask</span>(eastness, flat_slope, <span class="at">updatevalue =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
 </div>
 <p>We can also easily calculate distance rasters using the <code>distance()</code> function. In the next example, the value of each pixel in the output raster will be the distance to the nearest bird sighting. You can use this with other vector types, for example to compute the distance from streets or the distance to coastlines. The raster used as the first argument is there only to define the extent and resolution of the output (the values of the input raster are ignored).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>dist_from_obs <span class="ot">&lt;-</span> <span class="fu">distance</span>(elev, <span class="fu">vect</span>(obs))</span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dist_from_obs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>dist_from_obs <span class="ot">&lt;-</span> <span class="fu">distance</span>(elev, <span class="fu">vect</span>(obs))</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dist_from_obs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1198,11 +1196,11 @@ Exercise (5 minutes)
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>obs_in_sempach <span class="ot">&lt;-</span> obs[sempach,]</span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>dist_sempach <span class="ot">&lt;-</span> <span class="fu">distance</span>(elev, obs_in_sempach)</span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>dist_sempach <span class="ot">&lt;-</span> <span class="fu">mask</span>(dist_sempach, sempach)</span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="fu">global</span>(dist_sempach, <span class="st">"max"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">trim</span>(dist_sempach))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>obs_in_sempach <span class="ot">&lt;-</span> obs[sempach,]</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>dist_sempach <span class="ot">&lt;-</span> <span class="fu">distance</span>(elev, obs_in_sempach)</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>dist_sempach <span class="ot">&lt;-</span> <span class="fu">mask</span>(dist_sempach, sempach)</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="fu">global</span>(dist_sempach, <span class="st">"max"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">trim</span>(dist_sempach))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -1224,11 +1222,11 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>muni <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/geodata.gpkg"</span>, <span class="st">"municipalities"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>sempach <span class="ot">&lt;-</span> muni[muni<span class="sc">$</span>name <span class="sc">==</span> <span class="st">"Sempach"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>muni <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/geodata.gpkg"</span>, <span class="st">"municipalities"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>sempach <span class="ot">&lt;-</span> muni[muni<span class="sc">$</span>name <span class="sc">==</span> <span class="st">"Sempach"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1236,8 +1234,8 @@ If you start from here…
 <p>Vector data provides a better precision but some operations can be really slow when using large data sets. Sometimes it can be interesting to convert your vector data sets to rasters. This will allow you to perform analyses that would have been to slow or even impossible using vectors.</p>
 <p>You’ll need the <code>rasterize()</code> function to perform such transformations. The first argument is the vector data set you want to rasterize, the second argument is a template raster data set that will be used to provide the extent and resolution. You also need to specify a single attribute that will be used. It is not possible to rasterize a vector data set to a multiband raster.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>muni_raster <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(<span class="fu">vect</span>(muni), elev, <span class="at">field =</span> <span class="st">"popsize"</span>)</span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(muni_raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>muni_raster <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(<span class="fu">vect</span>(muni), elev, <span class="at">field =</span> <span class="st">"popsize"</span>)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(muni_raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1248,10 +1246,10 @@ If you start from here…
 </div>
 <p>This rasterization process can also be used to aggregate vector data. In the next example we first create a template raster using the extent of Sempach and a resolution of 100 meters. Then we rasterize the sightings without specifying an attribute but using an aggregating function. Each pixel of the output raster will contain the number of sightings.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rast</span>(sempach, <span class="at">resolution =</span> <span class="dv">100</span>)</span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(<span class="fu">vect</span>(obs), r, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
-<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>nobs[<span class="fu">is.na</span>(nobs)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nobs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rast</span>(sempach, <span class="at">resolution =</span> <span class="dv">100</span>)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>nobs <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(<span class="fu">vect</span>(obs), r, <span class="at">fun =</span> <span class="st">"sum"</span>)</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>nobs[<span class="fu">is.na</span>(nobs)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nobs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1277,18 +1275,18 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>soi <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="st">"POINT(2657271 1219754)"</span>, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
-<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>soi <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="st">"POINT(2657271 1219754)"</span>, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>Using a digital elevation model and some knowledge about the curvature of the earth and refraction of the atmosphere, it is possible to estimate the area that is visible from a specific point of view. This is often called a viewshed analysis. Of course this doesn’t take buildings or trees/forests into account (except if you use a digital surface model which includes natural and human-made structures). All of this is easily computed with the <code>viewshed()</code> function. Note that you need to specify the coordinates of the observer as a vector (you can’t directly use an <code>sf</code> or <code>sfc</code> object). Let’s check what’s visible from our location.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">viewshed</span>(elev, <span class="fu">st_coordinates</span>(soi))</span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">viewshed</span>(elev, <span class="fu">st_coordinates</span>(soi))</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1299,8 +1297,8 @@ If you start from here…
 </div>
 <p>The function can also take into account that your point of view is above the ground (e.g., observation tower or building). Similarly you can also specify the height of a target. Let’s imagine that we’re standing on the roof of the building and we want to compute the area where we would see a Golden Eagle flying 100m above the ground (and making the assumption that we have really good binoculars).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">viewshed</span>(elev, <span class="fu">st_coordinates</span>(soi), <span class="at">observer =</span> <span class="dv">10</span>, <span class="at">target =</span> <span class="dv">100</span>)</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">viewshed</span>(elev, <span class="fu">st_coordinates</span>(soi), <span class="at">observer =</span> <span class="dv">10</span>, <span class="at">target =</span> <span class="dv">100</span>)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1326,21 +1324,21 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
-<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
-<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
-<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>Performing CRS transformations on vector data sets in relatively easy since you only have to transform the vertices. It is a bit more complex with raster data sets. Projecting a raster data involves a resampling, the geometric characteristics of your raster will change and the pixel values will be recomputed. If you have vector data in a specific CRS and rasters in another CRS but you want to use a common CRS, it’s usually better to transform the vectors. Since the operation involves resampling we also need to define the interpolation function. As we’ve seen before, you need to be careful when projecting discrete rasters and use nearest neighbor interpolation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>elev_wgs84 <span class="ot">&lt;-</span> <span class="fu">project</span>(elev, <span class="st">"EPSG:4326"</span>, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>landcover_wgs84 <span class="ot">&lt;-</span> <span class="fu">project</span>(landcover, <span class="st">"EPSG:4326"</span>, <span class="at">method =</span> <span class="st">"near"</span>)</span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_wgs84)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>elev_wgs84 <span class="ot">&lt;-</span> <span class="fu">project</span>(elev, <span class="st">"EPSG:4326"</span>, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>landcover_wgs84 <span class="ot">&lt;-</span> <span class="fu">project</span>(landcover, <span class="st">"EPSG:4326"</span>, <span class="at">method =</span> <span class="st">"near"</span>)</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev_wgs84)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1351,19 +1349,19 @@ If you start from here…
 </div>
 <p>If we have a look at some characteristics of the original and projected rasters, we see that some changes occurred…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncell</span>(elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncell</span>(elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 507360</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncell</span>(elev_wgs84)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncell</span>(elev_wgs84)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 434294</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 604 840   1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(elev_wgs84)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(elev_wgs84)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 463 938   1</code></pre>
 </div>
@@ -1455,8 +1453,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1567,7 +1563,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

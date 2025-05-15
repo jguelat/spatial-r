@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,10 +90,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-17a3278685664306fedb48a9f62c2a33.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -309,16 +309,10 @@ Important
 <h2 data-number="2.2" class="anchored" data-anchor-id="a-first-look-at-vector-data-in-r"><span class="header-section-number">2.2</span> A first look at vector data in R</h2>
 <p>Let’s have a look at how R stores a vector data set. The main classes and methods needed to work with spatial vector data are defined in the <code>sf</code> package. We will also load the <code>tmap</code> package to have access to some spatial data sets.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tmap' was built under R version 4.4.3</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'sf' was built under R version 4.4.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Linking to GEOS 3.13.0, GDAL 3.10.1, PROJ 9.5.1; sf_use_s2() is TRUE</code></pre>
+<pre><code>Linking to GEOS 3.13.1, GDAL 3.10.2, PROJ 9.5.1; sf_use_s2() is TRUE</code></pre>
 </div>
 </div>
 <p>When you first load the <code>sf</code> package, it will provide you with version information about some important open-source GIS libraries it uses. In a few rare cases, some functions will only be available if you use recent version of these libraries. If you use <code>sf</code> on Windows or Mac and install it from CRAN, they will be included inside the <code>sf</code> package and there’s no easy way to update them. These libraries are used in almost all open-source GIS software and even in some commercial ones. GDAL takes care of reading and writing your GIS files and can read 99.9% of all the existing GIS formats (the vector part of the GDAL library is often called OGR); GEOS is a Euclidean planar geometry engine and is used for all the common GIS analyses (intersection, union, buffer, etc.); PROJ is responsible for all the coordinate reference systems operations. The s2 library is a spherical geometry engine which is active by default for computations when using unprojected data.</p>
@@ -337,18 +331,18 @@ A bit of history
 </div>
 <p>We will now inspect the <code>World</code> vector data set inside the <code>tmap</code> package and have a look at its structure.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(World)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(World)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "sf"         "data.frame"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(World)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(World)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "iso_a3"       "name"         "sovereignt"   "continent"    "area"        
  [6] "pop_est"      "pop_est_dens" "economy"      "income_grp"   "gdp_cap_est" 
 [11] "life_exp"     "well_being"   "footprint"    "HPI"          "inequality"  
 [16] "gender"       "press"        "geometry"    </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>World</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>World</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 177 features and 17 fields
 Attribute-geometry relationships: constant (12), aggregate (3), identity (2)
@@ -422,7 +416,7 @@ Question: why is the MULTIPOLYGON type appropriate?
 </div>
 <p>It is also easy to plot the data using the usual command.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(World)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(World)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -433,7 +427,7 @@ Question: why is the MULTIPOLYGON type appropriate?
 </div>
 <p>By default R will take the first 9 attributes of the <code>sf</code> object and plot them using the available geometries. Since these objects inherit from the data base class, you can use all the typical data frame functions such as <code>summary</code>, <code>head</code>, <code>merge</code>, <code>rbind</code>, etc. Subsetting is also possible using the standard <code>[]</code> operators. Therefore you can use the following code if you only want to plot the well-being index, for the whole world, only for countries with a high index, or just for Australia.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(World[,<span class="st">"well_being"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(World[,<span class="st">"well_being"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -441,7 +435,7 @@ Question: why is the MULTIPOLYGON type appropriate?
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(World[World<span class="sc">$</span>well_being <span class="sc">&gt;</span> <span class="dv">6</span>,<span class="st">"well_being"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(World[World<span class="sc">$</span>well_being <span class="sc">&gt;</span> <span class="dv">6</span>,<span class="st">"well_being"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -449,7 +443,7 @@ Question: why is the MULTIPOLYGON type appropriate?
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(World[World<span class="sc">$</span>name <span class="sc">==</span> <span class="st">"Australia"</span>,<span class="st">"well_being"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(World[World<span class="sc">$</span>name <span class="sc">==</span> <span class="st">"Australia"</span>,<span class="st">"well_being"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -460,7 +454,7 @@ Question: why is the MULTIPOLYGON type appropriate?
 </div>
 <p>Note that the color scale was adapted depending on the available values in the filtered data set. If you only need the geometries without any attributes, then you can use the <code>st_geometry()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(World))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(World))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -496,9 +490,9 @@ Exercise (5 minutes)
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>redlist <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/red_list_index.csv"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>world2 <span class="ot">&lt;-</span> <span class="fu">merge</span>(World, redlist, <span class="at">by.x =</span> <span class="st">"iso_a3"</span>, <span class="at">by.y =</span> <span class="st">"code"</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(world2[,<span class="st">"index_2020"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>redlist <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/red_list_index.csv"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>world2 <span class="ot">&lt;-</span> <span class="fu">merge</span>(World, redlist, <span class="at">by.x =</span> <span class="st">"iso_a3"</span>, <span class="at">by.y =</span> <span class="st">"code"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(world2[,<span class="st">"index_2020"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -520,7 +514,7 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -530,25 +524,25 @@ If you start from here…
 <p>You first need to create each feature geometry using some constructor functions. Each of these features will be of class <code>sfg</code> (simple feature geometry). Then you collect all these geometries in a list using the <code>st_sfc()</code> function. You get a new object of class <code>sfc</code> (simple feature list-column). After that you combine the newly created simple feature list-column with the attributes (stored as a data frame, or a tibble) using the <code>st_sf()</code> function in order to get an <code>sf</code> object.</p>
 <p>Since this is rather abstract, let’s look at a simple example. Imagine we want to create a point data set containing three bird observations, and each observation will have the following attributes: species and sex. We start by creating our point geometries using x and y coordinates:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pt1 <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">2657000</span>, <span class="dv">1219000</span>))</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>pt2 <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">2658000</span>, <span class="dv">1218000</span>))</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>pt3 <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">2659000</span>, <span class="dv">1217000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pt1 <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">2657000</span>, <span class="dv">1219000</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>pt2 <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">2658000</span>, <span class="dv">1218000</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>pt3 <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">2659000</span>, <span class="dv">1217000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s have a look at what we’ve just created:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pt1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pt1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>POINT (2657000 1219000)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pt1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pt1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "XY"    "POINT" "sfg"  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(pt1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(pt1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "double"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pt1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pt1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> 'XY' num [1:2] 2657000 1219000</code></pre>
 </div>
@@ -556,11 +550,11 @@ If you start from here…
 <p>Our first object is a 2D point (otherwise we would see XYZ or XYZM) of class <code>sfg</code>. If we look a bit more into the details of the structure, we see that it is actually stored as vector of type <code>double</code> (with length 2).</p>
 <p>Now we need to collect our points inside an <code>sfc</code> object. This is simply a list of <code>sfg</code> objects with an associated coordinate reference system (CRS). Since we collected our data in Switzerland, we will use the standard Swiss coordinate reference system. As we will see later, most coordinate reference systems are identified by a specific number.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(pt1, pt2, pt3, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(pt1, pt2, pt3, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s have a look at our new creation:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Geometry set for 3 features 
 Geometry type: POINT
@@ -577,36 +571,36 @@ Projected CRS: CH1903+ / LV95</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>POINT (2659000 1217000)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "sfc_POINT" "sfc"      </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(pts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(pts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "list"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>sfc_POINT of length 3; first list element:  'XY' num [1:2] 2657000 1219000</code></pre>
 </div>
 </div>
 <p>This confirms that our <code>sfc</code> object is actually a list, and this object will be the geometry column of the soon to be created <code>sf</code> object. Since our object is a list, it is easy to extract individual elements if needed:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the second item of the list</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>pts[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the second item of the list</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>pts[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>POINT (2658000 1218000)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pts[[<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pts[[<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "XY"    "POINT" "sfg"  </code></pre>
 </div>
 </div>
 <p>The feature geometries (stored in an <code>sfc</code> object) are only half of what we need to create an <code>sf</code> object. We also need to define the attributes of each feature. We store them in a data frame using the same order as the geometries.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>pts_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> <span class="fu">c</span>(<span class="st">"wallcreeper"</span>, <span class="st">"alpine chough"</span>, <span class="st">"kingfisher"</span>),</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sex =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"female"</span>))</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>pts_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>pts_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> <span class="fu">c</span>(<span class="st">"wallcreeper"</span>, <span class="st">"alpine chough"</span>, <span class="st">"kingfisher"</span>),</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sex =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"female"</span>))</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>pts_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        species    sex
 1   wallcreeper   male
@@ -616,8 +610,8 @@ Projected CRS: CH1903+ / LV95</code></pre>
 </div>
 <p>And as a last step we combine the feature geometries with the related attributes using the <code>st_sf()</code> function. We now have a typical GIS data set stored as an <code>sf</code> object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>pts_sf <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(pts_data, <span class="at">geometry =</span> pts)</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>pts_sf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>pts_sf <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(pts_data, <span class="at">geometry =</span> pts)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>pts_sf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 3 features and 2 fields
 Geometry type: POINT
@@ -632,22 +626,22 @@ Projected CRS: CH1903+ / LV95
 </div>
 <p>Since everything is stored as lists, it is again easy to access individual elements of the <code>sf</code> object:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the 3rd geometry</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>pts_sf<span class="sc">$</span>geometry[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the 3rd geometry</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>pts_sf<span class="sc">$</span>geometry[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>POINT (2659000 1217000)</code></pre>
 </div>
 </div>
 <p>There’s some sort of tradition to call geometry columns <em>geom</em> or <em>geometry</em>, but you’re entirely free to chose another name. However, you need to be a bit careful since the <code>sf</code> package must always know the correct name. For example, using the standard <code>names()</code> function will not work for geometry columns since <code>sf</code> won’t be informed of the change. To modify the name of the geometry column, always use the <code>st_geometry()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pts_sf)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"my_beautiful_points"</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>pts_sf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pts_sf)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"my_beautiful_points"</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>pts_sf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in st_geometry.sf(x): attr(obj, "sf_column") does not point to a geometry column.
 Did you rename it, without setting st_geometry(obj) &lt;- "newname"?</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_geometry</span>(pts_sf) <span class="ot">&lt;-</span> <span class="st">"my_beautiful_points"</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>pts_sf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_geometry</span>(pts_sf) <span class="ot">&lt;-</span> <span class="st">"my_beautiful_points"</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>pts_sf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 3 features and 2 fields
 Geometry type: POINT
@@ -672,8 +666,8 @@ Tip
 <div class="callout-body-container callout-body">
 <p>You can also create <code>sf</code> objects directly from a data frame containing a column of type <code>sfc</code> using the <code>st_as_sf()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>pts_data<span class="sc">$</span>geometry <span class="ot">&lt;-</span> pts</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>pts_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(pts_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>pts_data<span class="sc">$</span>geometry <span class="ot">&lt;-</span> pts</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>pts_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(pts_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -692,20 +686,20 @@ Note
 </div>
 <p>We process similarly to create other geometry types from scratch, the only difference is that we now need matrices to store the vertices of the lines and polygons instead of a simple vector, and for multilinestrings, (multi-)polygons and geometry collections, we need more lists to encapsulate everything. If you’re not sure how to create geometries, the <code>sf</code> documentation provides examples for all the geometry types. Look for the following functions: <code>st_point()</code>, <code>st_linestring()</code>, <code>st_polygon()</code>, <code>st_multipoint()</code>, <code>st_multilinestring()</code>, <code>st_multipolygon()</code>, <code>st_geometrycollection()</code>. Here’s a more complex example showing how to create a multipolygon (including one geometry with a hole) inside an <code>sfg</code> object. The next steps (collecting geometries in an <code>sfc</code> object, adding attributes and store as an <code>sf</code> object) are exactly the same as before.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rbind creates matrices and makes the coding easier</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>pol1_border <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>))</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>pol1_hole <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>))</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>pol1 <span class="ot">&lt;-</span> <span class="fu">list</span>(pol1_border, pol1_hole)</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>pol2 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>)))</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>multipolygon_list <span class="ot">&lt;-</span> <span class="fu">list</span>(pol1, pol2)</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>multipol <span class="ot">&lt;-</span> <span class="fu">st_multipolygon</span>(multipolygon_list)</span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>multipol</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rbind creates matrices and makes the coding easier</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>pol1_border <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>))</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>pol1_hole <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>))</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>pol1 <span class="ot">&lt;-</span> <span class="fu">list</span>(pol1_border, pol1_hole)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>pol2 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>)))</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>multipolygon_list <span class="ot">&lt;-</span> <span class="fu">list</span>(pol1, pol2)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>multipol <span class="ot">&lt;-</span> <span class="fu">st_multipolygon</span>(multipolygon_list)</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>multipol</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>MULTIPOLYGON (((1 5, 2 2, 4 1, 4 4, 1 5), (2 4, 3 4, 3 3, 2 3, 2 4)), ((0 2, 1 2, 1 3, 0 3, 0 2)))</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(multipol, <span class="at">col =</span> <span class="st">"navy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(multipol, <span class="at">col =</span> <span class="st">"navy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -728,12 +722,12 @@ Tip
 <div class="callout-body-container callout-body">
 <p>You can also create <code>sfc</code> and <code>sf</code> objects from scratch using the WKT format and the <code>st_as_sfc()</code> and <code>st_as_sf()</code> functions. The following example creates an <code>sfc</code> object using a character vector, without needing to create an <code>sfg</code> object first.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="fu">c</span>(<span class="st">"POINT(2657000 1219000)"</span>, <span class="st">"POINT(2658000 1218000)"</span>, <span class="st">"POINT(2659000 1217000)"</span>), <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="fu">c</span>(<span class="st">"POINT(2657000 1219000)"</span>, <span class="st">"POINT(2658000 1218000)"</span>, <span class="st">"POINT(2659000 1217000)"</span>), <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And you can use a similar approach to create an <code>sf</code> object. In this case we add a new column (as a character vector) to the data frame containing the attributes. Note the use of the <code>wkt</code> argument inside the <code>st_as_sf()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>pts_data<span class="sc">$</span>geometry <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"POINT(2657000 1219000)"</span>, <span class="st">"POINT(2658000 1218000)"</span>, <span class="st">"POINT(2659000 1217000)"</span>)</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>pts_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(pts_data, <span class="at">wkt =</span> <span class="st">"geometry"</span>, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>pts_data<span class="sc">$</span>geometry <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"POINT(2657000 1219000)"</span>, <span class="st">"POINT(2658000 1218000)"</span>, <span class="st">"POINT(2659000 1217000)"</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>pts_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(pts_data, <span class="at">wkt =</span> <span class="st">"geometry"</span>, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -845,8 +839,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -957,7 +949,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

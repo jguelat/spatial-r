@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,10 +90,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-17a3278685664306fedb48a9f62c2a33.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -2409,7 +2409,7 @@ If you start from here…
 <span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a>temp_dist <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(samples_ssi)</span>
 <span id="cb224-3"><a href="#cb224-3" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(temp_dist[temp_dist <span class="sc">&gt;</span> <span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.23856</code></pre>
+<pre><code>[1] 50.02896</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb226"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(sempach), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
 <span id="cb226-2"><a href="#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(samples_ssi), <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2527,9 +2527,6 @@ If you start from here…
 <div class="cell">
 <div class="sourceCode cell-code" id="cb234"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'spdep' was built under R version 4.4.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: spData</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
@@ -2537,8 +2534,8 @@ If you start from here…
 package with: `install.packages('spDataLarge',
 repos='https://nowosad.github.io/drat/', type='source')`</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb238"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1" aria-hidden="true" tabindex="-1"></a>muni_neigh <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(muni)</span>
-<span id="cb238-2"><a href="#cb238-2" aria-hidden="true" tabindex="-1"></a>muni_neigh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb237"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href="#cb237-1" aria-hidden="true" tabindex="-1"></a>muni_neigh <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(muni)</span>
+<span id="cb237-2"><a href="#cb237-2" aria-hidden="true" tabindex="-1"></a>muni_neigh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Neighbour list object:
 Number of regions: 7 
@@ -2546,7 +2543,7 @@ Number of nonzero links: 22
 Percentage nonzero weights: 44.89796 
 Average number of links: 3.142857 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb240"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(muni_neigh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb239"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb239-1"><a href="#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(muni_neigh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Neighbour list object:
 Number of regions: 7 
@@ -2562,7 +2559,7 @@ Link number distribution:
 3 most connected regions:
 2 4 5 with 4 links</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb242"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb242-1"><a href="#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(muni_neigh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb241"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb241-1"><a href="#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(muni_neigh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 7
  $ : int [1:2] 2 3
@@ -2585,14 +2582,14 @@ Link number distribution:
 </div>
 <p>The output is stored as a list with the same ordering as the input data sets. For example we see that the municipality 1 (Neuenkirch) is neighboring municipalities 2 (Nottwil) and 3 (Sempach). Since it’s stored as a list, we can easily get the number of neighbors for all the municipalities.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb244"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb244-1"><a href="#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(muni_neigh, length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb243"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb243-1"><a href="#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(muni_neigh, length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2 4 3 4 4 3 2</code></pre>
 </div>
 </div>
 <p>We can also compare the results of the <code>poly2nb()</code> function with the results of the <code>st_touches()</code> function provided by <code>sf</code>. Fortunately, the outputs are identical.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb246"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb246-1"><a href="#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_touches</span>(muni)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb245"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_touches</span>(muni)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sparse geometry binary predicate list of length 7, where the predicate
 was `touches'
@@ -2607,13 +2604,13 @@ was `touches'
 </div>
 <p>The <code>spdep</code> package provides plotting functions to visualize the neighbor lists. When working with polygons, we need to provide the coordinates of the centroids to the <code>plot()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb248"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb248-1"><a href="#cb248-1" aria-hidden="true" tabindex="-1"></a>muni_centroids_coords <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(<span class="fu">st_centroid</span>(muni))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1" aria-hidden="true" tabindex="-1"></a>muni_centroids_coords <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(<span class="fu">st_centroid</span>(muni))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: st_centroid assumes attributes are constant over geometries</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb250"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb250-1"><a href="#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
-<span id="cb250-2"><a href="#cb250-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(muni_neigh, muni_centroids_coords, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb250-3"><a href="#cb250-3" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(muni_centroids_coords, <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(muni), <span class="at">pos =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
+<span id="cb249-2"><a href="#cb249-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(muni_neigh, muni_centroids_coords, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb249-3"><a href="#cb249-3" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(muni_centroids_coords, <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(muni), <span class="at">pos =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2624,8 +2621,8 @@ was `touches'
 </div>
 <p>Looking for the closest neighbors to some feature is also a common neighborhood analysis (called K-nearest neighbors). Here we look for the two closest nearest neighbors of each municipality. To do that we use the <code>knearneigh()</code> function. This function only accepts point geometries so we need to use the centroids (and hence all the distances will be computed between centroids and not between the polygon boundaries). To get a neighbor list we use the <code>knn2nb()</code> function on the output of the <code>knearneigh()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb251"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1" aria-hidden="true" tabindex="-1"></a>muni_knb <span class="ot">&lt;-</span> <span class="fu">knn2nb</span>(<span class="fu">knearneigh</span>(muni_centroids_coords, <span class="at">k =</span> <span class="dv">2</span>))</span>
-<span id="cb251-2"><a href="#cb251-2" aria-hidden="true" tabindex="-1"></a>muni_knb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb250"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb250-1"><a href="#cb250-1" aria-hidden="true" tabindex="-1"></a>muni_knb <span class="ot">&lt;-</span> <span class="fu">knn2nb</span>(<span class="fu">knearneigh</span>(muni_centroids_coords, <span class="at">k =</span> <span class="dv">2</span>))</span>
+<span id="cb250-2"><a href="#cb250-2" aria-hidden="true" tabindex="-1"></a>muni_knb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Neighbour list object:
 Number of regions: 7 
@@ -2634,23 +2631,23 @@ Percentage nonzero weights: 28.57143
 Average number of links: 2 
 Non-symmetric neighbours list</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb253"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.symmetric.nb</span>(muni_knb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb252"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb252-1"><a href="#cb252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.symmetric.nb</span>(muni_knb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb255"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb255-1"><a href="#cb255-1" aria-hidden="true" tabindex="-1"></a>muni_knb2 <span class="ot">&lt;-</span> <span class="fu">make.sym.nb</span>(muni_knb)</span>
-<span id="cb255-2"><a href="#cb255-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.symmetric.nb</span>(muni_knb2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb254"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb254-1"><a href="#cb254-1" aria-hidden="true" tabindex="-1"></a>muni_knb2 <span class="ot">&lt;-</span> <span class="fu">make.sym.nb</span>(muni_knb)</span>
+<span id="cb254-2"><a href="#cb254-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.symmetric.nb</span>(muni_knb2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <p>The resulting neighbor list will often be asymmetric. For example the two closest neighbors from municipality 1 (Neuenkirch) are municipalities 2 (Nottwil) and 3 (Sempach). However the two closest neighbors of municipality 2 are municipalities 4 and 5. Hence the link between municipalities 1 and 2 is asymmetric. We can use the <code>make.sym.nb()</code> function to make everything symmetric, but after applying this function we will have some municipalities with more than two neighbors. Let’s have a look at the plot of the two computed neighborhoods (symmetric and asymmetric).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb257"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb257-2"><a href="#cb257-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
-<span id="cb257-3"><a href="#cb257-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(muni_knb, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">arrows =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb257-4"><a href="#cb257-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
-<span id="cb257-5"><a href="#cb257-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(muni_knb2, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">arrows =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb256"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb256-1"><a href="#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb256-2"><a href="#cb256-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
+<span id="cb256-3"><a href="#cb256-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(muni_knb, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">arrows =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb256-4"><a href="#cb256-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
+<span id="cb256-5"><a href="#cb256-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(muni_knb2, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">arrows =</span> <span class="cn">TRUE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2661,34 +2658,34 @@ Non-symmetric neighbours list</code></pre>
 </div>
 <p>The K-nearest neighbor analysis also allows us to compute other quantities. For example we can easily compute the minimum distance so that each community has at least one neighbor. We use the <code>nbdists()</code> function to compute all the neighborhood distances, and since its output is a list we need to use the <code>unlist()</code> function to convert it to a vector.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb258"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb258-1"><a href="#cb258-1" aria-hidden="true" tabindex="-1"></a>muni_knb3 <span class="ot">&lt;-</span> <span class="fu">knn2nb</span>(<span class="fu">knearneigh</span>(muni_centroids_coords, <span class="at">k =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb257"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1" aria-hidden="true" tabindex="-1"></a>muni_knb3 <span class="ot">&lt;-</span> <span class="fu">knn2nb</span>(<span class="fu">knearneigh</span>(muni_centroids_coords, <span class="at">k =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in knn2nb(knearneigh(muni_centroids_coords, k = 1)): neighbour object
 has 2 sub-graphs</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb260"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb260-1"><a href="#cb260-1" aria-hidden="true" tabindex="-1"></a>distances <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">nbdists</span>(muni_knb3, muni_centroids_coords))</span>
-<span id="cb260-2"><a href="#cb260-2" aria-hidden="true" tabindex="-1"></a>(dist1nb <span class="ot">&lt;-</span> <span class="fu">max</span>(distances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb259"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb259-1"><a href="#cb259-1" aria-hidden="true" tabindex="-1"></a>distances <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">nbdists</span>(muni_knb3, muni_centroids_coords))</span>
+<span id="cb259-2"><a href="#cb259-2" aria-hidden="true" tabindex="-1"></a>(dist1nb <span class="ot">&lt;-</span> <span class="fu">max</span>(distances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3860.315</code></pre>
 </div>
 </div>
 <p>The <code>dnearneigh()</code> function is similar to the <code>knearneigh</code> function. It computes a list of all the neighbors within a specific distance. Similarly, the <code>dnearneigh()</code> function only accepts point geometries so we need to work with the centroids. Using this function we can also check that our computed minimum distance to have at least one neighbor is correct.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb262"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb262-1"><a href="#cb262-1" aria-hidden="true" tabindex="-1"></a>dnb1 <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(muni_centroids_coords, <span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="fl">0.75</span> <span class="sc">*</span> dist1nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb261"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb261-1"><a href="#cb261-1" aria-hidden="true" tabindex="-1"></a>dnb1 <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(muni_centroids_coords, <span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="fl">0.75</span> <span class="sc">*</span> dist1nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in dnearneigh(muni_centroids_coords, d1 = 0, d2 = 0.75 * dist1nb):
 neighbour object has 5 sub-graphs</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb264"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb264-1"><a href="#cb264-1" aria-hidden="true" tabindex="-1"></a>dnb2 <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(muni_centroids_coords, <span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="dv">1</span> <span class="sc">*</span> dist1nb)</span>
-<span id="cb264-2"><a href="#cb264-2" aria-hidden="true" tabindex="-1"></a>dnb3 <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(muni_centroids_coords, <span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="fl">1.25</span> <span class="sc">*</span> dist1nb)</span>
-<span id="cb264-3"><a href="#cb264-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb264-4"><a href="#cb264-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb264-5"><a href="#cb264-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
-<span id="cb264-6"><a href="#cb264-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dnb1, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb264-7"><a href="#cb264-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
-<span id="cb264-8"><a href="#cb264-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dnb2, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb264-9"><a href="#cb264-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
-<span id="cb264-10"><a href="#cb264-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dnb3, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb263"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb263-1"><a href="#cb263-1" aria-hidden="true" tabindex="-1"></a>dnb2 <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(muni_centroids_coords, <span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="dv">1</span> <span class="sc">*</span> dist1nb)</span>
+<span id="cb263-2"><a href="#cb263-2" aria-hidden="true" tabindex="-1"></a>dnb3 <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(muni_centroids_coords, <span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="fl">1.25</span> <span class="sc">*</span> dist1nb)</span>
+<span id="cb263-3"><a href="#cb263-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb263-4"><a href="#cb263-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb263-5"><a href="#cb263-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
+<span id="cb263-6"><a href="#cb263-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dnb1, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb263-7"><a href="#cb263-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
+<span id="cb263-8"><a href="#cb263-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dnb2, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb263-9"><a href="#cb263-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
+<span id="cb263-10"><a href="#cb263-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dnb3, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2699,7 +2696,7 @@ neighbour object has 5 sub-graphs</code></pre>
 </div>
 <p>Neighborhood lists provide an efficient way to store neighborhood information thanks to their sparse structure, but sometimes it’s nice to work with the full neighborhood matrix. You can use the <code>nb2mat()</code> function to get the matrix.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb265"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb265-1"><a href="#cb265-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nb2mat</span>(muni_neigh, <span class="at">style =</span> <span class="st">"B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb264"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb264-1"><a href="#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nb2mat</span>(muni_neigh, <span class="at">style =</span> <span class="st">"B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [,1] [,2] [,3] [,4] [,5] [,6] [,7]
 1    0    1    1    0    0    0    0
@@ -2715,12 +2712,12 @@ nb2mat(neighbours = muni_neigh, style = "B")</code></pre>
 </div>
 <p>If you want to save the neighborhood as an <code>sf</code> line object, you can create the lines using the <code>nb2lines()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb267"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb267-1"><a href="#cb267-1" aria-hidden="true" tabindex="-1"></a>neigh_sf <span class="ot">&lt;-</span> <span class="fu">nb2lines</span>(muni_neigh, <span class="at">coords =</span> <span class="fu">st_geometry</span>(muni_centroid))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb266"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb266-1"><a href="#cb266-1" aria-hidden="true" tabindex="-1"></a>neigh_sf <span class="ot">&lt;-</span> <span class="fu">nb2lines</span>(muni_neigh, <span class="at">coords =</span> <span class="fu">st_geometry</span>(muni_centroid))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Neighborhood information is sometimes needed to fit more complex statistical models accounting for spatial autocorrelation (e.g.&nbsp;CAR models). You can fit some of these models in R, but sometimes you’ll need another software such as INLA or WinBUGS. The <code>spdep</code> package provide functions to export the neighborhood lists so that they can be used with these software.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb268"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb268-1"><a href="#cb268-1" aria-hidden="true" tabindex="-1"></a>nb_winbugs <span class="ot">&lt;-</span> <span class="fu">nb2WB</span>(muni_neigh)</span>
-<span id="cb268-2"><a href="#cb268-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nb2INLA</span>(<span class="at">file =</span> <span class="st">"export/nbinla.txt"</span>, muni_neigh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb267"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb267-1"><a href="#cb267-1" aria-hidden="true" tabindex="-1"></a>nb_winbugs <span class="ot">&lt;-</span> <span class="fu">nb2WB</span>(muni_neigh)</span>
+<span id="cb267-2"><a href="#cb267-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nb2INLA</span>(<span class="at">file =</span> <span class="st">"export/nbinla.txt"</span>, muni_neigh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="geocoding" class="level2" data-number="5.17">
@@ -2739,57 +2736,55 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb269"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb269-1"><a href="#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb268"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb268-1"><a href="#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>Sometimes the only geographical information you have is an address. The operation of translating an address into a geographical location (with coordinates) is called geocoding. For Switzerland, Swisstopo offers a free online tool to do that. To communicate with this tool we will use an API that is also documented by Swisstopo, with the help of the <code>httr2</code> package. First let’s define a function that will allow us to query the online geocoder.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb270"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb270-1"><a href="#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'httr2' was built under R version 4.4.3</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb272"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb272-1"><a href="#cb272-1" aria-hidden="true" tabindex="-1"></a>swissgeocode <span class="ot">&lt;-</span> <span class="cf">function</span>(address, <span class="at">nresults =</span> <span class="dv">3</span>){</span>
-<span id="cb272-2"><a href="#cb272-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb272-3"><a href="#cb272-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># URL of the search service</span></span>
-<span id="cb272-4"><a href="#cb272-4" aria-hidden="true" tabindex="-1"></a>    base <span class="ot">&lt;-</span> <span class="st">"https://api3.geo.admin.ch/"</span></span>
-<span id="cb272-5"><a href="#cb272-5" aria-hidden="true" tabindex="-1"></a>    endpoint <span class="ot">&lt;-</span> <span class="st">"rest/services/api/SearchServer"</span></span>
-<span id="cb272-6"><a href="#cb272-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb272-7"><a href="#cb272-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Encode address (needed because of spaces and exotic characters in the address)</span></span>
-<span id="cb272-8"><a href="#cb272-8" aria-hidden="true" tabindex="-1"></a>    address_url <span class="ot">&lt;-</span> <span class="fu">URLencode</span>(address)</span>
-<span id="cb272-9"><a href="#cb272-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb272-10"><a href="#cb272-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Request that will be sent to the server</span></span>
-<span id="cb272-11"><a href="#cb272-11" aria-hidden="true" tabindex="-1"></a>    request_string <span class="ot">&lt;-</span> <span class="fu">paste0</span>(base, endpoint, <span class="st">"?searchText="</span>, address_url, <span class="st">"&amp;type=locations"</span>, <span class="st">"&amp;limit="</span>, nresults, <span class="st">"&amp;sr=2056"</span>)</span>
-<span id="cb272-12"><a href="#cb272-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb272-13"><a href="#cb272-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Send request</span></span>
-<span id="cb272-14"><a href="#cb272-14" aria-hidden="true" tabindex="-1"></a>    req <span class="ot">&lt;-</span> <span class="fu">request</span>(request_string)</span>
-<span id="cb272-15"><a href="#cb272-15" aria-hidden="true" tabindex="-1"></a>    resp <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(req)</span>
-<span id="cb272-16"><a href="#cb272-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert JSON to R objects</span></span>
-<span id="cb272-17"><a href="#cb272-17" aria-hidden="true" tabindex="-1"></a>    resp_json <span class="ot">&lt;-</span> <span class="fu">resp_body_json</span>(resp, <span class="at">simplifyVector =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb272-18"><a href="#cb272-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb272-19"><a href="#cb272-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The address was not found</span></span>
-<span id="cb272-20"><a href="#cb272-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(resp_json<span class="sc">$</span>results) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">||</span> <span class="fu">length</span>(resp_json<span class="sc">$</span>results) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb272-21"><a href="#cb272-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">warning</span>(<span class="st">"The address could not be located."</span>)</span>
-<span id="cb272-22"><a href="#cb272-22" aria-hidden="true" tabindex="-1"></a>        output <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">address_origin =</span> address, <span class="at">address_found =</span> <span class="cn">NA</span>, <span class="at">x =</span> <span class="cn">NA</span>, <span class="at">y =</span> <span class="cn">NA</span>, <span class="at">lat =</span> <span class="cn">NA</span>, <span class="at">lon =</span> <span class="cn">NA</span>, <span class="at">weight =</span> <span class="cn">NA</span>)</span>
-<span id="cb272-23"><a href="#cb272-23" aria-hidden="true" tabindex="-1"></a>     }</span>
-<span id="cb272-24"><a href="#cb272-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The address was found</span></span>
-<span id="cb272-25"><a href="#cb272-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb272-26"><a href="#cb272-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Merge results in a data frame</span></span>
-<span id="cb272-27"><a href="#cb272-27" aria-hidden="true" tabindex="-1"></a>        output <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(address)</span>
-<span id="cb272-28"><a href="#cb272-28" aria-hidden="true" tabindex="-1"></a>        output <span class="ot">&lt;-</span> <span class="fu">cbind</span>(output, resp_json<span class="sc">$</span>results<span class="sc">$</span>attrs[, <span class="fu">c</span>(<span class="st">"detail"</span>, <span class="st">"y"</span>, <span class="st">"x"</span>, <span class="st">"lat"</span>, <span class="st">"lon"</span>)], resp_json<span class="sc">$</span>results<span class="sc">$</span>weight)</span>
-<span id="cb272-29"><a href="#cb272-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The search service switches the coordinates axes (x=y and y=x)</span></span>
-<span id="cb272-30"><a href="#cb272-30" aria-hidden="true" tabindex="-1"></a>        <span class="fu">names</span>(output) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"address_origin"</span>, <span class="st">"address_found"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"lat"</span>, <span class="st">"lon"</span>, <span class="st">"weight"</span>)</span>
-<span id="cb272-31"><a href="#cb272-31" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb272-32"><a href="#cb272-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
-<span id="cb272-33"><a href="#cb272-33" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb269"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb269-1"><a href="#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span>
+<span id="cb269-2"><a href="#cb269-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb269-3"><a href="#cb269-3" aria-hidden="true" tabindex="-1"></a>swissgeocode <span class="ot">&lt;-</span> <span class="cf">function</span>(address, <span class="at">nresults =</span> <span class="dv">3</span>){</span>
+<span id="cb269-4"><a href="#cb269-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb269-5"><a href="#cb269-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># URL of the search service</span></span>
+<span id="cb269-6"><a href="#cb269-6" aria-hidden="true" tabindex="-1"></a>    base <span class="ot">&lt;-</span> <span class="st">"https://api3.geo.admin.ch/"</span></span>
+<span id="cb269-7"><a href="#cb269-7" aria-hidden="true" tabindex="-1"></a>    endpoint <span class="ot">&lt;-</span> <span class="st">"rest/services/api/SearchServer"</span></span>
+<span id="cb269-8"><a href="#cb269-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb269-9"><a href="#cb269-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Encode address (needed because of spaces and exotic characters in the address)</span></span>
+<span id="cb269-10"><a href="#cb269-10" aria-hidden="true" tabindex="-1"></a>    address_url <span class="ot">&lt;-</span> <span class="fu">URLencode</span>(address)</span>
+<span id="cb269-11"><a href="#cb269-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb269-12"><a href="#cb269-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Request that will be sent to the server</span></span>
+<span id="cb269-13"><a href="#cb269-13" aria-hidden="true" tabindex="-1"></a>    request_string <span class="ot">&lt;-</span> <span class="fu">paste0</span>(base, endpoint, <span class="st">"?searchText="</span>, address_url, <span class="st">"&amp;type=locations"</span>, <span class="st">"&amp;limit="</span>, nresults, <span class="st">"&amp;sr=2056"</span>)</span>
+<span id="cb269-14"><a href="#cb269-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb269-15"><a href="#cb269-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Send request</span></span>
+<span id="cb269-16"><a href="#cb269-16" aria-hidden="true" tabindex="-1"></a>    req <span class="ot">&lt;-</span> <span class="fu">request</span>(request_string)</span>
+<span id="cb269-17"><a href="#cb269-17" aria-hidden="true" tabindex="-1"></a>    resp <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(req)</span>
+<span id="cb269-18"><a href="#cb269-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert JSON to R objects</span></span>
+<span id="cb269-19"><a href="#cb269-19" aria-hidden="true" tabindex="-1"></a>    resp_json <span class="ot">&lt;-</span> <span class="fu">resp_body_json</span>(resp, <span class="at">simplifyVector =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb269-20"><a href="#cb269-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb269-21"><a href="#cb269-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The address was not found</span></span>
+<span id="cb269-22"><a href="#cb269-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(resp_json<span class="sc">$</span>results) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">||</span> <span class="fu">length</span>(resp_json<span class="sc">$</span>results) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb269-23"><a href="#cb269-23" aria-hidden="true" tabindex="-1"></a>        <span class="fu">warning</span>(<span class="st">"The address could not be located."</span>)</span>
+<span id="cb269-24"><a href="#cb269-24" aria-hidden="true" tabindex="-1"></a>        output <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">address_origin =</span> address, <span class="at">address_found =</span> <span class="cn">NA</span>, <span class="at">x =</span> <span class="cn">NA</span>, <span class="at">y =</span> <span class="cn">NA</span>, <span class="at">lat =</span> <span class="cn">NA</span>, <span class="at">lon =</span> <span class="cn">NA</span>, <span class="at">weight =</span> <span class="cn">NA</span>)</span>
+<span id="cb269-25"><a href="#cb269-25" aria-hidden="true" tabindex="-1"></a>     }</span>
+<span id="cb269-26"><a href="#cb269-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The address was found</span></span>
+<span id="cb269-27"><a href="#cb269-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb269-28"><a href="#cb269-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Merge results in a data frame</span></span>
+<span id="cb269-29"><a href="#cb269-29" aria-hidden="true" tabindex="-1"></a>        output <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(address)</span>
+<span id="cb269-30"><a href="#cb269-30" aria-hidden="true" tabindex="-1"></a>        output <span class="ot">&lt;-</span> <span class="fu">cbind</span>(output, resp_json<span class="sc">$</span>results<span class="sc">$</span>attrs[, <span class="fu">c</span>(<span class="st">"detail"</span>, <span class="st">"y"</span>, <span class="st">"x"</span>, <span class="st">"lat"</span>, <span class="st">"lon"</span>)], resp_json<span class="sc">$</span>results<span class="sc">$</span>weight)</span>
+<span id="cb269-31"><a href="#cb269-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The search service switches the coordinates axes (x=y and y=x)</span></span>
+<span id="cb269-32"><a href="#cb269-32" aria-hidden="true" tabindex="-1"></a>        <span class="fu">names</span>(output) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"address_origin"</span>, <span class="st">"address_found"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"lat"</span>, <span class="st">"lon"</span>, <span class="st">"weight"</span>)</span>
+<span id="cb269-33"><a href="#cb269-33" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb269-34"><a href="#cb269-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
+<span id="cb269-35"><a href="#cb269-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can test it with a random address.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb273"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb273-1"><a href="#cb273-1" aria-hidden="true" tabindex="-1"></a>test_address <span class="ot">&lt;-</span> <span class="st">"Seerose 1 6204 Sempach"</span></span>
-<span id="cb273-2"><a href="#cb273-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">swissgeocode</span>(test_address, <span class="at">nresults =</span> <span class="dv">5</span>)</span>
-<span id="cb273-3"><a href="#cb273-3" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(results, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
-<span id="cb273-4"><a href="#cb273-4" aria-hidden="true" tabindex="-1"></a>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb270"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb270-1"><a href="#cb270-1" aria-hidden="true" tabindex="-1"></a>test_address <span class="ot">&lt;-</span> <span class="st">"Seerose 1 6204 Sempach"</span></span>
+<span id="cb270-2"><a href="#cb270-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">swissgeocode</span>(test_address, <span class="at">nresults =</span> <span class="dv">5</span>)</span>
+<span id="cb270-3"><a href="#cb270-3" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(results, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb270-4"><a href="#cb270-4" aria-hidden="true" tabindex="-1"></a>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 5 features and 5 fields
 Geometry type: POINT
@@ -2812,9 +2807,9 @@ Projected CRS: CH1903+ / LV95
 </div>
 <p>If you need to geocode addresses outside of Switzerland, you can try the <code>geocode_OSM()</code> function in the <code>tmaptools</code> package. It uses a geocoder called Nominatim that is provided by OpenStreetMap. Also check the <code>tidygeocoder</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb275"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb275-1"><a href="#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmaptools)</span>
-<span id="cb275-2"><a href="#cb275-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">geocode_OSM</span>(test_address, <span class="at">as.sf =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb275-3"><a href="#cb275-3" aria-hidden="true" tabindex="-1"></a>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb272"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb272-1"><a href="#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmaptools)</span>
+<span id="cb272-2"><a href="#cb272-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">geocode_OSM</span>(test_address, <span class="at">as.sf =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb272-3"><a href="#cb272-3" aria-hidden="true" tabindex="-1"></a>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 1 feature and 7 fields
 Active geometry column: point
@@ -2845,8 +2840,8 @@ If you start from here…
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb277"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb277-2"><a href="#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb274"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb274-1"><a href="#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb274-2"><a href="#cb274-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -2854,7 +2849,7 @@ If you start from here…
 <p>If the data sets you’re using have different CRSs, it’s usually a good idea to transform some of them so that they all have the same CRS. We need the <code>st_transform()</code> function to do this. Sometimes we also say that we “project” the data to another CRS (however, transformations between geographic CRSs are not really projections).</p>
 <p>Here we first check the CRS of the <code>World</code> data set using the <code>st_crs()</code> function and compute a graticule (grid). Then we project the data set to three different projected CRSs, the Swiss CRS, the Equal Earth projection and the Robinson projection. If we use a CRS with an EPSG number, we can also use the integer value directly (without specifying “EPSG:”). However it’s a good habit to always specify the provider to avoid confusions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb278"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb278-1"><a href="#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(World)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb275"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb275-1"><a href="#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(World)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coordinate Reference System:
   User input: EPSG:4326 
@@ -2886,25 +2881,25 @@ GEOGCRS["WGS 84",
         BBOX[-90,-180,90,180]],
     ID["EPSG",4326]]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb280"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb280-1"><a href="#cb280-1" aria-hidden="true" tabindex="-1"></a>grat <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>()</span>
-<span id="cb280-2"><a href="#cb280-2" aria-hidden="true" tabindex="-1"></a>world_ch <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"EPSG:2056"</span>)</span>
-<span id="cb280-3"><a href="#cb280-3" aria-hidden="true" tabindex="-1"></a>grat_ch <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"EPSG:2056"</span>)</span>
-<span id="cb280-4"><a href="#cb280-4" aria-hidden="true" tabindex="-1"></a>world_equal <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"EPSG:8857"</span>)</span>
-<span id="cb280-5"><a href="#cb280-5" aria-hidden="true" tabindex="-1"></a>grat_equal <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"EPSG:8857"</span>)</span>
-<span id="cb280-6"><a href="#cb280-6" aria-hidden="true" tabindex="-1"></a>world_rob <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"ESRI:54030"</span>)</span>
-<span id="cb280-7"><a href="#cb280-7" aria-hidden="true" tabindex="-1"></a>grat_rob <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"ESRI:54030"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb277"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1" aria-hidden="true" tabindex="-1"></a>grat <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>()</span>
+<span id="cb277-2"><a href="#cb277-2" aria-hidden="true" tabindex="-1"></a>world_ch <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb277-3"><a href="#cb277-3" aria-hidden="true" tabindex="-1"></a>grat_ch <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb277-4"><a href="#cb277-4" aria-hidden="true" tabindex="-1"></a>world_equal <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"EPSG:8857"</span>)</span>
+<span id="cb277-5"><a href="#cb277-5" aria-hidden="true" tabindex="-1"></a>grat_equal <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"EPSG:8857"</span>)</span>
+<span id="cb277-6"><a href="#cb277-6" aria-hidden="true" tabindex="-1"></a>world_rob <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"ESRI:54030"</span>)</span>
+<span id="cb277-7"><a href="#cb277-7" aria-hidden="true" tabindex="-1"></a>grat_rob <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"ESRI:54030"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>When we plot that data, we first see that, not surprisingly, the Swiss CRS is not adapted at all for global data, and that the Equal Earth and Robinson projections give a pleasing result. Both of these projections are good choices for world maps.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb281"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb281-1"><a href="#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb281-2"><a href="#cb281-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(World), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
-<span id="cb281-3"><a href="#cb281-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb281-4"><a href="#cb281-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_ch), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
-<span id="cb281-5"><a href="#cb281-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_ch), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb281-6"><a href="#cb281-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_equal), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
-<span id="cb281-7"><a href="#cb281-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_equal), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb281-8"><a href="#cb281-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_rob), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
-<span id="cb281-9"><a href="#cb281-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_rob), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb278"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb278-1"><a href="#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb278-2"><a href="#cb278-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(World), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
+<span id="cb278-3"><a href="#cb278-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb278-4"><a href="#cb278-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_ch), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
+<span id="cb278-5"><a href="#cb278-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_ch), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb278-6"><a href="#cb278-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_equal), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
+<span id="cb278-7"><a href="#cb278-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_equal), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb278-8"><a href="#cb278-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_rob), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
+<span id="cb278-9"><a href="#cb278-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_rob), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2940,11 +2935,11 @@ Exercise (5 minutes)
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb282"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb282-1"><a href="#cb282-1" aria-hidden="true" tabindex="-1"></a>world_bonne <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"ESRI:54024"</span>)</span>
-<span id="cb282-2"><a href="#cb282-2" aria-hidden="true" tabindex="-1"></a>grat_bonne <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"ESRI:54024"</span>)</span>
-<span id="cb282-3"><a href="#cb282-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb282-4"><a href="#cb282-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_bonne), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
-<span id="cb282-5"><a href="#cb282-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_bonne), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb279"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb279-1"><a href="#cb279-1" aria-hidden="true" tabindex="-1"></a>world_bonne <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"ESRI:54024"</span>)</span>
+<span id="cb279-2"><a href="#cb279-2" aria-hidden="true" tabindex="-1"></a>grat_bonne <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"ESRI:54024"</span>)</span>
+<span id="cb279-3"><a href="#cb279-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb279-4"><a href="#cb279-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_bonne), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
+<span id="cb279-5"><a href="#cb279-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_bonne), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -3044,8 +3039,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -3156,7 +3149,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
