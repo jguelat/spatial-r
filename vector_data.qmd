@@ -4,6 +4,14 @@ toc-depth: 3
 toc-title: ""
 ---
 
+```{r}
+#| echo: false
+#| output: false
+if (.Platform$OS.type == "windows" && Sys.getenv("PROJ_LIB") != ""){
+  Sys.setenv(PROJ_LIB = "")
+}
+```
+
 # Vector data
 
 ## Vector data model
@@ -244,3 +252,89 @@ pts_sf <- st_as_sf(pts_data, wkt = "geometry", crs = "EPSG:2056")
 ::: {.callout-note icon="false" title="Exercise (5 minutes)"}
 Try to build your own `sfc` and `sf` objects using either `st_sfc()` and `st_sf()` or `st_as_sfc()` and `st_as_sf()`.
 :::
+
+
+## Vector data with `terra`
+
+::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
+Run the following code to load and create everything you'll need to run the examples in this section.
+```{r}
+#| eval: false
+library(sf)
+pt1 <- st_point(c(2657000, 1219000))
+pt2 <- st_point(c(2658000, 1218000))
+pt3 <- st_point(c(2659000, 1217000))
+pts <- st_sfc(pt1, pt2, pt3, crs = "EPSG:2056")
+pts_data <- data.frame(species = c("wallcreeper", "alpine chough", "kingfisher"),
+                       sex = c("male", "female", "female"))
+pts_sf <- st_sf(pts_data, geometry = pts)
+```
+:::
+
+Even though `sf` is probably the most used package for GIS vector data in R, it is possible to use other packages to process and visualize such data. The `terra` package provides a lot of tools for raster data processing (as we will see later), but it also defines classes and functions allowing to work efficiently with vector data.
+
+With `terra`, our vector data will be stored in objects called `SpatVector`. This class defines a way to store geometries and attributes (similarly to the `sf` class seen above). We will now see how to create such objects from scratch in order to understand them a bit better.
+
+```{r}
+library(terra)
+
+xcoords <- c(2657000, 2658000, 2659000)
+ycoords <- c(1219000, 1218000, 1217000)
+coords <- cbind(xcoords, ycoords)
+
+pts_terra <- vect(coords, type= "points", crs = "EPSG:2056")
+class(pts_terra)
+pts_terra
+geom(pts_terra)
+geom(pts_terra, wkt = TRUE)
+```
+
+We use the `vect()` function to create a `SpatVector` object, and similarly to `sf`, we also need to specify the coordinate system. When we call the created object, we get some general information on the data set, including the dimensions and an extent that is automatically computed. To get more information about the geometries, we can use the `geom()` function (with a matrix or WKT output).
+
+::: callout-important
+If you got a warning when using the `vect()` function, please read the next lines carefully!
+
+The `terra` package currently has a bug causing some troubles finding the PROJ library if you manually installed another PROJ instance on Windows (e.g. this is happening when you install PostGIS). In this case you'll often see warnings referring to `PROJ: proj_create_from_database` and all CRS operations will fail. To solve this problem, run the following code *before* loading `terra` (do this ONLY if you get these warnings, otherwise this may cause other problems):
+
+```{r}
+#| eval: false
+Sys.setenv(PROJ_LIB = "")
+```
+:::
+
+We can also use the `vect()` function to add attributes to each feature using a data frame.
+
+```{r}
+pts_data <- data.frame(species = c("wallcreeper", "alpine chough", "kingfisher"),
+                       sex = c("male", "female", "female"))
+
+pts_terra <- vect(coords, type= "points", atts = pts_data, crs = "EPSG:2056")
+pts_terra
+```
+
+We can also create other geometry types from scratch but we need to provide additional information. For each vertex, we need to provide an index specifying the feature and the part (for MULTI\* type) it belongs to.
+
+```{r}
+coords <- rbind(c(0, 2), c(1, 2), c(1, 3), c(0, 3))
+coords <- cbind(id = 1, part = 1, coords)
+
+line_terra <- vect(coords, type = "lines")
+polygon_terra <- vect(coords, type = "polygons")
+```
+
+Strictly speaking, `SpatVector` objects are not data frames (unlike `sf` objects), fortunately you can still use a lot of the usual data frame functions such as `head`, `rbind` and `merge`. Extracting specific features or attributes using square brackets also works and you will get a new `SpatVector` object.
+
+```{r}
+pts_terra[,"species"]
+pts_terra[pts_terra$sex == "female",]
+```
+
+You can easily convert `sf` objects to `SpatVector` objects using the `vect()` function. To convert `SpatVector` objects to `sf` objects, use the `st_as_sf()` function.
+
+```{r}
+pts_terra_from_sf <- vect(pts_sf)
+class(pts_terra_from_sf)
+pts_sf_from_terra <- st_as_sf(pts_terra)
+class(pts_sf_from_terra)
+```
+
