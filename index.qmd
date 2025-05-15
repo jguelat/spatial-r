@@ -71,6 +71,7 @@ Only the big updates are listed here.
 
 | | |
 |------------|------------|
+| 2025-05-15 | Add a short introduction about vector data with terra |
 | 2025-05-08 | The whole content was converted to a Quarto book and is available as a GitHub website: <https://jguelat.github.io/spatial-r>{target="_blank"}. |
 | 2025-02-25 | Update of the `tmap` subsections (static and dynamic maps), compatibility with version 4.x, more explanations and map examples. |
 | 2025-02-07 | Large update of the "Tips and tricks for vectors" and "Dynamic maps" sections, second workshop in Sempach. |
