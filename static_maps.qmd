@@ -437,7 +437,7 @@ tm_style("grey") +
 tm_layout(inner.margins = c(0.05, 0.05, 0.05, 0.3), frame.r = 0)
 ```
 
-In the next example we customize two maps in the same plotting window. We also use the `tm_title()` function to add nicer titles and the `tm_credits()` function to add some copyright information. Note the difference when using lowercase vs. uppercase for the positioning of the map components. We also tell `tmap` to remove the automatic title panels using the `panel.show = FALSE` argument inside the `tm_layout()` function. Lastly, note how we change the colors and the title of the legends for the two maps using `list` objects, and the use of an expression to properly display the units.
+In the next example we customize two maps in the same plotting window. We also use the `tm_title()` function to add nicer titles and the `tm_credits()` function to add some copyright information. Note the difference when using lowercase vs. uppercase for the positioning of the map components. We also tell `tmap` to remove the automatic title panels using the `panel.show = FALSE` argument inside the `tm_layout()` function. Lastly, note how we change the colors and the title of the legends for the two maps using `list` objects, and the use of an expression to properly display the units. The `meta.margins` inside `tm_layout()` is needed when using version 4.1 of `tmap`, otherwise the margins are suboptimal (this is a bug that should be corrected in the next version).
 
 ```{r}
 tm_shape(muni) + tm_polygons(fill = c("popsize", "area"),
@@ -445,7 +445,7 @@ tm_shape(muni) + tm_polygons(fill = c("popsize", "area"),
                              fill.legend = list(tm_legend("Population size"), tm_legend(expression("Area [m"^2*"]")))) +
 tm_title(c("Population size", "Area"), size = 1.1, position = c("right", "top")) + 
 tm_credits("Data © swisstopo", position = c("LEFT", "BOTTOM")) +
-tm_layout(panel.show = FALSE)
+tm_layout(panel.show = FALSE, meta.margins = c(0.3, 0, 0, 0))
 ```
 
 Having multiple maps on the same plot can be achieved using the `tmap_arrange()` function. First create your maps and store them in `tmap` objects, then use them with `tmap_arrange()`. This function is especially useful since the usual `par(mfrow)` trick doesn't work with `tmap` objects.

@@ -92,7 +92,7 @@ If you use a list to combine several data sets, you can easily customize some ar
 mapview(list(muni, obs), legend = list(FALSE, TRUE), homebutton = list(TRUE, FALSE))
 ```
 
-If you want to produce a map for a specific data set but use the extent of another data set, you can use the `hide = TRUE` argument for the data set defining the extent.
+If you want to produce a map for a specific data set but use the extent of another data set, you can use the `hide = TRUE` argument for the data set defining the extent. Note that there is a bug in the current version of `mapview` for Windows. If, like in the next example, you use square brackets to extract only specific features, you'll need to use the `layer.name` argument as well.
 
 ```{r}
 #| classes: map-padding
