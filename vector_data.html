@@ -251,6 +251,7 @@ div.csl-indent {
   <li><a href="#vector-data-model" id="toc-vector-data-model" class="nav-link active" data-scroll-target="#vector-data-model"><span class="header-section-number">2.1</span> Vector data model</a></li>
   <li><a href="#a-first-look-at-vector-data-in-r" id="toc-a-first-look-at-vector-data-in-r" class="nav-link" data-scroll-target="#a-first-look-at-vector-data-in-r"><span class="header-section-number">2.2</span> A first look at vector data in R</a></li>
   <li><a href="#structure-of-sf-objects" id="toc-structure-of-sf-objects" class="nav-link" data-scroll-target="#structure-of-sf-objects"><span class="header-section-number">2.3</span> Structure of <code>sf</code> objects</a></li>
+  <li><a href="#vector-data-with-terra" id="toc-vector-data-with-terra" class="nav-link" data-scroll-target="#vector-data-with-terra"><span class="header-section-number">2.4</span> Vector data with <code>terra</code></a></li>
   </ul>
 </nav>
     </div>
@@ -420,7 +421,7 @@ Question: why is the MULTIPOLYGON type appropriate?
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vector_data_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vector_data_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -431,7 +432,7 @@ Question: why is the MULTIPOLYGON type appropriate?
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vector_data_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vector_data_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -439,7 +440,7 @@ Question: why is the MULTIPOLYGON type appropriate?
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vector_data_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vector_data_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -447,7 +448,7 @@ Question: why is the MULTIPOLYGON type appropriate?
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vector_data_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vector_data_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -458,7 +459,7 @@ Question: why is the MULTIPOLYGON type appropriate?
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vector_data_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vector_data_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -705,7 +706,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vector_data_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vector_data_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -742,6 +743,163 @@ Exercise (5 minutes)
 </div>
 <div class="callout-body-container callout-body">
 <p>Try to build your own <code>sfc</code> and <code>sf</code> objects using either <code>st_sfc()</code> and <code>st_sf()</code> or <code>st_as_sfc()</code> and <code>st_as_sf()</code>.</p>
+</div>
+</div>
+</section>
+<section id="vector-data-with-terra" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="vector-data-with-terra"><span class="header-section-number">2.4</span> Vector data with <code>terra</code></h2>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you start from here…
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>pt1 <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">2657000</span>, <span class="dv">1219000</span>))</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>pt2 <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">2658000</span>, <span class="dv">1218000</span>))</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>pt3 <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">2659000</span>, <span class="dv">1217000</span>))</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(pt1, pt2, pt3, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>pts_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> <span class="fu">c</span>(<span class="st">"wallcreeper"</span>, <span class="st">"alpine chough"</span>, <span class="st">"kingfisher"</span>),</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sex =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"female"</span>))</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>pts_sf <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(pts_data, <span class="at">geometry =</span> pts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>Even though <code>sf</code> is probably the most used package for GIS vector data in R, it is possible to use other packages to process and visualize such data. The <code>terra</code> package provides a lot of tools for raster data processing (as we will see later), but it also defines classes and functions allowing to work efficiently with vector data.</p>
+<p>With <code>terra</code>, our vector data will be stored in objects called <code>SpatVector</code>. This class defines a way to store geometries and attributes (similarly to the <code>sf</code> class seen above). We will now see how to create such objects from scratch in order to understand them a bit better.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>terra 1.8.50</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>xcoords <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2657000</span>, <span class="dv">2658000</span>, <span class="dv">2659000</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>ycoords <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1219000</span>, <span class="dv">1218000</span>, <span class="dv">1217000</span>)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">cbind</span>(xcoords, ycoords)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>pts_terra <span class="ot">&lt;-</span> <span class="fu">vect</span>(coords, <span class="at">type=</span> <span class="st">"points"</span>, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pts_terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SpatVector"
+attr(,"package")
+[1] "terra"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>pts_terra</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> class       : SpatVector 
+ geometry    : points 
+ dimensions  : 3, 0  (geometries, attributes)
+ extent      : 2657000, 2659000, 1217000, 1219000  (xmin, xmax, ymin, ymax)
+ coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geom</span>(pts_terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     geom part       x       y hole
+[1,]    1    1 2657000 1219000    0
+[2,]    2    1 2658000 1218000    0
+[3,]    3    1 2659000 1217000    0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geom</span>(pts_terra, <span class="at">wkt =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "POINT (2657000 1219000)" "POINT (2658000 1218000)"
+[3] "POINT (2659000 1217000)"</code></pre>
+</div>
+</div>
+<p>We use the <code>vect()</code> function to create a <code>SpatVector</code> object, and similarly to <code>sf</code>, we also need to specify the coordinate system. When we call the created object, we get some general information on the data set, including the dimensions and an extent that is automatically computed. To get more information about the geometries, we can use the <code>geom()</code> function (with a matrix or WKT output).</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you got a warning when using the <code>vect()</code> function, please read the next lines carefully!</p>
+<p>The <code>terra</code> package currently has a bug causing some troubles finding the PROJ library if you manually installed another PROJ instance on Windows (e.g.&nbsp;this is happening when you install PostGIS). In this case you’ll often see warnings referring to <code>PROJ: proj_create_from_database</code> and all CRS operations will fail. To solve this problem, run the following code <em>before</em> loading <code>terra</code> (do this ONLY if you get these warnings, otherwise this may cause other problems):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">PROJ_LIB =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>We can also use the <code>vect()</code> function to add attributes to each feature using a data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>pts_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> <span class="fu">c</span>(<span class="st">"wallcreeper"</span>, <span class="st">"alpine chough"</span>, <span class="st">"kingfisher"</span>),</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sex =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"female"</span>))</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>pts_terra <span class="ot">&lt;-</span> <span class="fu">vect</span>(coords, <span class="at">type=</span> <span class="st">"points"</span>, <span class="at">atts =</span> pts_data, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>pts_terra</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> class       : SpatVector 
+ geometry    : points 
+ dimensions  : 3, 2  (geometries, attributes)
+ extent      : 2657000, 2659000, 1217000, 1219000  (xmin, xmax, ymin, ymax)
+ coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+ names       :       species    sex
+ type        :         &lt;chr&gt;  &lt;chr&gt;
+ values      :   wallcreeper   male
+               alpine chough female
+                  kingfisher female</code></pre>
+</div>
+</div>
+<p>We can also create other geometry types from scratch but we need to provide additional information. For each vertex, we need to provide an index specifying the feature and the part (for MULTI* type) it belongs to.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>))</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">id =</span> <span class="dv">1</span>, <span class="at">part =</span> <span class="dv">1</span>, coords)</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>line_terra <span class="ot">&lt;-</span> <span class="fu">vect</span>(coords, <span class="at">type =</span> <span class="st">"lines"</span>)</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>polygon_terra <span class="ot">&lt;-</span> <span class="fu">vect</span>(coords, <span class="at">type =</span> <span class="st">"polygons"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Strictly speaking, <code>SpatVector</code> objects are not data frames (unlike <code>sf</code> objects), fortunately you can still use a lot of the usual data frame functions such as <code>head</code>, <code>rbind</code> and <code>merge</code>. Extracting specific features or attributes using square brackets also works and you will get a new <code>SpatVector</code> object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>pts_terra[,<span class="st">"species"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> class       : SpatVector 
+ geometry    : points 
+ dimensions  : 3, 1  (geometries, attributes)
+ extent      : 2657000, 2659000, 1217000, 1219000  (xmin, xmax, ymin, ymax)
+ coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+ names       :       species
+ type        :         &lt;chr&gt;
+ values      :   wallcreeper
+               alpine chough
+                  kingfisher</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>pts_terra[pts_terra<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> class       : SpatVector 
+ geometry    : points 
+ dimensions  : 2, 2  (geometries, attributes)
+ extent      : 2658000, 2659000, 1217000, 1218000  (xmin, xmax, ymin, ymax)
+ coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+ names       :       species    sex
+ type        :         &lt;chr&gt;  &lt;chr&gt;
+ values      : alpine chough female
+                  kingfisher female</code></pre>
+</div>
+</div>
+<p>You can easily convert <code>sf</code> objects to <code>SpatVector</code> objects using the <code>vect()</code> function. To convert <code>SpatVector</code> objects to <code>sf</code> objects, use the <code>st_as_sf()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>pts_terra_from_sf <span class="ot">&lt;-</span> <span class="fu">vect</span>(pts_sf)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pts_terra_from_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SpatVector"
+attr(,"package")
+[1] "terra"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>pts_sf_from_terra <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(pts_terra)</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pts_sf_from_terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "sf"         "data.frame"</code></pre>
 </div>
 </div>
 
