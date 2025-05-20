@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -191,8 +225,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+   
+  <ul>
+  <li><a href="#raster-data-model" id="toc-raster-data-model" class="nav-link active" data-scroll-target="#raster-data-model"><span class="header-section-number">3.1</span> Raster data model</a></li>
+  <li><a href="#raster-data-in-r" id="toc-raster-data-in-r" class="nav-link" data-scroll-target="#raster-data-in-r"><span class="header-section-number">3.2</span> Raster data in R</a></li>
+  <li><a href="#structure-of-spatraster-objects" id="toc-structure-of-spatraster-objects" class="nav-link" data-scroll-target="#structure-of-spatraster-objects"><span class="header-section-number">3.3</span> Structure of <code>SpatRaster</code> objects</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -216,26 +257,17 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>As we saw above, a raster data set is basically an image, which is the same as a grid of pixels. These pixels are often called cells. Most raster data sets you will encounter will have square cells with a constant size (also called resolution), and we will only focus on these in this tutorial. However don’t forget that other kind of grids, for example sheared or curvilinear, also exist. This is sometimes needed depending on the coordinate reference system used to store the data, or can be caused by some reprojections.</p>
+<section id="raster-data-model" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="raster-data-model"><span class="header-section-number">3.1</span> Raster data model</h2>
+<p>As we saw above, a raster data set is basically an image, which is the same as a grid of pixels. These pixels are often called cells. Most raster data sets you will encounter will have square (or maybe rectangular) cells with a constant size (also called resolution), and we will only focus on these in this tutorial. However don’t forget that other kind of grids, for example sheared or curvilinear ones, also exist. This is sometimes needed depending on the coordinate reference system used to store the data, or can be caused by some reprojections.</p>
 <p>Rasters are perfect for storing continuous values contained in a large area (called the extent of the raster). Digital elevation models are a typical example of such data, each cell is used to store an elevation value. You will also find rasters containing discrete values, these are often used to store landcover or landuse data sets. Note that, unlike vector data, it is impossible to store overlapping features in the same data set.</p>
 <p>We saw that vector data sets can store multiple attributes for a single feature. We can use a similar technique for raster data sets with the help of raster bands. You can think of raster bands as different layers of the same grid, each layer containing a different information. This is mainly use for spectral data, for example the red, green and blue intensity values in an aerial picture; satellite imagery will have even more bands depending on the number of sensors. Multiband rasters are also often used to store environment variables that change through time (e.g.&nbsp;a temperature raster, with one band per day). Such rasters are often called datacubes.</p>
 <p><img src="figures/raster_types.jpg" class="img-fluid"></p>
 <p>Performing computations on raster data sets is usually very efficient and faster than using vector data. This is due to the fact that rasters are stored in some kind of matrix formats with some extra information such as the coordinate reference system and the origin of the raster. It this thus possible to use highly efficient linear algebra libraries. The mathematical operations performed on raster cells are called map algebra.</p>
-<p>We will use the <code>terra</code> package to work with raster data. This package has everything needed to import, analyse, visualize and export raster data sets. Like the <code>sf</code> package, it is also using the GDAL library for the import/export operations, which means it can open almost every raster data format. Unlike the <code>sf</code> package, <code>terra</code> will not import the full data sets in memory but only create a pointer to the data and then read smaller blocks of data successively. This allows working with very large rasters with a relatively small memory footprint. The amount of functions available in the <code>terra</code> package is similar to typical GIS software.</p>
-<div class="callout callout-style-default callout-important callout-titled" title="Rasters and R workspaces">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Rasters and R workspaces
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Since <code>terra</code> only stores a pointer to the raster data set, this means the actual data set won’t be included if you save your session in an R workspace (.Rdata files). If you really want to include it in your workspace, you can use the <code>wrap()</code> function. Note that this is also needed if you want to pass raster data over a connection that serializes, e.g.&nbsp;to a computer cluster.</p>
-</div>
-</div>
-<p>There is another famous R package to process raster data, the <code>stars</code> package. It is especially useful if you need to work with “irregular” rasters (sheared, curvilinear, etc.) or with complex datacubes. It is also tidyverse-friendly and the syntax is closed to the one used in <code>sf</code>. However the number of available functions is (still) much lower than in <code>terra</code>. If you need to use both packages, it is fortunately easy to convert raster objects from <code>terra</code> to <code>stars</code> (using the function <code>st_as_stars()</code>), and the other way round (using the function <code>rast()</code>).</p>
+</section>
+<section id="raster-data-in-r" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="raster-data-in-r"><span class="header-section-number">3.2</span> Raster data in R</h2>
+<p>We will use the <code>terra</code> package to work with raster data. This package has everything needed to import, analyse, visualize and export raster data sets. Like the <code>sf</code> package, it is also using the GDAL library for the import/export operations, which means it can open almost every raster data format. Unlike the <code>sf</code> package, <code>terra</code> will usually not import the full data sets in memory but only create a pointer to the data and then read smaller blocks of data successively. This allows working with very large rasters with a relatively small memory footprint. We’ve already seen that <code>terra</code> stores vector data inside <code>SpatVector</code> objects, similarly it stores raster data inside objects called <code>SpatRaster</code>. The amount of functions available in the <code>terra</code> package is similar to typical GIS software.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="A bit of history">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -249,8 +281,272 @@ A bit of history
 <p>A revolution happened in 2010 in the small world of R-spatial when the <code>raster</code> package was released. People were able to perform analyses using raster data sets in R instead of using a standard GIS software. The package has been maintained during many years, and many functions were added. However its developer decided to create a new package from scratch in order to improve speed and memory efficiency, the <code>terra</code> package was born. You will often find a lot of R code using the <code>raster</code> package on the web. Fortunately it is quite easy to adapt code written for the <code>raster</code> package to <code>terra</code>. The functions have similar names (sometimes even identical) and everything that was available in <code>raster</code> should also be available in <code>terra</code>. Actually the recent versions of <code>raster</code> even uses <code>terra</code> in the background instead of the original <code>raster</code> code.</p>
 </div>
 </div>
+<p>There is another famous R package to process raster data, the <code>stars</code> package. It is especially useful if you need to work with “irregular” rasters (sheared, curvilinear, etc.) or with complex datacubes. It is also tidyverse-friendly and the syntax is closed to the one used in <code>sf</code>. However the number of available functions is (still) much lower than in <code>terra</code>. If you need to use both packages, it is fortunately easy to convert raster objects from <code>terra</code> to <code>stars</code> (using the function <code>st_as_stars()</code>), and the other way round (using the function <code>rast()</code>).</p>
+</section>
+<section id="structure-of-spatraster-objects" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="structure-of-spatraster-objects"><span class="header-section-number">3.3</span> Structure of <code>SpatRaster</code> objects</h2>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you start from here…
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>Even though we will most often create <code>SpatRaster</code> objects by importing some existing raster data set, it is useful to create one from scratch to better understand how they’re structured. We do this using the <code>rast()</code> function, specifying the desired number of rows and columns, the extent of the raster as well as a coordinate reference system. The next code block creates an empty raster somewhere in Switzerland.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">nrow =</span> <span class="dv">10</span>, <span class="at">ncol =</span> <span class="dv">10</span>, <span class="at">xmin =</span> <span class="dv">2600000</span>, <span class="at">xmax =</span> <span class="dv">2610000</span>, <span class="at">ymin =</span> <span class="dv">1200000</span>, <span class="at">ymax =</span> <span class="dv">1210000</span>, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 10, 10, 1  (nrow, ncol, nlyr)
+resolution  : 1000, 1000  (x, y)
+extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+</div>
+</div>
+<p>Printing a <code>SpatRaster</code> object shows some general information about the raster data set such as dimensions, resolution and extent. Note that the resolution was automatically computed since we provided the dimensions and the extent of the new raster. All the raster geometric properties (number of cells, dimensions, extent, resolution etc.) can also be extracted using specific functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncell</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10 10  1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ext</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>SpatExtent : 2600000, 2610000, 1200000, 1210000 (xmin, xmax, ymin, ymax)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">xmin</span>(r), <span class="fu">xmax</span>(r), <span class="fu">ymin</span>(r), <span class="fu">ymax</span>(r))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2600000 2610000 1200000 1210000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">res</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1000 1000</code></pre>
+</div>
+</div>
+<p>As I mentioned above, <code>terra</code> usually doesn’t import the full data set in memory but only create a pointer to the data stored on your computer. You can extract the reference to the data file using the sources() function. Since we create our raster from scratch, our <code>SpatRaster</code> object is of course not linked to any file and the whole object is stored in memory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sources</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] ""</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inMemory</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>Once we have a <code>SpatRaster</code> object, we can easily modify its geometry. For example we can change its resolution using the <code>res()</code> function and <code>terra</code> will automatically modify the dimensions of the raster.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>rmod1 <span class="ot">&lt;-</span> r</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">res</span>(rmod1) <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>rmod1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 100, 100, 1  (nrow, ncol, nlyr)
+resolution  : 100, 100  (x, y)
+extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+</div>
+</div>
+<p>If the desired resolution is not compatible with the available extent, then <code>terra</code> will also automatically adapt the extent.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">res</span>(rmod1) <span class="ot">&lt;-</span> <span class="dv">900</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>rmod1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 11, 11, 1  (nrow, ncol, nlyr)
+resolution  : 900, 900  (x, y)
+extent      : 2600000, 2609900, 1200000, 1209900  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+</div>
+</div>
+<p>We can also provide two values to the <code>res()</code> function to create rectangular cells…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">res</span>(rmod1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2000</span>, <span class="dv">1000</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>rmod1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 10, 5, 1  (nrow, ncol, nlyr)
+resolution  : 2000, 1000  (x, y)
+extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+</div>
+</div>
+<p>Instead of changing the resolution, we can also modify the dimensions of the raster using the <code>nrow()</code> and <code>ncol()</code> (or <code>dim()</code>) functions. The resolution will be adapted automatically to maintain the defined extent.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>rmod2 <span class="ot">&lt;-</span> r</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(rmod2) <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(rmod2) <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>rmod2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 5, 9, 1  (nrow, ncol, nlyr)
+resolution  : 1111.111, 2000  (x, y)
+extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+</div>
+</div>
+<p>Until now we’ve only had a look on the geometry of <code>SpatRaster</code> objects. The raster objects we’ve created have cells but these are empty, they don’t store any values. We can assign values to a <code>SpatRaster</code> object using the <code>values()</code> function (note that we can use the same function to extract the cell values).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(r) <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fu">ncell</span>(r))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 10, 10, 1  (nrow, ncol, nlyr)
+resolution  : 1000, 1000  (x, y)
+extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+source(s)   : memory
+name        :      lyr.1 
+min value   : 0.01638269 
+max value   : 0.99074772 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="raster_data_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Printing the object now shows some summary information on the values as well. Also note that the values were assigned to the cells using cell order, that is, from the top left cell to the top right and then down by row. To view the cell order of the raster, you can use the <code>cells()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(r, <span class="at">labels =</span> <span class="fu">cells</span>(r), <span class="at">halo =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="raster_data_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you change the number of rows or columns of a raster, you will lose the values associated to the <code>SpatRaster</code> object since the number of cells is changing. This doesn’t happen if you change the extent only. Here’s a quick example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>rmod3 <span class="ot">&lt;-</span> r</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xmax</span>(rmod3) <span class="ot">&lt;-</span> <span class="dv">2620000</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hasValues</span>(rmod3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(rmod3) <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hasValues</span>(rmod3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>If you need to create a multiband raster, you can simply use the <code>c()</code> function to combine several <code>SpatRaster</code> objects into a single one. Note that they need to have the exact same geometric properties. You can use the <code>names()</code> function to change (or extract) the names of the bands.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>r2 <span class="ot">&lt;-</span> r</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>r3 <span class="ot">&lt;-</span> r</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(r2) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncell</span>(r)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(r3) <span class="ot">&lt;-</span> <span class="fu">ncell</span>(r)<span class="sc">:</span><span class="dv">1</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">c</span>(r, r2, r3)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(s) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"band 1"</span>, <span class="st">"band 2"</span>, <span class="st">"band 3"</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 10, 10, 3  (nrow, ncol, nlyr)
+resolution  : 1000, 1000  (x, y)
+extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+source(s)   : memory
+names       :     band 1, band 2, band 3 
+min values  : 0.01638269,      1,      1 
+max values  : 0.99074772,    100,    100 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="raster_data_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you need to extract one or more bands, you can index your <code>SpatRaster</code> objects using double square brackets and the numbers or the names of the desired bands.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>s[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 10, 10, 1  (nrow, ncol, nlyr)
+resolution  : 1000, 1000  (x, y)
+extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+source(s)   : memory
+name        : band 2 
+min value   :      1 
+max value   :    100 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>s[[<span class="st">"band 2"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 10, 10, 1  (nrow, ncol, nlyr)
+resolution  : 1000, 1000  (x, y)
+extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+source(s)   : memory
+name        : band 2 
+min value   :      1 
+max value   :    100 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Rasters and R workspaces">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rasters and R workspaces
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since <code>terra</code> only stores a pointer to the raster data set, this means the actual data set won’t be included if you save your session in an R workspace (.Rdata files). If you really want to include it in your workspace, you can use the <code>wrap()</code> function. Note that this is also needed if you want to pass raster data over a connection that serializes, e.g.&nbsp;to a computer cluster.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise (5 minutes)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise (5 minutes)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Explain the following output, try to change some geometry parameters and add some values to the cells.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rast</span>()</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 180, 360, 1  (nrow, ncol, nlyr)
+resolution  : 1, 1  (x, y)
+extent      : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)
+coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) </code></pre>
+</div>
+</div>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
