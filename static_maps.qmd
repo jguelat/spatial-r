@@ -224,11 +224,8 @@ hillshade <- crop(hillshade, ext(st_union(border, lakes)) + 2000)
 # Mask hillshade
 hillshade <- mask(hillshade, border)
 
-# Simulate 70% opacity
-hillshade <- 255 - 0.7*(255 - hillshade)
-
 # Plot
-plotRGB(hillshade, smooth = TRUE, mar = c(1, 1, 1, 1), axes = FALSE, legend = FALSE, maxcell = Inf)
+plotRGB(hillshade, alpha = 0.7, smooth = TRUE, mar = c(1, 1, 1, 1), axes = FALSE, legend = FALSE, maxcell = Inf)
 plot(st_geometry(border), col = NA, border = rgb(130, 130, 130, maxColorValue = 255), add = TRUE, lwd = 3)
 plot(st_geometry(rivers), col = rgb(69, 138, 230, maxColorValue = 255), add = TRUE, lwd = width_std)
 plot(st_geometry(lakes), col = rgb(162, 197, 243, maxColorValue = 255), border = rgb(69, 138, 230, maxColorValue = 255), add = TRUE)
