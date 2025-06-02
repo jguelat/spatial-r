@@ -313,7 +313,15 @@ We're not limited to vector data, `tmap` can easily plot `SpatRaster` objects (a
 
 ```{r}
 tm_shape(elev) + tm_raster()
+```
+```{r}
+#| eval: false
 tm_shape(elev) + tm_raster(col.scale = tm_scale_continuous())
+```
+```{r}
+#| echo: false
+# Temporary fix for alignment problems with the continuous scale
+tm_shape(elev) + tm_raster(col.scale = tm_scale_continuous(limits = c(451, 930), outliers.trunc = c(451, 930)))
 ```
 
 If you have a large raster, `tmap` will downsample it to gain speed. If you need the full resolution, you can change the `raster.max_cells` option using the `tmap_options()` function (this will stay like this until you close R or change the option again).
