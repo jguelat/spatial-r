@@ -320,7 +320,7 @@ tm_shape(elev) + tm_raster(col.scale = tm_scale_continuous())
 ```
 ```{r}
 #| echo: false
-# Temporary fix for alignment problems with the continuous scale
+# Temporary fix to avoid alignment problems with the continuous scale
 tm_shape(elev) + tm_raster(col.scale = tm_scale_continuous(limits = c(451, 930), outliers.trunc = c(451, 930)))
 ```
 
