@@ -303,13 +303,13 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>terra 1.8.50</code></pre>
+<pre><code>terra 1.8.54</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>elev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
-dimensions  : 604, 840, 1  (nrow, ncol, nlyr)
+size        : 604, 840, 1  (nrow, ncol, nlyr)
 resolution  : 25, 25  (x, y)
 extent      : 2643988, 2664988, 1212913, 1228013  (xmin, xmax, ymin, ymax)
 coord. ref. : CH1903+ / LV95 (EPSG:2056) 
@@ -328,7 +328,7 @@ name        : dem </code></pre>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ortho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
-dimensions  : 1427, 1996, 3  (nrow, ncol, nlyr)
+size        : 1427, 1996, 3  (nrow, ncol, nlyr)
 resolution  : 0.1000104, 0.1000196  (x, y)
 extent      : 2657219, 2657419, 1219699, 1219842  (xmin, xmax, ymin, ymax)
 coord. ref. : CH1903+ / LV95 (EPSG:2056) 
@@ -352,7 +352,7 @@ names       : sempach_ortho_1, sempach_ortho_2, sempach_ortho_3 </code></pre>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>landcover</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
-dimensions  : 151, 210, 1  (nrow, ncol, nlyr)
+size        : 151, 210, 1  (nrow, ncol, nlyr)
 resolution  : 100, 100  (x, y)
 extent      : 2644000, 2665000, 1212900, 1228000  (xmin, xmax, ymin, ymax)
 coord. ref. :  
@@ -436,14 +436,14 @@ Important
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>elev2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
-dimensions  : 604, 840, 2  (nrow, ncol, nlyr)
+size        : 604, 840, 2  (nrow, ncol, nlyr)
 resolution  : 25, 25  (x, y)
 extent      : 2643988, 2664988, 1212913, 1228013  (xmin, xmax, ymin, ymax)
 coord. ref. :  
 source(s)   : memory
 names       : dem,      rand 
-min values  : 425, -4.705051 
-max values  : 930,  4.591977 </code></pre>
+min values  : 425, -4.530961 
+max values  : 930,  4.817472 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev2, <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -703,7 +703,7 @@ If you start from here…
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>elev_resample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
-dimensions  : 151, 210, 1  (nrow, ncol, nlyr)
+size        : 151, 210, 1  (nrow, ncol, nlyr)
 resolution  : 100, 100  (x, y)
 extent      : 2644000, 2665000, 1212900, 1228000  (xmin, xmax, ymin, ymax)
 coord. ref. : CH1903+ / LV95 (EPSG:2056) 
@@ -721,7 +721,7 @@ max value   : 920.8250 </code></pre>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>landcover_resample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
-dimensions  : 604, 840, 1  (nrow, ncol, nlyr)
+size        : 604, 840, 1  (nrow, ncol, nlyr)
 resolution  : 25, 25  (x, y)
 extent      : 2643988, 2664988, 1212913, 1228013  (xmin, xmax, ymin, ymax)
 coord. ref. : CH1903+ / LV95 (EPSG:2056) 
