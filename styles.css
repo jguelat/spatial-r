@@ -1,0 +1,14 @@
+a {
+  text-decoration:none;
+}
+.quarto-title-block .quarto-title-banner {
+  background-image: url(figures/logo.svg);
+  background-size: 200px;
+  background-position: 5%;
+  background-repeat: no-repeat;
+  padding-right: 0px;
+  background-origin: content-box;
+}
+.map-padding {
+  padding: 0 0 2em 0;
+}
