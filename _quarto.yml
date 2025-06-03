@@ -45,4 +45,4 @@ format:
 include-in-header: 
   - text: |
       <style>a {text-decoration:none;}
-      .map-padding { padding: 0 0 2em 0; }</style
+      .map-padding { padding: 0 0 2em 0; }</style>
