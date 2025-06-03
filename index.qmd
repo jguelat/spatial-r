@@ -16,7 +16,7 @@ keywords:
   - Static maps
   - Dynamic maps
 
-title-block-banner: "#2271B1"
+title-block-banner: "#5374a5"
 title-block-banner-color: white
 
 toc: true
