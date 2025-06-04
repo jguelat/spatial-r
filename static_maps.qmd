@@ -99,6 +99,103 @@ plot(st_transform(temp_poly, 4326), col = "grey90", add = TRUE)
 ```
 
 
+## Basemaps
+
+::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
+Run the following code to load and create everything you'll need to run the examples in this section.
+```{r}
+#| eval: false
+library(sf)
+library(terra)
+muni <- st_read("data/geodata.gpkg", "municipalities", quiet = TRUE)
+sempach <- muni[muni$name == "Sempach",]
+obs <- read.csv("data/observations.csv")
+obs <- st_as_sf(obs, coords = c("x", "y"), crs = "EPSG:2056")
+obs_in_sempach <- obs[sempach,]
+```
+:::
+
+To help people understanding your maps, you'll often need to add some kind of basemap such as a topographic map or aerial imagery. If you don't have high quality basemaps at your disposal, you'll need to use some online map provider such as [OpenStreetMap](https://www.openstreetmap.org){target="_blank"}. In this section we will see how to use the `maptiles`[@giraud_maptiles_2025] package to do this.
+
+When you browse an online map, even though everything looks like a single map, you are actually looking at many small tiles stitched together at a specific zoom level. The `get_tiles()` function allows us to download and merge these tiles. To specify the extent you want to download, you can use an `sf` or `sfc` object (`SpatVector` and `SpatRaster` are also working). The `get_tiles()` function will automatically use the bounding box of the object. You also need to specify the desired provider (use the `get_providers()` function to get a list of the available providers). The output will be a `SpatRaster` object with 3 bands (red, green and blue).
+
+```{r}
+library(maptiles)
+
+osm_basemap <- get_tiles(obs_in_sempach, provider = "OpenStreetMap", crop = TRUE)
+plot(osm_basemap)
+```
+
+I recommend using `crop = TRUE` to get a basemap cropped to the bounding box of your object, otherwise you'll get all the tiles that intersect the bounding box. If you need another zoom level, you can easily get it using the `zoom` argument.
+
+```{r}
+osm_basemap <- get_tiles(obs_in_sempach, provider = "OpenStreetMap", crop = TRUE, zoom = 13)
+plot(osm_basemap)
+```
+
+You've probably noticed that the resolution of the basemap is rather low. One reason is that the map is automatically reprojected to the CRS of the object defining the extent. As we saw earlier, reprojecting rasters imply some sort of resampling that will impact the rendering quality. We can solve this using `project = FALSE` inside the `get_tiles()` function. The CRS of the output raster will then be EPSG:3857 (Pseudo-Mercator).
+
+```{r}
+osm_basemap <- get_tiles(obs_in_sempach, provider = "OpenStreetMap", project = FALSE, crop = TRUE)
+plot(osm_basemap)
+```
+
+The quality is slightly better but we're hitting the main problem of most online map providers, the resolution they use is not high enough for creating high quality maps. Fortunately some providers allow downloading tiles with a better resolution, such as all the basemaps provided by Carto and Stadia (note that you'll need an API key to use Stadia).
+
+```{r}
+carto_basemap <- get_tiles(obs_in_sempach, provider = "CartoDB.Voyager", project = FALSE, crop = TRUE)
+plot(carto_basemap)
+```
+
+If you find the colored basemaps too disturbing, you can easily create black and white versions using the following trick. Note that we need to use `plotRGB()` instead of `plot()` because `terra` doesn't properly recognize the RGB bands.
+
+```{r}
+osm_bw = (osm_basemap[[1]] + osm_basemap[[2]] + osm_basemap[[3]])/3
+plotRGB(rast(list(osm_bw, osm_bw, osm_bw)))
+```
+
+If you want to use another provider that is not included in `maptiles`, you can easily create a custom provider using the `create_provider()` function. Then you can use this new provider inside the `get_tiles()` function. Note that the provider has to provide tiles using EPSG:3857 (it will not work with other CRSs). In the next example, we create 3 providers to get maps and imagery from Swisstopo.
+
+```{r}
+# Create a new provider
+swisstopo_grey_prov <- create_provider(
+    name = "swisstopo_grey",
+    url = "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg",
+    citation = "Background map © Swisstopo")
+
+swisstopo_color_prov <- create_provider(
+    name = "swisstopo_color",
+    url = "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg",
+    citation = "Background map © Swisstopo")
+
+swisstopo_ortho_prov <- create_provider(
+    name = "swisstopo_ortho",
+    url = "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg",
+    citation = "Background map © Swisstopo")
+
+swisstopo_grey_basemap <- get_tiles(obs_in_sempach, provider = swisstopo_grey_prov, project = FALSE, crop = TRUE)
+plot(swisstopo_grey_basemap)
+swisstopo_color_basemap <- get_tiles(obs_in_sempach, provider = swisstopo_color_prov, project = FALSE, crop = TRUE)
+plot(swisstopo_color_basemap)
+swisstopo_ortho_basemap <- get_tiles(obs_in_sempach, provider = swisstopo_ortho_prov, project = FALSE, crop = TRUE)
+plot(swisstopo_ortho_basemap)
+```
+
+When using data from Swisstopo downloaded with `maptiles`, you will notice that the grid lines on the topographic maps won't appear as straight perpendicular lines. This is caused by the reprojection of the original maps to EPSG:3857 on the Swisstopo server. The orthophotos also have some strange display artefacts.
+
+We've already seen how to automatically crop the basemaps but sometimes you'll need basemaps with an extent that is slightly bigger than the bounding box of your `sf` object. You can easily do that by using an affine transformation (see @sec-affine_transformations for details). For example let's make the bounding box 10% bigger:
+
+```{r}
+bbox_sfc <- st_as_sfc(st_bbox(obs_in_sempach))
+expanded <- (bbox_sfc - st_centroid(bbox_sfc)) * 1.1 + st_centroid(bbox_sfc)
+st_crs(expanded) <- "EPSG:2056"
+
+swisstopo_grey_basemap <- get_tiles(expanded, provider = swisstopo_grey_prov, project = FALSE, crop = TRUE, zoom = 14)
+plot(swisstopo_grey_basemap)
+points(st_transform(obs_in_sempach, "EPSG:3857"), col = "blue")
+```
+
+
 ## World maps and globes
 
 ::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
@@ -470,6 +567,27 @@ obs$var1 <- runif(nrow(obs), 1, 100)
 tm_shape(obs) + tm_symbols(fill = "var1") + tm_facets_wrap("name")
 tm_shape(obs) + tm_symbols(fill = "var1") + tm_facets_stack("name")
 ```
+
+### Basemaps
+
+Adding a basemap to your map is extremely easy with `tmap` thanks to the `tm_basemap()` function. The `maptiles` package is used in the background to download the tiles. You only need to specify the provider name inside the `tm_basemap()` function, and you can adjust the zoom level with the `zoom` argument. Use the `tmap_providers()` function to get the list of available providers. Note that adding basemaps to static maps will work only with version 4.1 (or newer) of `tmap`.
+
+```{r}
+map <- tm_shape(obs_in_sempach) + tm_dots(size = 0.5, fill = "red")
+map + tm_basemap("OpenStreetMap")
+map + tm_basemap("OpenStreetMap", zoom = 13)
+map + tm_basemap("CartoDB.Voyager")
+```
+
+If you want to use another provider that is not included by default, you can directly use the URL of the tile server inside the `tm_basemap()` function. Note that the provider has to provide tiles using EPSG:3857 (it will not work with other CRSs). In the next example, we create maps combining bird sightings, topographic maps and imagery from Swisstopo.
+
+```{r}
+map + tm_basemap(server = "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg")
+map + tm_basemap(server = "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg")
+map + tm_basemap(server = "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg")
+```
+
+When using data from Swisstopo with `tmap`, you will notice that the grid lines on the topographic maps won't appear as straight perpendicular lines. This is caused by the reprojection of the original maps to EPSG:3857 on the Swisstopo server. The orthophotos also have some strange display artefacts.
 
 ### World maps and globes
 

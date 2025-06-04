@@ -56,6 +56,7 @@ install.packages("leaflet.extras2")
 install.packages("leafpop")
 install.packages("leafsync")
 install.packages("lwgeom")
+install.packages("maptiles")
 install.packages("qgisprocess")
 install.packages("spatstat.random")
 install.packages("spdep")
@@ -71,8 +72,9 @@ Only the big updates are listed here.
 
 | | |
 |------------|------------|
-| 2025-05-20 | Add a section on the structure of `SpatRaster` objects |
-| 2025-05-15 | Add a short introduction about vector data with `terra` |
+| 2025-06-04 | New sections showing how to use basemaps in static maps |
+| 2025-05-20 | New section on the structure of `SpatRaster` objects |
+| 2025-05-15 | Short introduction about vector data with `terra` |
 | 2025-05-08 | The whole content was converted to a Quarto book and is available as a GitHub website: <https://jguelat.github.io/spatial-r>{target="_blank"}. |
 | 2025-02-25 | Update of the `tmap` subsections (static and dynamic maps), compatibility with version 4.x, more explanations and map examples. |
 | 2025-02-07 | Large update of the "Tips and tricks for vectors" and "Dynamic maps" sections, second workshop in Sempach. |

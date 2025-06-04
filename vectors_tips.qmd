@@ -781,7 +781,7 @@ If you use a geographic CRS and `sf_use_s2()` is `TRUE`, a numeric value for the
 :::
 
 
-## Affine transformations
+## Affine transformations {#sec-affine_transformations}
 
 ::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
 Run the following code to load and create everything you'll need to run the examples in this section.
