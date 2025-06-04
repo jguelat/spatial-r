@@ -313,7 +313,7 @@ window.Quarto = {
   <li><a href="#spatial-joins" id="toc-spatial-joins" class="nav-link" data-scroll-target="#spatial-joins"><span class="header-section-number">5.8</span> Spatial joins</a></li>
   <li><a href="#distance-operations" id="toc-distance-operations" class="nav-link" data-scroll-target="#distance-operations"><span class="header-section-number">5.9</span> Distance operations</a></li>
   <li><a href="#buffers" id="toc-buffers" class="nav-link" data-scroll-target="#buffers"><span class="header-section-number">5.10</span> Buffers</a></li>
-  <li><a href="#affine-transformations" id="toc-affine-transformations" class="nav-link" data-scroll-target="#affine-transformations"><span class="header-section-number">5.11</span> Affine transformations</a></li>
+  <li><a href="#sec-affine_transformations" id="toc-sec-affine_transformations" class="nav-link" data-scroll-target="#sec-affine_transformations"><span class="header-section-number">5.11</span> Affine transformations</a></li>
   <li><a href="#combine-geometries" id="toc-combine-geometries" class="nav-link" data-scroll-target="#combine-geometries"><span class="header-section-number">5.12</span> Combine geometries</a>
   <ul class="collapse">
   <li><a href="#merge-geometries" id="toc-merge-geometries" class="nav-link" data-scroll-target="#merge-geometries"><span class="header-section-number">5.12.1</span> Merge geometries</a></li>
@@ -1822,8 +1822,8 @@ Important
 </div>
 </div>
 </section>
-<section id="affine-transformations" class="level2" data-number="5.11">
-<h2 data-number="5.11" class="anchored" data-anchor-id="affine-transformations"><span class="header-section-number">5.11</span> Affine transformations</h2>
+<section id="sec-affine_transformations" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="sec-affine_transformations"><span class="header-section-number">5.11</span> Affine transformations</h2>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2410,7 +2410,7 @@ If you start from here…
 <span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a>temp_dist <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(samples_ssi)</span>
 <span id="cb224-3"><a href="#cb224-3" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(temp_dist[temp_dist <span class="sc">&gt;</span> <span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 66.8801</code></pre>
+<pre><code>[1] 55.48019</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb226"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(sempach), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
 <span id="cb226-2"><a href="#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(samples_ssi), <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
