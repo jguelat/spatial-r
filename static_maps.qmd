@@ -599,11 +599,11 @@ tm_shape(World) + tm_polygons("HPI") +
 tm_title("Happy Planet Index")
 ```
 
-As in the previous section, I recommend using either the Robinson projection, which was designed to be aesthetically pleasing, or the Equal-Earth projection, which has the advantage of having equal areas. The Winkel tripel projection can also be a good choice. With `tmap`, you can use the `tm_crs()` function to define the projection that will be applied to the map. For world maps, you can use the argument `earth_boundary = TRUE` inside the `tm_layout()` function to display the earth boundary (this is only available for a few global projections, such as the ones we're using). We also remove the map frame using `frame = FALSE`.
+As in the previous section, I recommend using either the Robinson projection, which was designed to be aesthetically pleasing, or the Equal-Earth projection, which has the advantage of having equal areas. The Winkel tripel projection can also be a good choice. With `tmap`, you can use the `tm_crs()` function to define the projection that will be applied to the map. For world maps, you can use the argument `earth_boundary = TRUE` inside the `tm_layout()` function to display the earth boundary (this is only available for a few global projections, such as the ones we're using). We also remove the map frame using `frame = FALSE`. There's a bug in the current version of `tmap` (4.1) which causes the earth boundary to be clipped for some CRSs (e.g. Winkel tripel). To solve this, we need to specify manually the extent of the bounding box inside the `tm_shape()` function.
 
 ```{r}
 #| fig-width: 8
-map <- tm_shape(World) + tm_polygons(fill = "HPI") +
+map <- tm_shape(World, bbox = st_bbox()) + tm_polygons(fill = "HPI") +
 tm_title("Happy Planet Index") +
 tm_layout(earth_boundary = TRUE, frame = FALSE)
 
