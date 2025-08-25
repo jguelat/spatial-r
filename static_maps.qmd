@@ -417,7 +417,7 @@ tm_shape(elev) + tm_raster(col.scale = tm_scale_continuous())
 ```
 ```{r}
 #| echo: false
-# Temporary fix to avoid alignment problems with the continuous scale
+# Temporary fix to avoid alignment problems with the continuous scale (tmap 4.1)
 tm_shape(elev) + tm_raster(col.scale = tm_scale_continuous(limits = c(451, 930), outliers.trunc = c(451, 930)))
 ```
 
@@ -539,7 +539,7 @@ tm_style("grey") +
 tm_layout(inner.margins = c(0.05, 0.05, 0.05, 0.3), frame.r = 0)
 ```
 
-In the next example we customize two maps in the same plotting window. We also use the `tm_title()` function to add nicer titles and the `tm_credits()` function to add some copyright information. Note the difference when using lowercase vs. uppercase for the positioning of the map components. We also tell `tmap` to remove the automatic title panels using the `panel.show = FALSE` argument inside the `tm_layout()` function. Lastly, note how we change the colors and the title of the legends for the two maps using `list` objects, and the use of an expression to properly display the units. The `meta.margins` inside `tm_layout()` is needed when using version 4.1 of `tmap`, otherwise the margins are suboptimal (this is a bug that should be corrected in the next version).
+In the next example we customize two maps in the same plotting window. We also use the `tm_title()` function to add nicer titles and the `tm_credits()` function to add some copyright information. Note the difference when using lowercase vs. uppercase for the positioning of the map components. We also tell `tmap` to remove the automatic title panels using the `panel.show = FALSE` argument inside the `tm_layout()` function. Lastly, note how we change the colors and the title of the legends for the two maps using `list` objects, and the use of an expression to properly display the units. The `meta.margins` inside `tm_layout()` is needed when using version 4.1 of `tmap`, otherwise the margins are suboptimal (this is a bug that should be corrected soon).
 
 ```{r}
 tm_shape(muni) + tm_polygons(fill = c("popsize", "area"),
