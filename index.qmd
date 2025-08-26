@@ -54,7 +54,7 @@ Please also update to the latest version of R, otherwise you may get packages th
 ```{r}
 #| echo: false
 #| output: asis
-packages <- c("sf", "terra", "tmap", "mapview", "classInt", "httr2", "leaflet.extras2", "leafpop", "leafsync", "lwgeom", "maptiles", "qgisprocess", "spatstat.random", "spdep", "tmaptools")
+packages <- c("sf", "terra", "tmap", "mapview", "classInt", "cols4all", "httr2", "leaflet.extras2", "leafpop", "leafsync", "lwgeom", "maptiles", "qgisprocess", "spatstat.random", "spdep", "tmaptools")
 
 cat("``` r", paste0('install.packages(','"', packages, '"', ')'), "```", sep = "\n")
 ```
@@ -86,7 +86,6 @@ To create this book, the following R version was used:
 R.version
 ```
 
-
 ```{r}
 #| echo: false
 Rversion <- sapply(R.version, function(x) {x[1]})
@@ -101,13 +100,10 @@ And the following packages:
 
 ```{r}
 #| echo: false
-packages <- c("sf", "terra", "tmap", "mapview", "classInt", "httr2", "leaflet.extras2", "leafpop", "leafsync", "lwgeom", "maptiles", "qgisprocess", "spatstat.random", "spdep", "tmaptools")
 packages <- sort(packages)
-
 versions <- sapply(packages, function(x) {as.character(packageVersion(x))})
 
 packagesData <- data.frame(Package = packages, Version = versions, row.names = NULL)
 #print(packagesData, row.names = FALSE, right = FALSE)
 format_tt(tt(packagesData, width = c(1, 2)), quarto = TRUE) |> style_tt(i = 1:nrow(packagesData), j = 1, monospace = TRUE)
 ```
-
