@@ -410,15 +410,7 @@ We're not limited to vector data, `tmap` can easily plot `SpatRaster` objects (a
 
 ```{r}
 tm_shape(elev) + tm_raster()
-```
-```{r}
-#| eval: false
 tm_shape(elev) + tm_raster(col.scale = tm_scale_continuous())
-```
-```{r}
-#| echo: false
-# Temporary fix to avoid alignment problems with the continuous scale (tmap 4.1)
-tm_shape(elev) + tm_raster(col.scale = tm_scale_continuous(limits = c(451, 930), outliers.trunc = c(451, 930)))
 ```
 
 If you have a large raster, `tmap` will downsample it to gain speed. If you need the full resolution, you can change the `raster.max_cells` option using the `tmap_options()` function (this will stay like this until you close R or change the option again).
@@ -539,7 +531,7 @@ tm_style("grey") +
 tm_layout(inner.margins = c(0.05, 0.05, 0.05, 0.3), frame.r = 0)
 ```
 
-In the next example we customize two maps in the same plotting window. We also use the `tm_title()` function to add nicer titles and the `tm_credits()` function to add some copyright information. Note the difference when using lowercase vs. uppercase for the positioning of the map components. We also tell `tmap` to remove the automatic title panels using the `panel.show = FALSE` argument inside the `tm_layout()` function. Lastly, note how we change the colors and the title of the legends for the two maps using `list` objects, and the use of an expression to properly display the units. The `meta.margins` inside `tm_layout()` is needed when using version 4.1 of `tmap`, otherwise the margins are suboptimal (this is a bug that should be corrected soon).
+In the next example we customize two maps in the same plotting window. We also use the `tm_title()` function to add nicer titles and the `tm_credits()` function to add some copyright information. Note the difference when using lowercase vs. uppercase for the positioning of the map components. We also tell `tmap` to remove the automatic title panels using the `panel.show = FALSE` argument inside the `tm_layout()` function. Lastly, note how we change the colors and the title of the legends for the two maps using `list` objects, and the use of an expression to properly display the units.
 
 ```{r}
 tm_shape(muni) + tm_polygons(fill = c("popsize", "area"),
@@ -547,7 +539,7 @@ tm_shape(muni) + tm_polygons(fill = c("popsize", "area"),
                              fill.legend = list(tm_legend("Population size"), tm_legend(expression("Area [m"^2*"]")))) +
 tm_title(c("Population size", "Area"), size = 1.1, position = c("right", "top")) + 
 tm_credits("Data © swisstopo", position = c("LEFT", "BOTTOM")) +
-tm_layout(panel.show = FALSE, meta.margins = c(0.3, 0, 0, 0))
+tm_layout(panel.show = FALSE)
 ```
 
 Having multiple maps on the same plot can be achieved using the `tmap_arrange()` function. First create your maps and store them in `tmap` objects, then use them with `tmap_arrange()`. This function is especially useful since the usual `par(mfrow)` trick doesn't work with `tmap` objects.
@@ -599,11 +591,11 @@ tm_shape(World) + tm_polygons("HPI") +
 tm_title("Happy Planet Index")
 ```
 
-As in the previous section, I recommend using either the Robinson projection, which was designed to be aesthetically pleasing, or the Equal-Earth projection, which has the advantage of having equal areas. The Winkel tripel projection can also be a good choice. With `tmap`, you can use the `tm_crs()` function to define the projection that will be applied to the map. For world maps, you can use the argument `earth_boundary = TRUE` inside the `tm_layout()` function to display the earth boundary (this is only available for a few global projections, such as the ones we're using). We also remove the map frame using `frame = FALSE`. There's a bug in the current version of `tmap` (4.1) which causes the earth boundary to be clipped for some CRSs (e.g. Winkel tripel). To solve this, we need to specify manually the extent of the bounding box inside the `tm_shape()` function.
+As in the previous section, I recommend using either the Robinson projection, which was designed to be aesthetically pleasing, or the Equal-Earth projection, which has the advantage of having equal areas. The Winkel tripel projection can also be a good choice. With `tmap`, you can use the `tm_crs()` function to define the projection that will be applied to the map. For world maps, you can use the argument `earth_boundary = TRUE` inside the `tm_layout()` function to display the earth boundary (this is only available for a few global projections, such as the ones we're using). We also remove the map frame using `frame = FALSE`.
 
 ```{r}
 #| fig-width: 8
-map <- tm_shape(World, bbox = st_bbox()) + tm_polygons(fill = "HPI") +
+map <- tm_shape(World) + tm_polygons(fill = "HPI") +
 tm_title("Happy Planet Index") +
 tm_layout(earth_boundary = TRUE, frame = FALSE)
 
