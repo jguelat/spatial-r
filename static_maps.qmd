@@ -98,6 +98,7 @@ plot(temp_poly, col = "grey90", add = TRUE)
 plot(st_transform(temp_poly, 4326), col = "grey90", add = TRUE)
 ```
 
+The `plot()` function doesn't understand CRSs. Our initial buffer (using EPSG:2056) will therefore not be placed correctly on the world map (using EPSG:4326). We first need to make sure that all data sets use a common CRS.
 
 ## Basemaps
 
