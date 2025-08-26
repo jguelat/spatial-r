@@ -26,7 +26,7 @@ ortho <- rast("data/sempach_ortho.tif")
 
 # Static maps
 
-Since a few years, it is possible to make really attractive maps using only R. For example, almost of the maps of the Swiss Breeding Bird Atlas 2013-16 were produced in R. Standard GIS software will still provide more advanced cartographic tools but R will be powerful enough for most cases. Moreover you definitely have a big advantage in terms of reproducibility. In this part we will first look at how we can use `sf` and `terra` standard plotting functions to make simple maps. Then we'll use the package `tmap` which provides interesting tools to make more complex maps in a more or less intuitive way.
+Since a few years, it is possible to make really attractive maps using only R. For example, almost all the maps of the Swiss Breeding Bird Atlas 2013-16 were produced in R. Standard GIS software will still provide more advanced cartographic tools but R will be powerful enough for most cases. Moreover you definitely have a big advantage in terms of reproducibility. In this part we will first look at how we can use `sf` and `terra` standard plotting functions to make simple maps. Then we'll use the package `tmap` which provides interesting tools to make more complex maps in a more or less intuitive way.
 
 
 ## Basic maps
