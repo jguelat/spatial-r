@@ -117,6 +117,10 @@ obs_in_sempach <- obs[sempach,]
 
 To help people understanding your maps, you'll often need to add some kind of basemap such as a topographic map or aerial imagery. If you don't have high quality basemaps at your disposal, you'll need to use some online map provider such as [OpenStreetMap](https://www.openstreetmap.org){target="_blank"}. In this section we will see how to use the `maptiles`[@giraud_maptiles_2025] package to do this.
 
+::: callout-important
+Creating a basemap and keeping it up to date is a lot of work! Please do not forget to cite it properly when you use some basemap.
+:::
+
 When you browse an online map, even though everything looks like a single map, you are actually looking at many small tiles stitched together at a specific zoom level. The `get_tiles()` function allows us to download and merge these tiles. To specify the extent you want to download, you can use an `sf` or `sfc` object (`SpatVector` and `SpatRaster` are also working). The `get_tiles()` function will automatically use the bounding box of the object. You also need to specify the desired provider (use the `get_providers()` function to get a list of the available providers). The output will be a `SpatRaster` object with 3 bands (red, green and blue).
 
 ```{r}
@@ -562,7 +566,13 @@ tm_shape(obs) + tm_symbols(fill = "var1") + tm_facets_stack("name")
 
 ### Basemaps
 
-Adding a basemap to your map is extremely easy with `tmap` thanks to the `tm_basemap()` function. The `maptiles` package is used in the background to download the tiles. You only need to specify the provider name inside the `tm_basemap()` function, and you can adjust the zoom level with the `zoom` argument. Use the `tmap_providers()` function to get the list of available providers. Note that adding basemaps to static maps will work only with version 4.1 (or newer) of `tmap`.
+Adding a basemap to your map is extremely easy with `tmap` thanks to the `tm_basemap()` function. The `maptiles` package is used in the background to download the tiles. You only need to specify the provider name inside the `tm_basemap()` function, and you can adjust the zoom level with the `zoom` argument. Use the `tmap_providers()` function to get the list of available providers.
+
+::: callout-important
+Creating a basemap and keeping it up to date is a lot of work! Please do not forget to cite it properly when you use some basemap.
+
+Adding basemaps to static maps will work only with version 4.1 (or newer) of `tmap`.
+:::
 
 ```{r}
 map <- tm_shape(obs_in_sempach) + tm_dots(size = 0.5, fill = "red")
