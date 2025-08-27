@@ -404,8 +404,11 @@ plot(st_geometry(bug_pts), col = rainbow(nrow(bug_pts)), pch = 16, main = "Point
 
 It is of course not possible to convert points directly to polygons, but if you have an `sf` object with points in the right order, you can easily build a linestring. As an example, let's extract the first 10 vertices of the Sempach multipolygon. Once you have an `sf` object with ordered points, you need to group them into a single multipoints geometry using the `st_combine()` function, and then call the `st_cast()` function on this new object.
 
-```{r}
+```{r, echo = -(1:2)}
 #| warning: false
+#| fig.height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 4.1, 4.1, 2.1))
 sempach_pts <- st_cast(muni[muni$name == "Sempach",], to = "POINT")[1:10,]
 sempach_multipts <- st_combine(sempach_pts)
 sempach_line <- st_cast(sempach_multipts, "LINESTRING")
@@ -419,7 +422,10 @@ plot(sempach_line, lwd = 2, col = "navy", main = "Linestring")
 
 If you have a linestring or multilinestring geometry forming a closed ring, you can easily convert it to a polygon. As an example, let's use the outer ring of the Sempach multipolygon.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 4.1, 4.1, 2.1))
 sempach_multiline <- st_cast(muni[muni$name == "Sempach",], to = "MULTILINESTRING")
 sempach_poly <- st_cast(sempach_multiline, to = "POLYGON")
 par(mfrow = c(1, 2))
@@ -663,7 +669,11 @@ abs(d2 - d1)
 
 The distance we're measuring is shown on the following map. Since the earth is not flat, the shortest distance between two points is not a straight line. These shortest distance lines are called great circles.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig-width: 5.5
+#| fig-height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 4, 1, 0))
 gcLine <- st_cast(st_combine(rbind(pt1, pt2)), "LINESTRING")
 gcLine <- st_segmentize(gcLine, 1000)
 
