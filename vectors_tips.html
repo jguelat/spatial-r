@@ -396,7 +396,7 @@ Available layers:
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>muni <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/geodata.gpkg"</span>, <span class="st">"municipalities"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `municipalities' from data source 
-  `C:\Users\jgu\Desktop\Spatial Data Processing with R\data\geodata.gpkg' 
+  `C:\Users\jgu\Desktop\GIS\Spatial Data Processing with R\data\geodata.gpkg' 
   using driver `GPKG'
 Simple feature collection with 7 features and 3 fields
 Geometry type: MULTIPOLYGON
@@ -1104,7 +1104,7 @@ First 10 features:
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vectors_tips_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vectors_tips_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
@@ -1775,7 +1775,7 @@ If you start from here…
 <span id="cb163-4"><a href="#cb163-4" aria-hidden="true" tabindex="-1"></a>line_buff2 <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(line, <span class="dv">400</span>, <span class="at">endCapStyle =</span> <span class="st">"FLAT"</span>)</span>
 <span id="cb163-5"><a href="#cb163-5" aria-hidden="true" tabindex="-1"></a>line_buff3 <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(line, <span class="dv">400</span>, <span class="at">endCapStyle =</span> <span class="st">"SQUARE"</span>)</span>
 <span id="cb163-6"><a href="#cb163-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-7"><a href="#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb163-7"><a href="#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
 <span id="cb163-8"><a href="#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line_buff1, <span class="at">main =</span> <span class="st">"endCapStyle = ROUND"</span>)</span>
 <span id="cb163-9"><a href="#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line, <span class="at">col =</span> <span class="st">"navy"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb163-10"><a href="#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line_buff2, <span class="at">main =</span> <span class="st">"endCapStyle = FLAT"</span>)</span>
@@ -1785,7 +1785,7 @@ If you start from here…
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vectors_tips_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vectors_tips_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -1795,7 +1795,7 @@ If you start from here…
 <div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a>line_singlebuff1 <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(line, <span class="dv">400</span>, <span class="at">singleSide =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb164-2"><a href="#cb164-2" aria-hidden="true" tabindex="-1"></a>line_singlebuff2 <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(line, <span class="sc">-</span><span class="dv">400</span>, <span class="at">singleSide =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb164-3"><a href="#cb164-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb164-4"><a href="#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb164-4"><a href="#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb164-5"><a href="#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line_singlebuff1)</span>
 <span id="cb164-6"><a href="#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line, <span class="at">col =</span> <span class="st">"navy"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb164-7"><a href="#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line_singlebuff2)</span>
@@ -2097,7 +2097,7 @@ Projected CRS: CH1903+ / LV95
 <div class="cell-output cell-output-stderr">
 <pre><code>GEOMETRYCOLLECTION (POLYGON ((7 0, 7 -0.5, 6 -0.5, 5.5 0, 7 0)), LINESTRING (4 0, 3 0), POINT (1 0))</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb193-2"><a href="#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(a, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
 <span id="cb193-3"><a href="#cb193-3" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Intersecting two polygons:"</span>)</span>
 <span id="cb193-4"><a href="#cb193-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(b, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">border =</span> <span class="st">"red"</span>)</span>
@@ -2108,7 +2108,7 @@ Projected CRS: CH1903+ / LV95
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vectors_tips_files/figure-html/unnamed-chunk-77-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vectors_tips_files/figure-html/unnamed-chunk-77-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -2410,7 +2410,7 @@ If you start from here…
 <span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a>temp_dist <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(samples_ssi)</span>
 <span id="cb224-3"><a href="#cb224-3" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(temp_dist[temp_dist <span class="sc">&gt;</span> <span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 53.16701</code></pre>
+<pre><code>[1] 58.07465</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb226"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(sempach), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
 <span id="cb226-2"><a href="#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(samples_ssi), <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2496,7 +2496,7 @@ all geometries</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vectors_tips_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vectors_tips_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -2647,7 +2647,7 @@ Non-symmetric neighbours list</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vectors_tips_files/figure-html/unnamed-chunk-102-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vectors_tips_files/figure-html/unnamed-chunk-102-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -2675,7 +2675,7 @@ neighbour object has 5 sub-graphs</code></pre>
 <div class="sourceCode cell-code" id="cb262"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb262-1"><a href="#cb262-1" aria-hidden="true" tabindex="-1"></a>dnb2 <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(muni_centroids_coords, <span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="dv">1</span> <span class="sc">*</span> dist1nb)</span>
 <span id="cb262-2"><a href="#cb262-2" aria-hidden="true" tabindex="-1"></a>dnb3 <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(muni_centroids_coords, <span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="fl">1.25</span> <span class="sc">*</span> dist1nb)</span>
 <span id="cb262-3"><a href="#cb262-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb262-4"><a href="#cb262-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb262-4"><a href="#cb262-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
 <span id="cb262-5"><a href="#cb262-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
 <span id="cb262-6"><a href="#cb262-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dnb1, muni_centroids_coords, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb262-7"><a href="#cb262-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(muni))</span>
@@ -2685,7 +2685,7 @@ neighbour object has 5 sub-graphs</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vectors_tips_files/figure-html/unnamed-chunk-104-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vectors_tips_files/figure-html/unnamed-chunk-104-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
@@ -2694,14 +2694,14 @@ neighbour object has 5 sub-graphs</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb263"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb263-1"><a href="#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nb2mat</span>(muni_neigh, <span class="at">style =</span> <span class="st">"B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [,1] [,2] [,3] [,4] [,5] [,6] [,7]
-1    0    1    1    0    0    0    0
-2    1    0    1    1    1    0    0
-3    1    1    0    0    1    0    0
-4    0    1    0    0    1    1    1
-5    0    1    1    1    0    1    0
-6    0    0    0    1    1    0    1
-7    0    0    0    1    0    1    0
+<pre><code>  1 2 3 4 5 6 7
+1 0 1 1 0 0 0 0
+2 1 0 1 1 1 0 0
+3 1 1 0 0 1 0 0
+4 0 1 0 0 1 1 1
+5 0 1 1 1 0 1 0
+6 0 0 0 1 1 0 1
+7 0 0 0 1 0 1 0
 attr(,"call")
 nb2mat(neighbours = muni_neigh, style = "B")</code></pre>
 </div>
@@ -2887,7 +2887,7 @@ GEOGCRS["WGS 84",
 </div>
 <p>When we plot that data, we first see that, not surprisingly, the Swiss CRS is not adapted at all for global data, and that the Equal Earth and Robinson projections give a pleasing result. Both of these projections are good choices for world maps.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb277"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<div class="sourceCode cell-code" id="cb277"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb277-2"><a href="#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(World), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
 <span id="cb277-3"><a href="#cb277-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb277-4"><a href="#cb277-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_ch), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
@@ -2899,7 +2899,7 @@ GEOGCRS["WGS 84",
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vectors_tips_files/figure-html/unnamed-chunk-114-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vectors_tips_files/figure-html/unnamed-chunk-114-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>

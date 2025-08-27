@@ -290,7 +290,7 @@ div.csl-indent {
 </header>
 
 
-<p>Since a few years, it is possible to make really attractive maps using only R. For example, almost of the maps of the Swiss Breeding Bird Atlas 2013-16 were produced in R. Standard GIS software will still provide more advanced cartographic tools but R will be powerful enough for most cases. Moreover you definitely have a big advantage in terms of reproducibility. In this part we will first look at how we can use <code>sf</code> and <code>terra</code> standard plotting functions to make simple maps. Then we’ll use the package <code>tmap</code> which provides interesting tools to make more complex maps in a more or less intuitive way.</p>
+<p>Since a few years, it is possible to make really attractive maps using only R. For example, almost all the maps of the Swiss Breeding Bird Atlas 2013-16 were produced in R. Standard GIS software will still provide more advanced cartographic tools but R will be powerful enough for most cases. Moreover you definitely have a big advantage in terms of reproducibility. In this part we will first look at how we can use <code>sf</code> and <code>terra</code> standard plotting functions to make simple maps. Then we’ll use the package <code>tmap</code> which provides interesting tools to make more complex maps in a more or less intuitive way.</p>
 <section id="basic-maps" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="basic-maps"><span class="header-section-number">7.1</span> Basic maps</h2>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
@@ -422,6 +422,7 @@ Exercise (5 minutes)
 </div>
 </div>
 </div>
+<p>The <code>plot()</code> function doesn’t understand CRSs. Our initial buffer (using EPSG:2056) will therefore not be placed correctly on the world map (using EPSG:4326). We first need to make sure that all data sets use a common CRS.</p>
 </section>
 <section id="basemaps" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="basemaps"><span class="header-section-number">7.2</span> Basemaps</h2>
@@ -451,6 +452,19 @@ If you start from here…
 </div>
 </div>
 <p>To help people understanding your maps, you’ll often need to add some kind of basemap such as a topographic map or aerial imagery. If you don’t have high quality basemaps at your disposal, you’ll need to use some online map provider such as <a href="https://www.openstreetmap.org" target="_blank">OpenStreetMap</a>. In this section we will see how to use the <code>maptiles</code><span class="citation" data-cites="giraud_maptiles_2025"><sup><a href="references.html#ref-giraud_maptiles_2025" role="doc-biblioref">1</a></sup></span> package to do this.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Creating a basemap and keeping it up to date is a lot of work! Please do not forget to cite it properly when you use some basemap.</p>
+</div>
+</div>
 <p>When you browse an online map, even though everything looks like a single map, you are actually looking at many small tiles stitched together at a specific zoom level. The <code>get_tiles()</code> function allows us to download and merge these tiles. To specify the extent you want to download, you can use an <code>sf</code> or <code>sfc</code> object (<code>SpatVector</code> and <code>SpatRaster</code> are also working). The <code>get_tiles()</code> function will automatically use the bounding box of the object. You also need to specify the desired provider (use the <code>get_providers()</code> function to get a list of the available providers). The output will be a <code>SpatRaster</code> object with 3 bands (red, green and blue).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maptiles)</span>
@@ -581,7 +595,7 @@ If you start from here…
 <section id="world-maps-and-globes" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="world-maps-and-globes"><span class="header-section-number">7.3</span> World maps and globes</h2>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -590,7 +604,7 @@ If you start from here…
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
@@ -673,7 +687,7 @@ Note
 <section id="exporting-high-quality-maps" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="exporting-high-quality-maps"><span class="header-section-number">7.4</span> Exporting high quality maps</h2>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -682,7 +696,7 @@ If you start from here…
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
@@ -721,7 +735,7 @@ If you start from here…
 <section id="swiss-map-with-hillshade" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="swiss-map-with-hillshade"><span class="header-section-number">7.5</span> Swiss map with hillshade</h2>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -730,7 +744,7 @@ If you start from here…
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
@@ -777,7 +791,7 @@ If you start from here…
 <section id="tmap" class="level2" data-number="7.6">
 <h2 data-number="7.6" class="anchored" data-anchor-id="tmap"><span class="header-section-number">7.6</span> tmap</h2>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -786,7 +800,7 @@ If you start from here…
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
@@ -921,15 +935,11 @@ Important
 </figure>
 </div>
 </div>
-</div>
-<div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(elev) <span class="sc">+</span> <span class="fu">tm_raster</span>(<span class="at">col.scale =</span> <span class="fu">tm_scale_continuous</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-32-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -944,7 +954,7 @@ Important
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -953,7 +963,7 @@ Important
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-35-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-33-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -984,7 +994,7 @@ Tip
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -997,7 +1007,7 @@ Tip
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1009,7 +1019,7 @@ Tip
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1021,7 +1031,7 @@ Tip
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1033,7 +1043,7 @@ Tip
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1045,7 +1055,7 @@ Tip
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1063,7 +1073,7 @@ Tip
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1074,7 +1084,7 @@ Tip
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-44-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-42-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1086,7 +1096,7 @@ Tip
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1114,7 +1124,7 @@ Exercise (5 minutes)
 </section>
 <section id="customizing-layout" class="level3" data-number="7.6.3">
 <h3 data-number="7.6.3" class="anchored" data-anchor-id="customizing-layout"><span class="header-section-number">7.6.3</span> Customizing layout</h3>
-<p>We can include extra objects in our map, such as titles, scale bars or north arrows. Each element has a <code>position</code> argument. In the next example we also include some styling using the <code>tm_style()</code> function. Currently 8 styles are available (have a look at the help file). We finally use the <code>tm_layout()</code> function to increase the right margin and draw a frame with sharp corners. For margins (specified as bottom, left, top, right), the units are relative to the map frame, so 0.05 means 5 percent of the frame height.</p>
+<p>We can include extra objects in our map, such as titles, scale bars or north arrows. Each element has a <code>position</code> argument. In the next example we also include some styling using the <code>tm_style()</code> function. Currently 9 styles are available (plus some old ones from <code>tmap</code> version 3). To list the available styles, run the <code>tmap_style()</code> function. You can also use the <code>tmap_style_catalog()</code> function to create sample maps using all the styles (the maps will be saved as PNG files in your working directory). We finally use the <code>tm_layout()</code> function to increase the right margin and draw a frame with sharp corners. For margins (specified as bottom, left, top, right), the units are relative to the map frame, so 0.05 means 5 percent of the frame height.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(muni) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"popsize"</span>,</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Population size"</span>,</span>
@@ -1128,23 +1138,23 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>In the next example we customize two maps in the same plotting window. We also use the <code>tm_title()</code> function to add nicer titles and the <code>tm_credits()</code> function to add some copyright information. Note the difference when using lowercase vs.&nbsp;uppercase for the positioning of the map components. We also tell <code>tmap</code> to remove the automatic title panels using the <code>panel.show = FALSE</code> argument inside the <code>tm_layout()</code> function. Lastly, note how we change the colors and the title of the legends for the two maps using <code>list</code> objects, and the use of an expression to properly display the units. The <code>meta.margins</code> inside <code>tm_layout()</code> is needed when using version 4.1 of <code>tmap</code>, otherwise the margins are suboptimal (this is a bug that should be corrected in the next version).</p>
+<p>In the next example we customize two maps in the same plotting window. We also use the <code>tm_title()</code> function to add nicer titles and the <code>tm_credits()</code> function to add some copyright information. Note the difference when using lowercase vs.&nbsp;uppercase for the positioning of the map components. We also tell <code>tmap</code> to remove the automatic title panels using the <code>panel.show = FALSE</code> argument inside the <code>tm_layout()</code> function. Lastly, note how we change the colors and the title of the legends for the two maps using <code>list</code> objects, and the use of an expression to properly display the units.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(muni) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"popsize"</span>, <span class="st">"area"</span>),</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">fill.scale =</span> <span class="fu">list</span>(<span class="fu">tm_scale</span>(<span class="at">values =</span> <span class="st">"brewer.reds"</span>), <span class="fu">tm_scale</span>(<span class="at">values =</span> <span class="st">"brewer.blues"</span>)),</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">fill.legend =</span> <span class="fu">list</span>(<span class="fu">tm_legend</span>(<span class="st">"Population size"</span>), <span class="fu">tm_legend</span>(<span class="fu">expression</span>(<span class="st">"Area [m"</span><span class="sc">^</span><span class="dv">2</span><span class="sc">*</span><span class="st">"]"</span>)))) <span class="sc">+</span></span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="fu">c</span>(<span class="st">"Population size"</span>, <span class="st">"Area"</span>), <span class="at">size =</span> <span class="fl">1.1</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"top"</span>)) <span class="sc">+</span> </span>
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_credits</span>(<span class="st">"Data © swisstopo"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"LEFT"</span>, <span class="st">"BOTTOM"</span>)) <span class="sc">+</span></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">panel.show =</span> <span class="cn">FALSE</span>, <span class="at">meta.margins =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">panel.show =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1159,7 +1169,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1171,7 +1181,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1179,7 +1189,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-50-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-48-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1187,14 +1197,28 @@ Exercise (5 minutes)
 </section>
 <section id="basemaps-1" class="level3" data-number="7.6.4">
 <h3 data-number="7.6.4" class="anchored" data-anchor-id="basemaps-1"><span class="header-section-number">7.6.4</span> Basemaps</h3>
-<p>Adding a basemap to your map is extremely easy with <code>tmap</code> thanks to the <code>tm_basemap()</code> function. The <code>maptiles</code> package is used in the background to download the tiles. You only need to specify the provider name inside the <code>tm_basemap()</code> function, and you can adjust the zoom level with the <code>zoom</code> argument. Use the <code>tmap_providers()</code> function to get the list of available providers. Note that adding basemaps to static maps will work only with version 4.1 (or newer) of <code>tmap</code>.</p>
+<p>Adding a basemap to your map is extremely easy with <code>tmap</code> thanks to the <code>tm_basemap()</code> function. The <code>maptiles</code> package is used in the background to download the tiles. You only need to specify the provider name inside the <code>tm_basemap()</code> function, and you can adjust the zoom level with the <code>zoom</code> argument. Use the <code>tmap_providers()</code> function to get the list of available providers.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Creating a basemap and keeping it up to date is a lot of work! Please do not forget to cite it properly when you use some basemap.</p>
+<p>Adding basemaps to static maps will work only with version 4.1 (or newer) of <code>tmap</code>.</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(obs_in_sempach) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"red"</span>)</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="st">"OpenStreetMap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1202,7 +1226,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-51-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-49-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1210,7 +1234,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-51-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-49-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1221,7 +1245,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1229,7 +1253,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-52-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-50-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1237,7 +1261,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-52-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-50-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1253,14 +1277,14 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>As in the previous section, I recommend using either the Robinson projection, which was designed to be aesthetically pleasing, or the Equal-Earth projection, which has the advantage of having equal areas. The Winkel tripel projection can also be a good choice. With <code>tmap</code>, you can use the <code>tm_crs()</code> function to define the projection that will be applied to the map. For world maps, you can use the argument <code>earth_boundary = TRUE</code> inside the <code>tm_layout()</code> function to display the earth boundary (this is only available for a few global projections, such as the ones we’re using). We also remove the map frame using <code>frame = FALSE</code>. There’s a bug in the current version of <code>tmap</code> (4.1) which causes the earth boundary to be clipped for some CRSs (e.g.&nbsp;Winkel tripel). To solve this, we need to specify manually the extent of the bounding box inside the <code>tm_shape()</code> function.</p>
+<p>As in the previous section, I recommend using either the Robinson projection, which was designed to be aesthetically pleasing, or the Equal-Earth projection, which has the advantage of having equal areas. The Winkel tripel projection can also be a good choice. With <code>tmap</code>, you can use the <code>tm_crs()</code> function to define the projection that will be applied to the map. For world maps, you can use the argument <code>earth_boundary = TRUE</code> inside the <code>tm_layout()</code> function to display the earth boundary (this is only available for a few global projections, such as the ones we’re using). We also remove the map frame using <code>frame = FALSE</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(World, <span class="at">bbox =</span> <span class="fu">st_bbox</span>()) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"HPI"</span>) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"HPI"</span>) <span class="sc">+</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="st">"Happy Planet Index"</span>) <span class="sc">+</span></span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">earth_boundary =</span> <span class="cn">TRUE</span>, <span class="at">frame =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1269,7 +1293,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
@@ -1278,7 +1302,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-54-2.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-52-2.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
@@ -1287,7 +1311,7 @@ Exercise (5 minutes)
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-54-3.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-52-3.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
@@ -1315,7 +1339,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
@@ -1334,7 +1358,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
@@ -1353,7 +1377,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1384,7 +1408,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
