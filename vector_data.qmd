@@ -86,7 +86,10 @@ plot(World[World$name == "Australia","well_being"])
 
 Note that the color scale was adapted depending on the available values in the filtered data set. If you only need the geometries without any attributes, then you can use the `st_geometry()` function.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig-height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 0, 0, 0))
 plot(st_geometry(World))
 ```
 
@@ -223,13 +226,9 @@ multipolygon_list <- list(pol1, pol2)
 multipol <- st_multipolygon(multipolygon_list)
 multipol
 ```
-```{r}
-#| eval: false
-plot(multipol, col = "navy")
-```
-```{r}
-#| echo: false
+```{r, echo = -(1:2)}
 #| fig-height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
 par(mar = c(0, 0, 1, 0))
 plot(multipol, col = "navy")
 ```

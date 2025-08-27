@@ -48,7 +48,9 @@ elev <- rast("data/dem.tif")
 
 As we've seen in some previous examples, the basic function to make maps is simply the `plot()` function. Both `sf` and `terra` extend this function to support vector and raster data sets. When we create maps, we usually consider the different data sets as layers that we combine to produce a nice output. This is why we will often use the `add = TRUE` argument in the `plot()` function. Most of the standard arguments provided by the standard `plot()` function (such as `pch`, `lwd`, `cex`, etc.) are also supported for `sf` objects. If you want to see all the additional parameters, you can check the help files (`?sf::plot` and `?terra::plot`). Here's a simple example:
 
-```{r}
+```{r, echo = -(1:2)}
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 0, 1, 0))
 plot(st_geometry(muni), col = "grey90", border = "grey50", lty = 3)
 plot(st_union(muni), col = NA, border = "grey50", lwd = 2, add = TRUE)
 plot(obs["name"], pch = 16, cex = 2, add = TRUE)
@@ -91,7 +93,10 @@ plot(elev, breaks = 15, col = hcl.colors(15))
 
 You need to be extra cautious when using data sets with different CRSs. Let's have a look at this example:
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig-height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 0, 0, 0))
 temp_poly <- st_buffer(soi, 2000000)
 plot(st_geometry(World))
 plot(temp_poly, col = "grey90", add = TRUE)
@@ -215,7 +220,10 @@ library(tmap)
 
 As we've seen before, the default projection that is used to plot data with a geographic CRS is not ideal. The distortions are large (especially near the poles) and the map will appear elongated. If you want to plot world maps, I recommend using either the Robinson projection, which was designed to be aesthetically pleasing, or the Equal-Earth projection, which has the advantage of having equal areas. The Winkel tripel projection can also be a good choice. We need to include a graticule to display the limits of the world map.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig-height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 0, 0, 0))
 grat <- st_geometry(st_graticule(lon = seq(-180, 180, by = 40), lat = seq(-91, 91, by = 30)))
 
 plot(st_transform(st_geometry(World), "ESRI:54030"))
@@ -227,7 +235,10 @@ plot(st_transform(grat, "EPSG:8857"), col = "grey50", add = TRUE)
 
 If you want to plot a 2D globe, you can use the orthographic projection. You can center the globe on one point by modifying the `lat_center` and `lon_center` variables in the following code.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig-height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 0, 1, 0))
 library(s2)
 options(s2_oriented = TRUE) # don't change orientation of the geometries (since the orientation is already correct)
 
@@ -407,8 +418,11 @@ tm_shape(sempach) + tm_polygons() + tm_shape(obs, is.main = TRUE) + tm_dots()
 
 If your spatial objects are using different CRSs, `tmap` will use the CRS of the object inside the first `tm_shape()` function for the map and automatically reproject the data sets used in the following `tm_shape()` functions.
 
-```{r}
+```{r, echo = -(1:2)}
 #| warning: false
+#| fig-height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 0, 0, 0))
 tm_shape(World) + tm_polygons() + tm_shape(st_buffer(soi, 2000000)) + tm_borders(col = "red", lwd = 2)
 ```
 
@@ -598,7 +612,8 @@ When using data from Swisstopo with `tmap`, you will notice that the grid lines 
 The default projection that is used to plot data with a geographic CRS in `tmap` is the same as before. We've seen that it's not ideal since the distortions are large (especially near the poles) and the map will appear elongated.
 
 ```{r}
-#| fig-width: 8
+#| warning: false
+#| fig-width: 9
 tm_shape(World) + tm_polygons("HPI") +
 tm_title("Happy Planet Index")
 ```
@@ -606,7 +621,7 @@ tm_title("Happy Planet Index")
 As in the previous section, I recommend using either the Robinson projection, which was designed to be aesthetically pleasing, or the Equal-Earth projection, which has the advantage of having equal areas. The Winkel tripel projection can also be a good choice. With `tmap`, you can use the `tm_crs()` function to define the projection that will be applied to the map. For world maps, you can use the argument `earth_boundary = TRUE` inside the `tm_layout()` function to display the earth boundary (this is only available for a few global projections, such as the ones we're using). We also remove the map frame using `frame = FALSE`.
 
 ```{r}
-#| fig-width: 8
+#| fig-width: 9
 map <- tm_shape(World) + tm_polygons(fill = "HPI") +
 tm_title("Happy Planet Index") +
 tm_layout(earth_boundary = TRUE, frame = FALSE)
@@ -626,7 +641,7 @@ You probably remember my warning about proj4strings, and that you should not use
 You can also use the `tm_style("natural")` function to specify a style adapted for world maps. Here's an example using the Robinson projection.
 
 ```{r}
-#| fig-width: 8
+#| fig-width: 9
 tm_shape(World) + tm_polygons(fill = "HPI") +
 tm_title("Happy Planet Index") +
 tm_layout(earth_boundary = TRUE, frame = FALSE) +
@@ -637,7 +652,7 @@ tm_crs("ESRI:54030")
 You can easily add graticule lines to your world map. We first need to generate them using the `st_graticule()` function (from the `sf` package). In theory you could use the `tmap` function `tm_graticules()` but unfortunately, depending on the projection, the lines don't go all the way to the poles.
 
 ```{r}
-#| fig-width: 8
+#| fig-width: 9
 grat <- st_graticule(lon = seq(-180, 180, by = 20), lat = seq(-90, 90, by = 30))
 
 tm_shape(World) +
