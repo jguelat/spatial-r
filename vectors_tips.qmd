@@ -258,7 +258,10 @@ You should normally not turn `s2` off. Computing areas and lengths (and distance
 
 Computing the centroid of polygons is another useful operation that is easily computed using the `st_centroid()` function.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 muni_centroid <- st_centroid(muni)
 plot(st_geometry(muni))
 plot(st_geometry(muni_centroid), add = TRUE)
@@ -283,7 +286,10 @@ head(st_coordinates(muni))
 
 Unfortunately geometric computations are not always that easy... Let's have a look at another example. We load another polygon layer and try to compute the area of each polygon.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 0, 1, 0))
 bug <- st_read("data/geodata.gpkg", "wtf", quiet = TRUE)
 plot(bug, col = 1:nrow(bug))
 st_area(bug)
@@ -384,6 +390,7 @@ bug_pts
 In the following figure, each feature has a unique color. It is thus easy to visualize the difference between the MULTI\* types and the other ones.
 
 ```{r}
+#| fig.width: 9
 par(mfrow = c(2, 3))
 plot(st_geometry(bug_multipoly), col = rainbow(nrow(bug_multipoly)), main = "Multipolygons")
 plot(st_geometry(bug_multiline), col = rainbow(nrow(bug_multiline)), main = "Multilines")
@@ -691,7 +698,10 @@ obs <- st_as_sf(obs, coords = c("x", "y"), crs = "EPSG:2056")
 
 Buffering objects is one of the most common operations in GIS. A buffer is a polygon showing the area within a given distance of a spatial object. You can buffer all the existing vector types with the `st_buffer()` function. For the distance, you can either specify a numeric value, or an object of class `units`. If you use a numeric value, the unit will the one of the used CRS (i.e., meters for the Swiss CRS we're using). You can also specify a vector of distances (one distance for each feature).
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 4.1, 4.1, 2.1))
 obs_buff <- st_buffer(obs[c(1, 2, 5),], dist = 80)
 obs_buff_var <- st_buffer(obs[c(1, 2, 5),], dist = c(60, 80, 100))
 par(mfrow = c(1, 2))
@@ -701,14 +711,20 @@ plot(st_geometry(obs_buff_var), col = 2:4, main = "Variable width")
 
 In the GIS world curves are often approximated using small segments, even though curves exists in the Simple Feature standard (but they're often poorly implemented in GIS software). The number of segments used to create the buffers is controlled by the argument `nQuadSegs` (= number of segments per quadrant). You can change this value to create buffers with octagonal shapes. You can also increase the default value if you need better precision.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 obs_buff_oct <- st_buffer(obs[c(1, 2, 5),], dist = 80, nQuadSegs = 2)
 plot(st_geometry(obs_buff_oct), col = 2:4)
 ```
 
 Each feature will get its own buffer, which means that, if they're close enough and/or the distance is large enough, the buffers will overlap but they're still separate features. It is possible to merge overlapping buffers using the `st_union()` function. The function will produce a single multipolygon, that's why we need to transform the output into a polygon to recover the non-overlapping buffers as separate features. Note that you will lose the attributes of the original features with this operation. If you need to recover some of them, you can use a spatial join (but be careful: what do you really want for the merged buffers?).
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 obs_buff_merged <- st_union(obs_buff)
 obs_buff_merged <- st_cast(obs_buff_merged, "POLYGON")
 plot(obs_buff_merged, col = 2:3)
@@ -716,7 +732,10 @@ plot(obs_buff_merged, col = 2:3)
 
 When using polygons, we can also specify negative distances to create "inside" buffers.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 muni_buff <- st_buffer(muni, dist = -500)
 plot(st_geometry(muni))
 plot(st_geometry(muni_buff), col = "navy", add = TRUE)
@@ -724,7 +743,9 @@ plot(st_geometry(muni_buff), col = "navy", add = TRUE)
 
 When buffering lines or polygons, we have three different options to control what will happen at corners: `ROUND`, `BEVEL` and `MITRE`. The default is to use rounded corners but we can easily change that with the `joinStyle` argument. When using the MITRE style, we can control the maximum distance from the original geometry with the `mitreLimit` argument. This is expressed as a ratio of the buffer distance and the default value is 1 (e.g., a value of 2 means that we allow distances up to twice the chosen buffer distance for corners).
 
-```{r}
+```{r, echo = -(1:2)}
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 4, 0))
 pol <- st_as_sfc("POLYGON((2656000 1221000, 2657000 1221000, 2657000 1220000, 2658000 1220000, 2658000 1219000, 2656000 1219000, 2656000 1221000))", crs = "EPSG:2056")
 
 pol_buff1 <- st_buffer(pol, 400, joinStyle = "ROUND")
@@ -745,15 +766,18 @@ plot(pol, col = "navy", add = TRUE)
 
 Similarly when buffering lines that don't form a closed ring, we also have three options to control how line endings are handled: `ROUND`, `FLAT` and `SQUARE`. The default is to use rounded line endings but we can easily change that with the `endCapStyle` argument.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig-width: 8
 #| fig-height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 1, 4, 1))
 line <- st_as_sfc("LINESTRING(2656000 1220000, 2657000 1221000, 2658000 1220000)", crs = "EPSG:2056")
 
 line_buff1 <- st_buffer(line, 400, endCapStyle = "ROUND")
 line_buff2 <- st_buffer(line, 400, endCapStyle = "FLAT")
 line_buff3 <- st_buffer(line, 400, endCapStyle = "SQUARE")
 
-par(mfrow = c(1, 3), mar = c(0, 1, 3, 1))
+par(mfrow = c(1, 3))
 plot(line_buff1, main = "endCapStyle = ROUND")
 plot(line, col = "navy", lwd = 2, add = TRUE)
 plot(line_buff2, main = "endCapStyle = FLAT")
@@ -764,12 +788,14 @@ plot(line, col = "navy", lwd = 2, add = TRUE)
 
 One last interesting possibility with lines consists of buffering only one side of the line features. We can do that by setting the `singleSide` argument to `TRUE`. Positive distance values will buffer the left-hand side (considering the line direction) of the line feature, while negative values will buffer the right-hand side.
 
-```{r}
+```{r, echo = -(1:2)}
 #| fig-height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 1, 0, 1))
 line_singlebuff1 <- st_buffer(line, 400, singleSide = TRUE)
 line_singlebuff2 <- st_buffer(line, -400, singleSide = TRUE)
 
-par(mfrow = c(1, 2), mar = c(0, 1, 3, 1))
+par(mfrow = c(1, 2))
 plot(line_singlebuff1)
 plot(line, col = "navy", lwd = 2, add = TRUE)
 plot(line_singlebuff2)
@@ -810,7 +836,10 @@ st_crs(sempach_sfc_shift) <- st_crs(sempach_sfc)
 
 We can also scale the geometries, but we need a reference point (such as the centroid) for each feature. Once we have these reference points, we can center the geometries by shifting them, apply the scaling, and shift them back to their original locations.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 muni_sfc <- st_geometry(muni)
 muni_sfc_centroids <- st_centroid(muni_sfc)
 muni_sfc_scale <- (muni_sfc - muni_sfc_centroids) * 0.5 + muni_sfc_centroids
@@ -830,7 +859,10 @@ $$R=
 
 We can of course combine different transformations, such as scaling and rotation...
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 2, 1, 2))
 rotation <- function(theta){
   theta_rad <- theta * pi / 180
   matrix(c(cos(theta_rad), sin(theta_rad), -sin(theta_rad), cos(theta_rad)), nrow = 2, ncol = 2)
@@ -882,7 +914,10 @@ When you combine geometries from different data sets, you need to be sure that t
 
 As we've seen earlier, we can use the `st_union()` function with a single data set to merge its geometries. All polygons with common borders will be merged together. If you have line geometries, the function will merge all the lines that are touching or intersecting.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 muni_merged <- st_union(muni)
 muni_merged
 plot(muni_merged, col = "navy")
@@ -890,7 +925,10 @@ plot(muni_merged, col = "navy")
 
 If you use the `st_union()` function on a polygon data set where some geometries don't have common borders, you'll get a single multipolygon geometry as output. You can easily disaggregate the parts using the `st_cast()` function. This operation is sometimes called "exploding" a multipart geometry.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 muni_merged <- st_union(muni[c(1, 2, 6, 7),])
 muni_merged
 muni_merged_exploded <- st_cast(muni_merged, "POLYGON")
@@ -900,7 +938,10 @@ plot(muni_merged_exploded, col = 2:3)
 
 The `st_union()` function can also be used to merge geometries between two `sf` objects having the same vector type.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 temp_poly <- st_geometry(st_buffer(obs[1,], 2000))
 plot(st_union(temp_poly, sempach))
 ```
@@ -924,7 +965,10 @@ st_cast(st_union(pts_sf), "POINT")
 
 Computing the intersection of geometries is another common GIS operation. For example, let's calculate the intersection between the new polygon we've just created and the municipality of Sempach.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 muni_inter <- st_intersection(sempach, temp_poly)
 muni_inter
 plot(st_geometry(muni_inter))
@@ -934,13 +978,16 @@ The returned object has the same class as that of the first argument. If you int
 
 In a perfect world you'll get polygons as output when you combine polygon (or multipolygon) objects with one of these functions. However, you may also get something more exotic. Let's have a look at the following example which comes from one of the `sf` vignettes.
 
-```{r}
-#| fig-height: 3
+```{r, echo = -(1:2)}
+#| fig.width: 8
+#| fig.height: 2
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 1, 4, 1))
 a <- st_polygon(list(cbind(c(0, 0, 7.5, 7.5, 0), c(0, -1, -1, 0, 0))))
 b <- st_polygon(list(cbind(c(0, 1, 2, 3, 4, 5, 6, 7, 7, 0), c(1, 0, 0.5, 0, 0, 0.5, -0.5, -0.5, 1, 1))))
 (inter <- st_intersection(a, b))
 
-par(mfrow = c(1, 2), mar = c(0, 1, 3, 1))
+par(mfrow = c(1, 2))
 plot(a, ylim = c(-1, 1))
 title("Intersecting two polygons:")
 plot(b, add = TRUE, border = "red")
@@ -982,7 +1029,10 @@ plot(temp_inter[4], col = "blue", add = TRUE)
 
 The `st_difference()` function allows you to erase some parts of a geometry using another geometry (the intersection will be removed from the first one). As an example, let's create a hole in the Sempach municipality using another polygon:
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 temp_poly <- st_geometry(st_buffer(obs[1,], 200))
 sempach_hole <- st_difference(sempach, temp_poly)
 plot(st_geometry(sempach_hole), col = "navy")
@@ -990,7 +1040,10 @@ plot(st_geometry(sempach_hole), col = "navy")
 
 The results of this function can get extremely confusing if there are multiple overlaps since `st_difference()` (and `st_sym_difference()`) will perform the difference operation on each pair of features (note that this isn't a problem with the `st_intersection()` function). Let's have a look at the following example:
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(2, 0, 2, 0))
 obj1 <- st_as_sfc(c("POLYGON((-180 -20, -140 55, -50 0, -140 -60, -180 -20))", "POLYGON((-10 0, 140 60, 160 0, 140 -55, -10 0))"))
 obj2 <- st_as_sfc("POLYGON((-125 0, 0 60, 40 5, 15 -45, -125 0))")
 
@@ -1000,7 +1053,10 @@ plot(obj2, col = rgb(0, 1, 0, 0.4), add = TRUE)
 
 Our goal now is to remove the intersecting areas of the two `sfc` objects from the second object (in green). Most people would expect the following code to perform the appropriate task.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(2, 0, 2, 0))
 diff1 <- st_difference(obj2, obj1)
 diff1
 par(mfrow = c(1, 2))
@@ -1010,7 +1066,10 @@ plot(diff1[2,], col = "navy")
 
 However, because the `st_difference()` function is working on each pair of features, we get something that might look a bit strange. The function first computed the difference between `obj2` and the first feature of `obj1`, and then the difference between `obj2` and the second feature of `obj1`. We thus get two features instead of a single one where all intersecting areas were removed. If you have large data sets with a lot of overlaps, the number of output features will explode. To achieve what we want, we first need to group the features in `obj1` in a single feature using the `st_combine()` function.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(2, 0, 2, 0))
 diff2 <- st_difference(obj2, st_combine(obj1))
 diff2
 plot(diff2, col = "navy")
@@ -1102,7 +1161,10 @@ sempach <- muni[muni$name == "Sempach",]
 
 If you need to generate points inside a polygon according to some sampling design, you'll need the `st_sample()` function. Have a look at the help file to see all the sampling types available. In the next example we sample 100 points in Sempach based on two different designs: random and regular. Note that the final number of points can be slightly different when using a regular sampling.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 2, 1, 2))
 samples_random <- st_sample(sempach, 100, type = "random")
 samples_regular <- st_sample(sempach, 100, type = "regular")
 
@@ -1115,7 +1177,10 @@ plot(samples_regular, pch = 16, cex = 0.5, add = TRUE)
 
 If you need more sampling methods, you can also use the ones provided by the `spatstat.random` package (you'll need to install it first). The next example shows how to use a simple sequential inhibition process (SSI) to sample 100 random points that are at least 50 meters apart. You can easily check that the constraint was applied by using the `st_distance()` function.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 samples_ssi <- st_sample(sempach, r = 50, n = 100, type = "SSI")
 temp_dist <- st_distance(samples_ssi)
 min(temp_dist[temp_dist > 0])
@@ -1139,7 +1204,10 @@ obs <- st_as_sf(obs, coords = c("x", "y"), crs = "EPSG:2056")
 
 Sometimes you'll need to use a polygon enclosing all your geometries. This is for example often used as a crude way to estimate an animal home range based on its sightings. Convex hulls are often called minimum convex polygons (MCP) in the ecological literature. Here we extract all the White Wagtail sightings in Neuenkirch and compute the respective minimum convex polygon. Note that we need to group the sightings into a single multipolygon using the `st_union()` or `st_combine()` function first. Otherwise we'll get a separate convex hull for each point (and that's rather useless since the convex hull of a single point is also a point).
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 3
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 obs_wagtail <- obs[obs$name == "White Wagtail",]
 obs_wagtail_neuenkirch <- obs_wagtail[muni[muni$name == "Neuenkirch",],]
 conv_hull <- st_convex_hull(st_combine(obs_wagtail_neuenkirch))
@@ -1149,7 +1217,10 @@ plot(st_geometry(obs_wagtail_neuenkirch), pch = 16, add = TRUE)
 
 If you want to compute separate convex hull for groups of points (based on some grouping factor such as individual identity), you need to use the `aggregate()` function. Let's imagine we need separate convex hulls for the White Wagtail sightings in Sursee, Schenkon and Oberkirch. We first need to compute a spatial join to know the municipality of all the points, then we can aggregate and compute the three convex hulls.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 obs_wagtail <- st_intersection(obs_wagtail, muni[muni$name %in% c("Sursee", "Oberkirch", "Schenkon"),])
 
 obs_wagtail_agg <- aggregate(obs_wagtail, list(obs_wagtail$name.1), FUN = length)
@@ -1163,7 +1234,11 @@ If you're computing home ranges and need a minimum convex polygon enclosing only
 
 Concave hulls (also known as alpha-shapes) are more flexible than convex hulls since the enclosing polygon can be, as the name suggests, concave and have holes. The concavity is controlled by the `ratio` argument: a value of 0 returns a maximally concave hull while a value of 1 returns a convex hull. Holes are controlled by the `allow_holes` argument.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.width: 8
+#| fig.height: 2
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 2, 0, 2))
 conc_hull1 <- st_concave_hull(st_combine(obs_wagtail_neuenkirch), ratio = 0)
 conc_hull2 <- st_concave_hull(st_combine(obs_wagtail_neuenkirch), ratio = 0.5)
 
@@ -1210,7 +1285,10 @@ st_touches(muni)
 
 The `spdep` package provides plotting functions to visualize the neighbor lists. When working with polygons, we need to provide the coordinates of the centroids to the `plot()` function.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 0, 1, 0))
 muni_centroids_coords <- st_coordinates(st_centroid(muni))
 plot(st_geometry(muni))
 plot(muni_neigh, muni_centroids_coords, add = TRUE)
@@ -1229,7 +1307,11 @@ is.symmetric.nb(muni_knb2)
 
 The resulting neighbor list will often be asymmetric. For example the two closest neighbors from municipality 1 (Neuenkirch) are municipalities 2 (Nottwil) and 3 (Sempach). However the two closest neighbors of municipality 2 are municipalities 4 and 5. Hence the link between municipalities 1 and 2 is asymmetric. We can use the `make.sym.nb()` function to make everything symmetric, but after applying this function we will have some municipalities with more than two neighbors. Let's have a look at the plot of the two computed neighborhoods (symmetric and asymmetric).
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.width: 8
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 2, 1, 2))
 par(mfrow = c(1, 2))
 plot(st_geometry(muni))
 plot(muni_knb, muni_centroids_coords, pch = 16, col = "blue", arrows = TRUE, add = TRUE)
@@ -1247,12 +1329,16 @@ distances <- unlist(nbdists(muni_knb3, muni_centroids_coords))
 
 The `dnearneigh()` function is similar to the `knearneigh` function. It computes a list of all the neighbors within a specific distance. Similarly, the `dnearneigh()` function only accepts point geometries so we need to work with the centroids. Using this function we can also check that our computed minimum distance to have at least one neighbor is correct.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.width: 9
+#| fig.height: 4
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 1, 1, 1))
 dnb1 <- dnearneigh(muni_centroids_coords, d1 = 0, d2 = 0.75 * dist1nb)
 dnb2 <- dnearneigh(muni_centroids_coords, d1 = 0, d2 = 1 * dist1nb)
 dnb3 <- dnearneigh(muni_centroids_coords, d1 = 0, d2 = 1.25 * dist1nb)
 
-par(mfrow = c(1, 3), mar = c(1, 1, 1, 1))
+par(mfrow = c(1, 3))
 plot(st_geometry(muni))
 plot(dnb1, muni_centroids_coords, pch = 16, col = "blue", add = TRUE)
 plot(st_geometry(muni))
@@ -1378,9 +1464,12 @@ grat_rob <- st_transform(grat, "ESRI:54030")
 
 When we plot that data, we first see that, not surprisingly, the Swiss CRS is not adapted at all for global data, and that the Equal Earth and Robinson projections give a pleasing result. Both of these projections are good choices for world maps.
 
-```{r}
+```{r, echo = -(1:2)}
+#| fig.width: 9
 #| fig-asp: 1
-par(mfrow = c(2, 2), mar = c(1, 1, 1, 1))
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(1, 2, 1, 2))
+par(mfrow = c(2, 2))
 plot(st_geometry(World), col = "grey90")
 plot(st_geometry(grat), col = "lightgrey", add = TRUE)
 plot(st_geometry(world_ch), col = "grey90")
