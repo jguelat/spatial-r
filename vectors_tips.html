@@ -1632,7 +1632,7 @@ If you start from here…
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vectors_tips_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vectors_tips_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="528"></p>
 </figure>
 </div>
 </div>
@@ -1795,15 +1795,17 @@ If you start from here…
 <div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a>line_singlebuff1 <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(line, <span class="dv">400</span>, <span class="at">singleSide =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb164-2"><a href="#cb164-2" aria-hidden="true" tabindex="-1"></a>line_singlebuff2 <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(line, <span class="sc">-</span><span class="dv">400</span>, <span class="at">singleSide =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb164-3"><a href="#cb164-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb164-4"><a href="#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb164-5"><a href="#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line_singlebuff1)</span>
-<span id="cb164-6"><a href="#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line, <span class="at">col =</span> <span class="st">"navy"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb164-7"><a href="#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line_singlebuff2)</span>
-<span id="cb164-8"><a href="#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line, <span class="at">col =</span> <span class="st">"navy"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb164-4"><a href="#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb164-5"><a href="#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line, <span class="at">col =</span> <span class="st">"navy"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">"Line direction"</span>)</span>
+<span id="cb164-6"><a href="#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fu">st_coordinates</span>(line)[<span class="dv">2</span>,<span class="dv">1</span>], <span class="fu">st_coordinates</span>(line)[<span class="dv">2</span>,<span class="dv">2</span>], <span class="fu">st_coordinates</span>(line)[<span class="dv">3</span>,<span class="dv">1</span>], <span class="fu">st_coordinates</span>(line)[<span class="dv">3</span>,<span class="dv">2</span>], <span class="at">length =</span> <span class="fl">0.15</span>, <span class="at">col =</span> <span class="st">"navy"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb164-7"><a href="#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line_singlebuff1, <span class="at">main =</span> <span class="st">"Left-sided"</span>)</span>
+<span id="cb164-8"><a href="#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line, <span class="at">col =</span> <span class="st">"navy"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb164-9"><a href="#cb164-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line_singlebuff2, <span class="at">main =</span> <span class="st">"Right-sided"</span>)</span>
+<span id="cb164-10"><a href="#cb164-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(line, <span class="at">col =</span> <span class="st">"navy"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vectors_tips_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vectors_tips_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -2410,7 +2412,7 @@ If you start from here…
 <span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a>temp_dist <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(samples_ssi)</span>
 <span id="cb224-3"><a href="#cb224-3" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(temp_dist[temp_dist <span class="sc">&gt;</span> <span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 58.07465</code></pre>
+<pre><code>[1] 69.27649</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb226"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(sempach), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
 <span id="cb226-2"><a href="#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(samples_ssi), <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
