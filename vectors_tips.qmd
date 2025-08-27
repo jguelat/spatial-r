@@ -799,17 +799,21 @@ plot(line, col = "navy", lwd = 2, add = TRUE)
 One last interesting possibility with lines consists of buffering only one side of the line features. We can do that by setting the `singleSide` argument to `TRUE`. Positive distance values will buffer the left-hand side (considering the line direction) of the line feature, while negative values will buffer the right-hand side.
 
 ```{r, echo = -(1:2)}
+#| fig-width: 8
 #| fig-height: 3
 # Optimize margins for Quarto HTML rendering (hidden in the HTML output)
-par(mar = c(0, 1, 0, 1))
+par(mar = c(0, 1, 4, 1))
 line_singlebuff1 <- st_buffer(line, 400, singleSide = TRUE)
 line_singlebuff2 <- st_buffer(line, -400, singleSide = TRUE)
 
-par(mfrow = c(1, 2))
-plot(line_singlebuff1)
+par(mfrow = c(1, 3))
+plot(line, col = "navy", lwd = 2, main = "Line direction")
+arrows(st_coordinates(line)[2,1], st_coordinates(line)[2,2], st_coordinates(line)[3,1], st_coordinates(line)[3,2], length = 0.15, col = "navy", lwd = 2)
+plot(line_singlebuff1, main = "Left-sided")
 plot(line, col = "navy", lwd = 2, add = TRUE)
-plot(line_singlebuff2)
+plot(line_singlebuff2, main = "Right-sided")
 plot(line, col = "navy", lwd = 2, add = TRUE)
+
 ```
 
 ::: callout-important
