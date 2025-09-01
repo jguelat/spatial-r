@@ -56,18 +56,18 @@ mapviewOptions(fgb = FALSE)
 
 ### Simple maps
 
-The main function used to create maps is simply called `mapview()`. It will accept any `sf` or `sfc` object.
+The main function used to create maps is simply called `mapview()`. It will accept any `sf` or `sfc` object. When mapping an `sf` object, you can easily check the related attributes by clicking on the features.
 
 ```{r}
 #| classes: map-padding
 mapview(muni)
 ```
 
-If you don't like the default color, you can change it using the `color.regions` argument. It is also possible to specify the name of an attribute that will be shown on mouseover using the `label` argument. Here we will use the name of the municipalities.
+If you don't like the default color, you can change it using the `color.regions` argument. It is also possible to specify the name of an attribute that will be shown on mouseover using the `label` argument. Here we will use the name of the municipalities. We also change the name of the data set that is shown on the map using the `layer.name` argument.
 
 ```{r}
 #| classes: map-padding
-mapview(muni, col.regions = "purple", label = "name")
+mapview(muni, col.regions = "purple", label = "name", layer.name = "Municipalities")
 ```
 
 You can also easily plot multiple data sets using a list or by adding `mapview` objects together. Note how it's possible to show/hide layers in the map.
@@ -92,11 +92,11 @@ If you use a list to combine several data sets, you can easily customize some ar
 mapview(list(muni, obs), legend = list(FALSE, TRUE), homebutton = list(TRUE, FALSE))
 ```
 
-If you want to produce a map for a specific data set but use the extent of another data set, you can use the `hide = TRUE` argument for the data set defining the extent. Note that there is a bug in the current version of `mapview` for Windows. If, like in the next example, you use square brackets to extract only specific features, you'll need to use the `layer.name` argument as well.
+If you want to produce a map for a specific data set but use the extent of another data set, you can use the `hide = TRUE` argument for the data set defining the extent. Note that the hidden layer will still be available in the layer list.
 
 ```{r}
 #| classes: map-padding
-mapview(muni[muni$name == "Sursee",], layer.name = "Sursee") + mapview(muni, hide = TRUE)
+mapview(muni[muni$name == "Sursee",]) + mapview(muni, hide = TRUE)
 ```
 
 For data exploration, it can sometimes be useful to "explode" a data set by columns. This is possible thanks to the `burst` argument. The result will be a map with one layer per attribute.
