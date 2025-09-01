@@ -96,7 +96,7 @@ format_tt(tt(Rversion, width = c(1, 2)), quarto = TRUE)
 ```
 \
 
-And the following packages:
+And the following packages (the dependencies are not listed):
 
 ```{r}
 #| echo: false
