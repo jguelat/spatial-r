@@ -639,12 +639,18 @@ map3 <- tm_shape(muni) + tm_polygons(fill = "popsize", fill.legend = tm_legend(p
 tmap_arrange(map1, map2, map3, nrow = 1)
 ```
 
-If you need multiple maps with a common legend, you should use the functions `tm_facets_wrap()` or `tm_facets_stack()`, depending on the layout you want. The function `tm_facets()` will decide which one to use automatically based on your data. Facets can even be defined for two or three dimensions using the `tm_facets_grid()` function. In the next example we first generate a fake continuous attribute and then automatically create separate maps for each bird species, using the new attribute for the legend.
+If you need multiple maps with a common legend, you should use the functions `tm_facets_wrap()` or `tm_facets_stack()`, depending on the layout you want. The function `tm_facets()` will decide which one to use automatically based on your data. In the next example we first generate a fake continuous attribute and then automatically create separate maps for each bird species, using the new attribute for the legend.
 
 ```{r}
 obs$var1 <- runif(nrow(obs), 1, 100)
 tm_shape(obs) + tm_symbols(fill = "var1") + tm_facets_wrap("name")
 tm_shape(obs) + tm_symbols(fill = "var1") + tm_facets_stack("name")
+```
+
+Facets can even be defined for two or three dimensions using the `tm_facets_grid()` function. Here's how we can use it to create individual maps for two different variables and for each municipality.
+
+```{r}
+tm_shape(muni) + tm_polygons(fill = c("popsize", "area")) + tm_facets_grid(columns = "name")
 ```
 
 ### Basemaps
