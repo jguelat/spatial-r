@@ -68,6 +68,7 @@ Only the big updates are listed here.
 
 | | |
 |------------|------------|
+| 2025-09-22 | Update of the basic maps subsection, more explanations and examples |
 | 2025-06-04 | New sections showing how to use basemaps in static maps |
 | 2025-05-20 | New section on the structure of `SpatRaster` objects |
 | 2025-05-15 | Short introduction about vector data with `terra` |

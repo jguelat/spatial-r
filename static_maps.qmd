@@ -26,7 +26,7 @@ ortho <- rast("data/sempach_ortho.tif")
 
 # Static maps
 
-Since a few years, it is possible to make really attractive maps using only R. For example, almost all the maps of the Swiss Breeding Bird Atlas 2013-16 were produced in R. Standard GIS software will still provide more advanced cartographic tools but R will be powerful enough for most cases. Moreover you definitely have a big advantage in terms of reproducibility. In this part we will first look at how we can use `sf` and `terra` standard plotting functions to make simple maps. Then we'll use the package `tmap` which provides interesting tools to make more complex maps in a more or less intuitive way.
+Since a few years, it is possible to make really attractive maps using only R. For example, almost all the maps of the Swiss Breeding Bird Atlas 2013-16 were produced in R. Standard GIS software will obviously provide more advanced cartographic tools, such as advanced labeling and masking. Nonetheless R is good enough for most cases. Moreover you definitely have a big advantage in terms of reproducibility. In this part we will first look at how we can use `sf` and `terra` standard plotting functions to make simple maps. Then we'll use the `tmap` package which massively simplify the creation of maps and also provides interesting tools to produce complex layouts.
 
 
 ## Basic maps
@@ -46,32 +46,62 @@ elev <- rast("data/dem.tif")
 ```
 :::
 
-As we've seen in some previous examples, the basic function to make maps is simply the `plot()` function. Both `sf` and `terra` extend this function to support vector and raster data sets. When we create maps, we usually consider the different data sets as layers that we combine to produce a nice output. This is why we will often use the `add = TRUE` argument in the `plot()` function. Most of the standard arguments provided by the standard `plot()` function (such as `pch`, `lwd`, `cex`, etc.) are also supported for `sf` objects. If you want to see all the additional parameters, you can check the help files (`?sf::plot` and `?terra::plot`). Here's a simple example:
+As we've seen in some previous examples, the most basic way to make maps is simply to use the `plot()` function. Both `sf` and `terra` extend this function to support vector and raster data sets. Most of the standard arguments provided by the standard `plot()` function (such as `main`, `pch`, `lwd`, `cex`, etc.) are also supported. If you want to see all the additional parameters, you can check the help files (`?sf::plot` and `?terra::plot`).
+
+To plot `sfc` objects, we simply pass the object to the `plot()` function. To plot a specific attribute of an `sf` object, we need to add the name of the attribute inside square brackets. Here's a simple example:
 
 ```{r, echo = -(1:2)}
 # Optimize margins for Quarto HTML rendering (hidden in the HTML output)
 par(mar = c(0, 0, 1, 0))
-plot(st_geometry(muni), col = "grey90", border = "grey50", lty = 3)
-plot(st_union(muni), col = NA, border = "grey50", lwd = 2, add = TRUE)
-plot(obs["name"], pch = 16, cex = 2, add = TRUE)
+muni_sfc <- st_geometry(muni)
+plot(muni_sfc)
+plot(muni["name"], lwd = 2, main = "Municipalities")
 ```
 
-::: {.callout-note icon="false" title="Exercise (5 minutes)"}
-Try a few options, try to change some colors, add some of the streets.
-:::
+We can also plot several attributes simultaneously, but this will unfortunately remove the legend and we can't use the `main` argument to add a global title. If you don't specify any attribute, the first 10 will be plotted. Note that `sf` uses by default different color palettes for categorical and continuous variables.
 
-When we have polygons with some continuous attribute, we can create what is called a choropleth map. These maps are often used to represent spatially variables like population densities or per-capita income.
+```{r}
+#| fig-height: 4
+plot(muni[c("name", "popsize")], lwd = 2)
+```
+
+Maps of polygons with some continuous attribute are called choropleth maps. These maps are often used to represent spatially variables such as population densities or per capita income. The number of breaks and the algorithm used to compute these breaks have a huge influence on the output map. Choose these settings carefully and be aware that they can dramatically change the interpretation of a map.
+
+Let's have a look at the population size of all the cantons in Switzerland:
 
 ```{r}
 cantons <- st_read("data/geodata.gpkg", "cantons", quiet = TRUE)
-par(mfrow = c(1, 3))
 plot(cantons["popsize"])
-plot(cantons["popsize"], nbreaks = 15)
-plot(cantons["popsize"], breaks = "quantile")
+```
+
+If, like me, you're not a big fan of the default colors used by `sf`, you can change the color palette thanks to the `pal` argument. You can use all the palettes available in R. You should especially have a look at the `RColorBrewer` and `viridis` packages. These were designed by color specialists and are highly recommended. For `RColorBrewer` you can visualize the existing color palettes on the following website: <https://colorbrewer2.org>{target="_blank"}. Note that some ColorBrewer and Viridis palettes are already included in the `hcl.colors()` color palette function (to see the full list, use `hcl.pals()`).
+
+Guessing the number of colors you'll need to use inside the color palette function can be a bit tricky (or at least I haven't found a consistent way to make things easier). By default `sf` will create 10 evenly distributed breaks (using the `pretty` algorithm) and you'll thus need 9 colors, but depending on the data and the chosen algorithm, this number can be different. If you're not sure, just create a plot using the default colors and count the number of unique colors.
+
+```{r}
+plot(cantons["popsize"], pal = hcl.colors(8, "Blues", rev = TRUE))
+```
+
+We can easily change the number of breaks using the `nbreaks` argument. Let's reduce the number of breaks to see if this improves our map.
+
+```{r}
+plot(cantons["popsize"], nbreaks = 5, pal = hcl.colors(4, "Blues", rev = TRUE))
+```
+
+Sometimes it's better to use another algorithm to define the breaks, we can change this setting using the `breaks` argument. For example the quantile algorithm will ensure that each class has the same number of features (careful, these maps can often be misleading).
+
+```{r}
+plot(cantons["popsize"], nbreaks = 5, breaks = "quantile", pal = hcl.colors(5, "Blues", rev = TRUE))
+```
+
+Of course it's also possible to define our own breaks by passing a numeric vector with the actual breaks to the `breaks` argument. Don't forget to also use the `at` argument in order to have a matching legend.
+
+```{r}
+plot(cantons["popsize"], breaks = c(min(cantons$popsize), 200000, 500000, 1000000, max(cantons$popsize)), at = c(200000, 500000, 1000000), pal = hcl.colors(4, "Blues", rev = TRUE))
 ```
 
 ::: {.callout-note icon="false" title="Exercise (5 minutes)"}
-Compute the population density and plot the corresponding choropleth map. Find better values for the breaks and change the colors used.
+Compute the population density and plot the corresponding choropleth map. Use another algorithm to compute the breaks and change the colors used.
 
 ```{r}
 #| eval: false
@@ -83,12 +113,49 @@ plot(cantons["popdensity"], breaks = "jenks", nbreaks = 10, pal = hcl.colors(10)
 ```
 :::
 
-If you need good colors for your maps, you should use the `RColorBrewer` and `viridis` packages. These were designed by color specialists and are highly recommended. For `RColorBrewer` you can visualize the existing color palettes on the following website: <https://colorbrewer2.org>{target="_blank"}.
+When we create maps, we usually consider the different data sets as layers that we combine to produce a nice output. This is why we will often use the `add = TRUE` argument in the `plot()` function.
 
-Plotting raster data is very similar
+```{r, echo = -(1:2)}
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 0, 1, 0))
+plot(st_geometry(muni), col = "grey90", border = "grey50", lty = 3)
+plot(st_union(muni), col = NA, border = "grey50", lwd = 2, add = TRUE)
+plot(obs["name"], pch = 16, cex = 2, add = TRUE)
+```
+
+The map looks OK but we're definitely missing a legend for the points. Adding such a legend is a bit tricky, we need to use a lookup table to match the species names and the colors inside the `plot()` function. This is, in my opinion, a good example of why specialized packages like `tmap` should be preferred.
+
+```{r, echo = -(1:2)}
+# Optimize margins for Quarto HTML rendering (hidden in the HTML output)
+par(mar = c(0, 0, 1, 0))
+obsColors <- data.frame(name = unique(obs$name), color = sf.colors(length(unique(obs$name)), categorical = TRUE))
+plot(st_geometry(muni), col = "grey90", border = "grey50", lty = 3)
+plot(st_union(muni), col = NA, border = "grey50", lwd = 2, add = TRUE)
+plot(obs["name"], pch = 16, cex = 2, col = obsColors$color[match(obs$name, obsColors$name)], add = TRUE)
+legend(x = "topright", legend = unique(obs$name), col = obsColors$color, pch = 16, bty = "n")
+```
+
+::: {.callout-note icon="false" title="Exercise (5 minutes)"}
+Try to modify some default settings, change the colors and add a few streets to your map.
+:::
+
+Plotting raster data is very similar, again use we use the `plot()` function.
 
 ```{r}
-plot(elev, breaks = 15, col = hcl.colors(15))
+plot(elev)
+```
+
+We get a continuous legend by default for continuous rasters, but we can easily use intervals with the `breaks` argument. This should be either a single number specifying the number of breaks or a vector with the actual breaks. The color palette can be changed using the `col` argument.
+
+```{r}
+plot(elev, breaks = 10, col = hcl.colors(10, "Blues"))
+```
+
+And we can of course combine vector and raster data using layers like in the previous example.
+
+```{r}
+plot(elev, breaks = 10, col = hcl.colors(10, "Blues"))
+plot(st_geometry(muni), border = "white", lwd = 3, col = rgb(1, 1, 1, 0.4), add = TRUE)
 ```
 
 You need to be extra cautious when using data sets with different CRSs. Let's have a look at this example:
@@ -416,7 +483,7 @@ tm_shape(sempach) + tm_polygons() + tm_shape(obs) + tm_dots()
 tm_shape(sempach) + tm_polygons() + tm_shape(obs, is.main = TRUE) + tm_dots()
 ```
 
-If your spatial objects are using different CRSs, `tmap` will use the CRS of the object inside the first `tm_shape()` function for the map and automatically reproject the data sets used in the following `tm_shape()` functions.
+If your spatial objects are using different CRSs, `tmap` will use the CRS of the object inside the first `tm_shape()` function to draw the map and automatically reproject the data sets used in the following `tm_shape()` functions.
 
 ```{r, echo = -(1:2)}
 #| warning: false
