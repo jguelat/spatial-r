@@ -1274,7 +1274,7 @@ Exercise (5 minutes)
 </div>
 </div>
 </div>
-<p>If you need multiple maps with a common legend, you should use the functions <code>tm_facets_wrap()</code> or <code>tm_facets_stack()</code>, depending on the layout you want. The function <code>tm_facets()</code> will decide which one to use automatically based on your data. Facets can even be defined for two or three dimensions using the <code>tm_facets_grid()</code> function. In the next example we first generate a fake continuous attribute and then automatically create separate maps for each bird species, using the new attribute for the legend.</p>
+<p>If you need multiple maps with a common legend, you should use the functions <code>tm_facets_wrap()</code> or <code>tm_facets_stack()</code>, depending on the layout you want. The function <code>tm_facets()</code> will decide which one to use automatically based on your data. In the next example we first generate a fake continuous attribute and then automatically create separate maps for each bird species, using the new attribute for the legend.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>obs<span class="sc">$</span>var1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fu">nrow</span>(obs), <span class="dv">1</span>, <span class="dv">100</span>)</span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(obs) <span class="sc">+</span> <span class="fu">tm_symbols</span>(<span class="at">fill =</span> <span class="st">"var1"</span>) <span class="sc">+</span> <span class="fu">tm_facets_wrap</span>(<span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1290,6 +1290,17 @@ Exercise (5 minutes)
 <div>
 <figure class="figure">
 <p><img src="static_maps_files/figure-html/unnamed-chunk-57-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Facets can even be defined for two or three dimensions using the <code>tm_facets_grid()</code> function. Here’s how we can use it to create individual maps for two different variables and for each municipality.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(muni) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"popsize"</span>, <span class="st">"area"</span>)) <span class="sc">+</span> <span class="fu">tm_facets_grid</span>(<span class="at">columns =</span> <span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="static_maps_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1313,35 +1324,8 @@ Important
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(obs_in_sempach) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"red"</span>)</span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="st">"OpenStreetMap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="st">"OpenStreetMap"</span>, <span class="at">zoom =</span> <span class="dv">13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-58-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="st">"CartoDB.Voyager"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-58-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>If you want to use another provider that is not included by default, you can directly use the URL of the tile server inside the <code>tm_basemap()</code> function. Note that the provider has to provide tiles using EPSG:3857 (it will not work with other CRSs). In the next example, we create maps combining bird sightings, topographic maps and imagery from Swisstopo.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">"https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(obs_in_sempach) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"red"</span>)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="st">"OpenStreetMap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1349,7 +1333,7 @@ Important
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">"https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="st">"OpenStreetMap"</span>, <span class="at">zoom =</span> <span class="dv">13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1357,11 +1341,38 @@ Important
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">"https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="st">"CartoDB.Voyager"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="static_maps_files/figure-html/unnamed-chunk-59-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you want to use another provider that is not included by default, you can directly use the URL of the tile server inside the <code>tm_basemap()</code> function. Note that the provider has to provide tiles using EPSG:3857 (it will not work with other CRSs). In the next example, we create maps combining bird sightings, topographic maps and imagery from Swisstopo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">"https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="static_maps_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">"https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="static_maps_files/figure-html/unnamed-chunk-60-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">"https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="static_maps_files/figure-html/unnamed-chunk-60-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1372,24 +1383,8 @@ Important
 <h3 data-number="7.6.5" class="anchored" data-anchor-id="world-maps-and-globes-1"><span class="header-section-number">7.6.5</span> World maps and globes</h3>
 <p>The default projection that is used to plot data with a geographic CRS in <code>tmap</code> is the same as before. We’ve seen that it’s not ideal since the distortions are large (especially near the poles) and the map will appear elongated.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="st">"HPI"</span>) <span class="sc">+</span></span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="st">"Happy Planet Index"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid figure-img" width="864"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>As in the previous section, I recommend using either the Robinson projection, which was designed to be aesthetically pleasing, or the Equal-Earth projection, which has the advantage of having equal areas. The Winkel tripel projection can also be a good choice. With <code>tmap</code>, you can use the <code>tm_crs()</code> function to define the projection that will be applied to the map. For world maps, you can use the argument <code>earth_boundary = TRUE</code> inside the <code>tm_layout()</code> function to display the earth boundary (this is only available for a few global projections, such as the ones we’re using). We also remove the map frame using <code>frame = FALSE</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"HPI"</span>) <span class="sc">+</span></span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="st">"Happy Planet Index"</span>) <span class="sc">+</span></span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">earth_boundary =</span> <span class="cn">TRUE</span>, <span class="at">frame =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Equal-Earth</span></span>
-<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_crs</span>(<span class="st">"EPSG:8857"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="st">"HPI"</span>) <span class="sc">+</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="st">"Happy Planet Index"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1397,21 +1392,37 @@ Important
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Robinson</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_crs</span>(<span class="st">"ESRI:54030"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As in the previous section, I recommend using either the Robinson projection, which was designed to be aesthetically pleasing, or the Equal-Earth projection, which has the advantage of having equal areas. The Winkel tripel projection can also be a good choice. With <code>tmap</code>, you can use the <code>tm_crs()</code> function to define the projection that will be applied to the map. For world maps, you can use the argument <code>earth_boundary = TRUE</code> inside the <code>tm_layout()</code> function to display the earth boundary (this is only available for a few global projections, such as the ones we’re using). We also remove the map frame using <code>frame = FALSE</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"HPI"</span>) <span class="sc">+</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="st">"Happy Planet Index"</span>) <span class="sc">+</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">earth_boundary =</span> <span class="cn">TRUE</span>, <span class="at">frame =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Equal-Earth</span></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_crs</span>(<span class="st">"EPSG:8857"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-61-2.png" class="img-fluid figure-img" width="864"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Winkel tripel</span></span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_crs</span>(<span class="st">"+proj=wintri"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Robinson</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_crs</span>(<span class="st">"ESRI:54030"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-61-3.png" class="img-fluid figure-img" width="864"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-62-2.png" class="img-fluid figure-img" width="864"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Winkel tripel</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>map <span class="sc">+</span> <span class="fu">tm_crs</span>(<span class="st">"+proj=wintri"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="static_maps_files/figure-html/unnamed-chunk-62-3.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
@@ -1431,30 +1442,11 @@ Note
 </div>
 <p>You can also use the <code>tm_style("natural")</code> function to specify a style adapted for world maps. Here’s an example using the Robinson projection.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"HPI"</span>) <span class="sc">+</span></span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="st">"Happy Planet Index"</span>) <span class="sc">+</span></span>
-<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">earth_boundary =</span> <span class="cn">TRUE</span>, <span class="at">frame =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_style</span>(<span class="st">"natural"</span>) <span class="sc">+</span></span>
-<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_crs</span>(<span class="st">"ESRI:54030"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="864"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>You can easily add graticule lines to your world map. We first need to generate them using the <code>st_graticule()</code> function (from the <code>sf</code> package). In theory you could use the <code>tmap</code> function <code>tm_graticules()</code> but unfortunately, depending on the projection, the lines don’t go all the way to the poles.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>grat <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>(<span class="at">lon =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>, <span class="at">by =</span> <span class="dv">20</span>), <span class="at">lat =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">30</span>))</span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span></span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"HPI"</span>) <span class="sc">+</span></span>
-<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(grat) <span class="sc">+</span></span>
-<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_lines</span>(<span class="at">col =</span> <span class="st">"grey70"</span>) <span class="sc">+</span></span>
-<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="st">"Happy Planet Index"</span>) <span class="sc">+</span></span>
-<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">earth_boundary =</span> <span class="cn">TRUE</span>, <span class="at">frame =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_crs</span>(<span class="st">"ESRI:54030"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"HPI"</span>) <span class="sc">+</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="st">"Happy Planet Index"</span>) <span class="sc">+</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">earth_boundary =</span> <span class="cn">TRUE</span>, <span class="at">frame =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_style</span>(<span class="st">"natural"</span>) <span class="sc">+</span></span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_crs</span>(<span class="st">"ESRI:54030"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1463,52 +1455,71 @@ Note
 </div>
 </div>
 </div>
-<p>If you want to plot a 2D globe, you can use the orthographic projection (which is also using a proj4string). You can center the globe on one point by modifying the lat_center and lon_center variables in the following code.</p>
+<p>You can easily add graticule lines to your world map. We first need to generate them using the <code>st_graticule()</code> function (from the <code>sf</code> package). In theory you could use the <code>tmap</code> function <code>tm_graticules()</code> but unfortunately, depending on the projection, the lines don’t go all the way to the poles.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>lat_center <span class="ot">&lt;-</span> <span class="dv">40</span></span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>lon_center <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">10</span></span>
-<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>projstring <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"+proj=ortho +lat_0="</span>, lat_center, <span class="st">" +lon_0="</span>, lon_center)</span>
-<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(World, <span class="at">crs =</span> projstring, <span class="at">bbox =</span> <span class="st">"FULL"</span>) <span class="sc">+</span></span>
-<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
-<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_graticules</span>(<span class="at">n.x =</span> <span class="dv">20</span>, <span class="at">n.y =</span> <span class="dv">10</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>, <span class="at">labels.show =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_style</span>(<span class="st">"natural"</span>) <span class="sc">+</span></span>
-<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_xlab</span>(<span class="st">"Longitudes"</span>, <span class="at">size =</span> <span class="fl">1.1</span>) <span class="sc">+</span> <span class="fu">tm_ylab</span>(<span class="st">"Latitudes"</span>, <span class="at">size =</span> <span class="fl">1.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>grat <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>(<span class="at">lon =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>, <span class="at">by =</span> <span class="dv">20</span>), <span class="at">lat =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">30</span>))</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"HPI"</span>) <span class="sc">+</span></span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(grat) <span class="sc">+</span></span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_lines</span>(<span class="at">col =</span> <span class="st">"grey70"</span>) <span class="sc">+</span></span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_title</span>(<span class="st">"Happy Planet Index"</span>) <span class="sc">+</span></span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_layout</span>(<span class="at">earth_boundary =</span> <span class="cn">TRUE</span>, <span class="at">frame =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_crs</span>(<span class="st">"ESRI:54030"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid figure-img" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you want to plot a 2D globe, you can use the orthographic projection (which is also using a proj4string). You can center the globe on one point by modifying the lat_center and lon_center variables in the following code.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>lat_center <span class="ot">&lt;-</span> <span class="dv">40</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>lon_center <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">10</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>projstring <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"+proj=ortho +lat_0="</span>, lat_center, <span class="st">" +lon_0="</span>, lon_center)</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(World, <span class="at">crs =</span> projstring, <span class="at">bbox =</span> <span class="st">"FULL"</span>) <span class="sc">+</span></span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_graticules</span>(<span class="at">n.x =</span> <span class="dv">20</span>, <span class="at">n.y =</span> <span class="dv">10</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>, <span class="at">labels.show =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_style</span>(<span class="st">"natural"</span>) <span class="sc">+</span></span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_xlab</span>(<span class="st">"Longitudes"</span>, <span class="at">size =</span> <span class="fl">1.1</span>) <span class="sc">+</span> <span class="fu">tm_ylab</span>(<span class="st">"Latitudes"</span>, <span class="at">size =</span> <span class="fl">1.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="static_maps_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Or you can use the code we used in the previous section to create the data, but this time we will use <code>tmap</code> to plot everything.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">s2_oriented =</span> <span class="cn">TRUE</span>) <span class="co"># don't change orientation of the geometries (since the orientation is already correct)</span></span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>earth <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="st">"POLYGON FULL"</span>, <span class="at">crs =</span> <span class="st">"EPSG:4326"</span>)</span>
-<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If you specify the first argument (x = earth), some lines will be missing after clipping</span></span>
-<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>grat <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>(<span class="at">lon =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>, <span class="at">by =</span> <span class="dv">20</span>), <span class="at">lat =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">30</span>))</span>
-<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(<span class="fu">s2_data_countries</span>())</span>
-<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>oceans <span class="ot">&lt;-</span> <span class="fu">st_difference</span>(earth, <span class="fu">st_union</span>(countries))</span>
-<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Clip the data using the visible half (otherwise problems can happen with the orthographic projection, for example countries with vertices in the non-visible part will disappear)</span></span>
-<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>buff <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(<span class="fu">st_as_sfc</span>(<span class="fu">paste0</span>(<span class="st">"POINT("</span>, lon_center, <span class="st">" "</span>, lat_center, <span class="st">")"</span>), <span class="at">crs =</span> <span class="st">"EPSG:4326"</span>), <span class="dv">9800000</span>) <span class="co"># visible half</span></span>
-<span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a>countries_clipped <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(buff, countries)</span>
-<span id="cb80-12"><a href="#cb80-12" aria-hidden="true" tabindex="-1"></a>oceans_clipped <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(buff, oceans)</span>
-<span id="cb80-13"><a href="#cb80-13" aria-hidden="true" tabindex="-1"></a>grat_clipped <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(buff, grat)</span>
-<span id="cb80-14"><a href="#cb80-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-15"><a href="#cb80-15" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(oceans_clipped) <span class="sc">+</span></span>
-<span id="cb80-16"><a href="#cb80-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
-<span id="cb80-17"><a href="#cb80-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(countries_clipped) <span class="sc">+</span></span>
-<span id="cb80-18"><a href="#cb80-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
-<span id="cb80-19"><a href="#cb80-19" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(grat_clipped) <span class="sc">+</span></span>
-<span id="cb80-20"><a href="#cb80-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_lines</span>(<span class="at">col =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
-<span id="cb80-21"><a href="#cb80-21" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_crs</span>(projstring)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">s2_oriented =</span> <span class="cn">TRUE</span>) <span class="co"># don't change orientation of the geometries (since the orientation is already correct)</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>earth <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="st">"POLYGON FULL"</span>, <span class="at">crs =</span> <span class="st">"EPSG:4326"</span>)</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If you specify the first argument (x = earth), some lines will be missing after clipping</span></span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>grat <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>(<span class="at">lon =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>, <span class="at">by =</span> <span class="dv">20</span>), <span class="at">lat =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">30</span>))</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(<span class="fu">s2_data_countries</span>())</span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a>oceans <span class="ot">&lt;-</span> <span class="fu">st_difference</span>(earth, <span class="fu">st_union</span>(countries))</span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Clip the data using the visible half (otherwise problems can happen with the orthographic projection, for example countries with vertices in the non-visible part will disappear)</span></span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a>buff <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(<span class="fu">st_as_sfc</span>(<span class="fu">paste0</span>(<span class="st">"POINT("</span>, lon_center, <span class="st">" "</span>, lat_center, <span class="st">")"</span>), <span class="at">crs =</span> <span class="st">"EPSG:4326"</span>), <span class="dv">9800000</span>) <span class="co"># visible half</span></span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a>countries_clipped <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(buff, countries)</span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a>oceans_clipped <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(buff, oceans)</span>
+<span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a>grat_clipped <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(buff, grat)</span>
+<span id="cb81-14"><a href="#cb81-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-15"><a href="#cb81-15" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(oceans_clipped) <span class="sc">+</span></span>
+<span id="cb81-16"><a href="#cb81-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
+<span id="cb81-17"><a href="#cb81-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(countries_clipped) <span class="sc">+</span></span>
+<span id="cb81-18"><a href="#cb81-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb81-19"><a href="#cb81-19" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(grat_clipped) <span class="sc">+</span></span>
+<span id="cb81-20"><a href="#cb81-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_lines</span>(<span class="at">col =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb81-21"><a href="#cb81-21" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_crs</span>(projstring)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="static_maps_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="static_maps_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1518,8 +1529,8 @@ Note
 <h3 data-number="7.6.6" class="anchored" data-anchor-id="saving-maps"><span class="header-section-number">7.6.6</span> Saving maps</h3>
 <p>Saving maps is trivially easy using the <code>tmap_save()</code> function. The format is automatically recognized using the file name extension. You can also specify the height, width and resolution of the map.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>map1 <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(muni) <span class="sc">+</span> <span class="fu">tm_polygons</span>()</span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_save</span>(map1, <span class="st">"mymap.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>map1 <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(muni) <span class="sc">+</span> <span class="fu">tm_polygons</span>()</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_save</span>(map1, <span class="st">"mymap.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
