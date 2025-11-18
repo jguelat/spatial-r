@@ -241,12 +241,12 @@ st_area(World[1:5,])
 st_perimeter(World[1:5,])
 ```
 
-The `s2` library performs its computations on a spheroid. For areas and lengths, it is possible to obtain a better approximation by using an ellipsoid. You can do this by turning off the `s2` library with the `sf_use_s2(FALSE)` function. In this case, `sf` will automatically use equivalent functions provided by the `lwgeom`[@pebesma_lwgeom_2023] package. These functions use algorithms from the GeographicLib library which are to my knowledge the most precise approximations you can currently get. Note that the `st_perimeter()` function won't be available if you do that. You'll need to transform the polygons to lines first (see @sec-typecasting for details), and then use the `st_length()` function. Don't forget to reactivate `s2` (using the `sf_use_s2(TRUE)` function) when you're done.
+The `s2` library performs its computations on a spheroid. For areas and lengths, it is possible to obtain a better approximation by using an ellipsoid. You can do this by turning off the `s2` library with the `sf_use_s2(FALSE)` function. In this case, `sf` will automatically use equivalent functions provided by the `lwgeom`[@pebesma_lwgeom_2023] package. These functions use algorithms from the GeographicLib library which are to my knowledge the most precise approximations you can currently get. Don't forget to reactivate `s2` (using the `sf_use_s2(TRUE)` function) when you're done.
 
 ```{r}
 sf_use_s2(FALSE)
 st_area(World[1:5,])
-st_length(st_cast(World[1:5,], "MULTILINESTRING"))
+st_perimeter(World[1:5,])
 sf_use_s2(TRUE)
 ```
 
