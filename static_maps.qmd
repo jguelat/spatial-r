@@ -744,12 +744,12 @@ lat_center <- 40
 lon_center <- -10
 projstring <- paste0("+proj=ortho +lat_0=", lat_center, " +lon_0=", lon_center)
 
-tm_shape(World, crs = projstring, bbox = "FULL") +
-    tm_polygons() +
+tm_shape(World) +
+    tm_polygons(fill = "white") +
 tm_graticules(n.x = 20, n.y = 10, col = "black", lwd = 0.5, labels.show = FALSE) +
-tm_style("natural") +
+tm_crs(projstring, bbox = "FULL") +
+tm_layout(bg.color = "lightblue", earth_boundary = TRUE) +
 tm_xlab("Longitudes", size = 1.1) + tm_ylab("Latitudes", size = 1.1)
-
 ```
 
 Or you can use the code we used in the previous section to create the data, but this time we will use `tmap` to plot everything.
