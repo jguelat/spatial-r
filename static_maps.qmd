@@ -604,7 +604,7 @@ tm_shape(muni) + tm_polygons(fill = "popsize", fill.legend = tm_legend("Populati
 
 ### Customizing layout
 
-We can include extra objects in our map, such as titles, scale bars or north arrows. Each element has a `position` argument. In the next example we also include some styling using the `tm_style()` function. Currently 9 styles are available (plus some old ones from `tmap` version 3). To list the available styles, run the `tmap_style()` function. You can also use the `tmap_style_catalog()` function to create sample maps using all the styles (the maps will be saved as PNG files in your working directory). We finally use the `tm_layout()` function to increase the right margin and draw a frame with sharp corners. For margins (specified as bottom, left, top, right), the units are relative to the map frame, so 0.05 means 5 percent of the frame height.
+We can include extra objects in our map, such as titles, scale bars or north arrows. Each element has a `position` argument. In the next example we also include some styling using the `tm_style()` function. Currently 9 styles are available (plus some old ones from `tmap` version 3). To list the available styles, run the `tmap_style()` function. You can also use the `tmap_style_catalog()` function to create sample maps using all the styles (the maps will be saved as PNG files in your working directory). We finally use the `tm_layout()` function to increase the right margin and draw a frame with sharp corners. For margins (specified as bottom, left, top, right), the units are relative to the map frame, so 0.05 means 5 percent of the frame height. Note that when using `tm_style()`, all the layout options are reset according to the chosen style. Therefore if you need to change additional layout elements, you'll need to call the `tm_layout()` function after `tm_style()`.
 
 ```{r}
 tm_shape(muni) + tm_polygons(fill = "popsize",
@@ -711,7 +711,7 @@ map + tm_crs("+proj=wintri")
 You probably remember my warning about proj4strings, and that you should not use them for projections. I'm actually using one of these strings here to define the Winkel tripel projection. The main reason is that there is no EPSG (or ESRI) number for this CRS. Moreover, for global maps, the inaccuracies are negligible.
 ::: 
 
-You can also use the `tm_style("natural")` function to specify a style adapted for world maps. Here's an example using the Robinson projection.
+You can also use the `tm_style("natural")` function to specify a style adapted for world maps (remember to call `tm_layout()` after and not before `tm_style()`). Here's an example using the Robinson projection.
 
 ```{r}
 #| fig-width: 9
