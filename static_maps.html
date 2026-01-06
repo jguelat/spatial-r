@@ -565,16 +565,12 @@ Important
 </div>
 <p>When you browse an online map, even though everything looks like a single map, you are actually looking at many small tiles stitched together at a specific zoom level. The <code>get_tiles()</code> function allows us to download and merge these tiles. To specify the extent you want to download, you can use an <code>sf</code> or <code>sfc</code> object (<code>SpatVector</code> and <code>SpatRaster</code> are also working). The <code>get_tiles()</code> function will automatically use the bounding box of the object. You also need to specify the desired provider (use the <code>get_providers()</code> function to get a list of the available providers). The output will be a <code>SpatRaster</code> object with 3 bands (red, green and blue).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maptiles)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>osm_basemap <span class="ot">&lt;-</span> <span class="fu">get_tiles</span>(obs_in_sempach, <span class="at">provider =</span> <span class="st">"OpenStreetMap"</span>, <span class="at">crop =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maptiles)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: `lift()` was deprecated in purrr 1.0.0.
-ℹ The deprecated feature was likely used in the slippymath package.
-  Please report the issue at
-  &lt;https://www.github.com/milesmcbain/slippymath/issues&gt;.</code></pre>
+<pre><code>Warning: package 'maptiles' was built under R version 4.5.2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(osm_basemap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>osm_basemap <span class="ot">&lt;-</span> <span class="fu">get_tiles</span>(obs_in_sempach, <span class="at">provider =</span> <span class="st">"OpenStreetMap"</span>, <span class="at">crop =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(osm_basemap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1228,7 +1224,7 @@ Exercise (5 minutes)
 </section>
 <section id="customizing-layout" class="level3" data-number="7.6.3">
 <h3 data-number="7.6.3" class="anchored" data-anchor-id="customizing-layout"><span class="header-section-number">7.6.3</span> Customizing layout</h3>
-<p>We can include extra objects in our map, such as titles, scale bars or north arrows. Each element has a <code>position</code> argument. In the next example we also include some styling using the <code>tm_style()</code> function. Currently 9 styles are available (plus some old ones from <code>tmap</code> version 3). To list the available styles, run the <code>tmap_style()</code> function. You can also use the <code>tmap_style_catalog()</code> function to create sample maps using all the styles (the maps will be saved as PNG files in your working directory). We finally use the <code>tm_layout()</code> function to increase the right margin and draw a frame with sharp corners. For margins (specified as bottom, left, top, right), the units are relative to the map frame, so 0.05 means 5 percent of the frame height.</p>
+<p>We can include extra objects in our map, such as titles, scale bars or north arrows. Each element has a <code>position</code> argument. In the next example we also include some styling using the <code>tm_style()</code> function. Currently 9 styles are available (plus some old ones from <code>tmap</code> version 3). To list the available styles, run the <code>tmap_style()</code> function. You can also use the <code>tmap_style_catalog()</code> function to create sample maps using all the styles (the maps will be saved as PNG files in your working directory). We finally use the <code>tm_layout()</code> function to increase the right margin and draw a frame with sharp corners. For margins (specified as bottom, left, top, right), the units are relative to the map frame, so 0.05 means 5 percent of the frame height. Note that when using <code>tm_style()</code>, all the layout options are reset according to the chosen style. Therefore if you need to change additional layout elements, you’ll need to call the <code>tm_layout()</code> function after <code>tm_style()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(muni) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"popsize"</span>,</span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Population size"</span>,</span>
@@ -1444,7 +1440,7 @@ Note
 <p>You probably remember my warning about proj4strings, and that you should not use them for projections. I’m actually using one of these strings here to define the Winkel tripel projection. The main reason is that there is no EPSG (or ESRI) number for this CRS. Moreover, for global maps, the inaccuracies are negligible.</p>
 </div>
 </div>
-<p>You can also use the <code>tm_style("natural")</code> function to specify a style adapted for world maps. Here’s an example using the Robinson projection.</p>
+<p>You can also use the <code>tm_style("natural")</code> function to specify a style adapted for world maps (remember to call <code>tm_layout()</code> after and not before <code>tm_style()</code>). Here’s an example using the Robinson projection.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(World) <span class="sc">+</span> <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"HPI"</span>) <span class="sc">+</span></span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_style</span>(<span class="st">"natural"</span>) <span class="sc">+</span></span>
