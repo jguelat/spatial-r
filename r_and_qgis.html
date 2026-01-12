@@ -297,11 +297,7 @@ If you start from here…
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qgisprocess)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Attempting to load the package cache ... 
-QGIS version change detected:
-- in the qgisprocess cache it was: 3.44.5-Solothurn
-- while 'C:/OSGeo4W/bin/qgis_process-qgis.bat' is at 3.44.6-Solothurn
-Hence rebuilding cache to reflect this change ...
+<pre><code>Attempting to load the package cache ... Success!
 QGIS version: 3.44.6-Solothurn
 Having access to 786 algorithms from 9 QGIS processing providers.
 Run `qgis_configure(use_cached_data = TRUE)` to reload cache and get more details.
@@ -338,7 +334,7 @@ Run `qgis_configure(use_cached_data = TRUE)` to reload cache and get more detail
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;Result of `qgis_run_algorithm("native:buffer", ...)`&gt;
 List of 1
- $ OUTPUT: 'qgis_outputVector' chr "C:\\Users\\jgu\\AppData\\Local\\Temp\\RtmpGGaNjE\\file373851d6e6e\\file37383fa357ee.gpkg"</code></pre>
+ $ OUTPUT: 'qgis_outputVector' chr "C:\\Users\\jgu\\AppData\\Local\\Temp\\RtmpkNRPC7\\file15c06780639b\\file15c07c794f35.gpkg"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>obs_buff_qgis <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(obs_buff_qgis_res, <span class="at">as_tibble =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(obs_buff_qgis))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

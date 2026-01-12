@@ -646,7 +646,8 @@ Projected CRS: CH1903+ / LV95
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pts_sf)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"my_beautiful_points"</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>pts_sf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in st_geometry.sf(x): attr(obj, "sf_column") does not point to a geometry column.
+<pre><code>Error in `st_geometry.sf()`:
+! attr(obj, "sf_column") does not point to a geometry column.
 Did you rename it, without setting st_geometry(obj) &lt;- "newname"?</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_geometry</span>(pts_sf) <span class="ot">&lt;-</span> <span class="st">"my_beautiful_points"</span></span>
