@@ -314,6 +314,7 @@ Run the following code to load and create everything you'll need to run the exam
 #| eval: false
 library(sf)
 library(terra)
+muni <- st_read("data/geodata.gpkg", "municipalities", quiet = TRUE)
 obs <- read.csv("data/observations.csv")
 obs <- st_as_sf(obs, coords = c("x", "y"), crs = "EPSG:2056")
 obs_buff <- st_buffer(obs[c(1, 2, 5),], dist = 80)
@@ -324,19 +325,33 @@ elev_resample <- resample(elev, landcover, method = "bilinear")
 ```
 :::
 
-Before doing a statistical analysis, it is quite common to collect all the covariates as GIS layers. We've already seen how to extract information from vector data sets using spatial joins. There is a similar procedure for raster data sets. The most common operation consists of extracting raster values at some given points/sites.
+Before doing a statistical analysis, it is quite common to collect all the covariates as GIS layers. We've already seen how to extract information from vector data sets using spatial joins. There is a similar procedure for raster data sets. Actually, extracting raster values at some given points/sites is probably one of the most common GIS procedures.
 
-Note that `terra` is using its own data model to store and process vector data (it doesn't use the classes defined by `sf`). Hence, most `terra` functions expecting a vector data set won't accept `sf` objects. The `terra` class for vector data is called `SpatVector`. Fortunately it is very easy to convert `sf` objects to `SpatVector` objects using the `vect()` function (actually the `extract()` function is an exception and is also accepting `sf` objects). If you need to convert a `SpatVector` object to `sf`, you can use the `st_as_sf()` function.
+The `extract()` function was created to easily perform this task. The first argument is the raster you want to extract values from, and the second argument is a spatial object containing the sites, or a 2-column matrix or data frame containing their coordinates. We also set `ID = FALSE` otherwise `terra` will add an ID column, which is useless when using points.
 
 ```{r}
 vals <- extract(elev, vect(obs), ID = FALSE)
 obs2 <- obs
 obs2$elev <- vals
+obs2
 ```
 
-The output of the `extract()` function is a standard data frame. The order of the data frame is the same as the order of the vector data set used to extract the data, you can therefore easily append the extracted values to the `sf` point object.
+The output of the `extract()` function is a standard data frame. If a point is located out of the chosen raster, then the associated value will be NA. The order of the data frame is the same as the order of the vector data set used to extract the data, you can therefore easily append the extracted values to the `sf` point object using the `$` operator or the `cbind()` function.
 
-If you're lucky enough to have properly aligned rasters, you can combine them in a multiband data set and use the `extract()` function on this new data set. You'll also get a data frame, with one column for each band.
+::: callout-note
+Do not forget that `terra` is using its own data model, the `SpatVector` class, to store and process vector data. Hence, most `terra` functions expecting a vector data set won't accept `sf` objects. Fortunately it is very easy to convert `sf` objects to `SpatVector` objects using the `vect()` function. If you need to convert a `SpatVector` object to `sf`, you can use the `st_as_sf()` function.
+
+Actually, the `extract()` function is an exception and tolerates `sf` objects...
+:::
+
+Using `bind = TRUE` inside the `extract()` function is another possibility to append the extracted values to the point data set. In this case, the output will be a `SpatVector` object, so you'll need to convert it if you want to use it with `sf`.
+
+```{r}
+obs2 <- st_as_sf(extract(elev, vect(obs), bind = TRUE))
+obs2
+```
+
+If you're lucky enough to have properly aligned rasters, you can combine them in a multiband raster data set and use the `extract()` function on the latter. You'll also get a data frame, with one column for each band.
 
 ```{r}
 covariates <- c(landcover, elev_resample)
@@ -344,20 +359,122 @@ names(covariates) <- c("landcover", "elevation")
 vals <- extract(covariates, vect(obs), ID = FALSE)
 ```
 
-You're actually not restricted to using points to extract information from rasters. For example using a line you can easily compute an elevation profile. Using polygons is even more powerful and allow performing what is usually called zonal analyses. By default the `extract()` function will extract all the pixels whose centroid is within the polygons.
+You're actually not restricted to using points to extract information from rasters. For example, using a line, you can easily compute an elevation profile (check the `extractAlong()` function). Using polygons is even more interesting and allows performing what is usually called a zonal analysis. By default the `extract()` function will extract all the pixels whose centroid is within the polygons (with a small exception, check the `small` argument).
 
 ```{r}
 vals <- extract(elev, vect(obs_buff))
 head(vals)
 ```
 
-The `ID` values corresponds to the ordering of the polygons of the `sf` object. This means that all rows with `ID=1` are pixels intersection the first polygon. You're then free to use these values, for example to characterize some habitat. If you only need some summary statistic for each polygon, you can use the `fun` argument to specify some aggregating function.
+The `ID` values corresponds to the ordering of the polygons of the `sf` object. This means that all rows with `ID=1` are pixels intersecting the first polygon. You're then free to use these values, for example to characterize some habitat. If you only need some summary statistic for each polygon, you can use the `fun` argument to specify some standard aggregating functions (e.g. minimum, maximum, mean, etc.), or your own custom function.
 
 ```{r}
 vals_avg <- extract(elev, vect(obs_buff), fun = mean)
+vals_avg
 ```
 
-The `extract()` function is really powerful (and fast) and has a lot of additional possibilities. Don't hesitate to have a look at its help file.
+If you need to summarize a raster containing discrete values, you'll need to use a more appropriate function such as `table` which will give you the number of pixels in each category.
+
+```{r}
+vals_tbl <- extract(landcover, vect(muni), fun = table)
+head(vals_tbl)
+```
+
+As we've seen above, the default behavior of the `extract()` function is to include all pixels whose centroid lies within the polygons. This is usually fine if the polygons contain a large number of pixels since the few pixels intersecting the polygons without having their centroids inside them will have almost no influence on the results. However, in some cases, it might be useful to include these pixels, and the `extract()` function is flexible enough to allow for that. If you specify `touches = TRUE`, the function will return all the pixels touched by the polygons. Similarly, setting `exact = TRUE` will also return all the pixels touched by the polygons, but `terra` will also add a new column with the exact fraction of the cell that is covered. The `weights = TRUE` argument is doing the same thing, but using only an approximation for the fraction covered (this can lead to a different number of returned pixels). This can be quicker in some cases. In the next example we can see the output of the different options.
+
+```{r}
+vals <- extract(elev, vect(obs_buff))
+nrow(vals)
+vals <- extract(elev, vect(obs_buff), touches = TRUE)
+nrow(vals)
+vals <- extract(elev, vect(obs_buff), exact = TRUE)
+nrow(vals)
+head(vals)
+vals <- extract(elev, vect(obs_buff), weights = TRUE)
+nrow(vals)
+head(vals)
+```
+
+If you're using a function to summarize the extracted values, the computation will change depending on the selected arguments. if you use the `exact` or `weights` arguments, only the following aggregating functions will be available: `mean`, `sum`, `min`, `max` and `table`. However the  function will consider the fraction of the pixels that are covered (i.e. the pixels that are not fully within the polygons will have a smaller weight). If you use the `touch` argument, all the pixels intersecting the polygons will have the same weight (i.e. the size of the covered fraction doesn't matter).
+
+```{r}
+extract(elev, vect(obs_buff), fun = mean, touches = TRUE)
+extract(elev, vect(obs_buff), fun = mean, exact = TRUE)
+extract(elev, vect(obs_buff), fun = mean, weights = TRUE)
+```
+
+Here's a graphical representation of the different options. The pixels that are taken into account are shown with a thick black border and the opacity of the pixels represents the weight used when summarizing the values.
+
+```{r}
+#| echo: false
+#| fig-height: 8
+
+rescale <- function(x, a, b){
+    (b - a) * ((x - min(x))/(max(x) - min(x))) + a
+}
+
+par(mfrow = c(2, 2))
+
+# Define temporary objects
+poly_tmp <- vect(obs_buff[1,])
+elev_crop <- crop(elev, ext(poly_tmp) + 50)
+elev_crop_poly <- as.polygons(elev_crop, aggregate = FALSE)
+elev_crop_poly$cells <- 1:nrow(elev_crop_poly)
+elev_crop_pts <- as.points(elev_crop)
+ralpha <- elev_crop
+
+# Default extract
+vals_tmp <- extract(elev_crop, poly_tmp, cells = TRUE)
+values(ralpha) <- 0.1
+cells_nb <- rowColFromCell(ralpha, vals_tmp[,"cell"])
+ralpha[cells_nb] <- 1
+
+plot(elev_crop, alpha = ralpha, legend = FALSE, main = "Default")
+plot(elev_crop_poly, add = TRUE)
+plot(elev_crop_poly[elev_crop_poly$cells %in% vals_tmp$cell], lwd = 3, border = "grey10", add = TRUE)
+plot(elev_crop_pts, col = "grey80", add = TRUE)
+plot(poly_tmp, lwd = 3, border = "red", add = TRUE)
+
+# Extract with touches = TRUE
+vals_tmp <- extract(elev_crop, poly_tmp, cells = TRUE, touches = TRUE)
+values(ralpha) <- 0.1
+cells_nb <- rowColFromCell(ralpha, vals_tmp[,"cell"])
+ralpha[cells_nb] <- 1
+
+plot(elev_crop, alpha = ralpha, legend = FALSE, main = "touches = TRUE")
+plot(elev_crop_poly, add = TRUE)
+plot(elev_crop_poly[poly_tmp], lwd = 3, border = "grey10", add = TRUE)
+plot(elev_crop_pts, col = "grey80", add = TRUE)
+plot(poly_tmp, lwd = 3, border = "red", add = TRUE)
+
+# Extract with exact = TRUE
+vals_tmp <- extract(elev_crop, poly_tmp, cells = TRUE, exact = TRUE)
+values(ralpha) <- 0.1
+cells_nb <- rowColFromCell(ralpha, vals_tmp[,"cell"])
+vals_alpha <- rescale(vals_tmp[,"fraction"], 0.2, 1)
+ralpha[cells_nb] <- vals_alpha
+
+plot(elev_crop, alpha = ralpha, legend = FALSE, main = "exact = TRUE")
+plot(elev_crop_poly, add = TRUE)
+plot(elev_crop_poly[poly_tmp], lwd = 3, border = "grey10", add = TRUE)
+plot(elev_crop_pts, col = "grey80", add = TRUE)
+plot(poly_tmp, lwd = 3, border = "red", add = TRUE)
+
+# Extract with weights = TRUE
+vals_tmp <- extract(elev_crop, poly_tmp, cells = TRUE, weights = TRUE)
+values(ralpha) <- 0.1
+cells_nb <- rowColFromCell(ralpha, vals_tmp[,"cell"])
+vals_alpha <- rescale(vals_tmp[,"weight"], 0.2, 1)
+ralpha[cells_nb] <- vals_alpha
+
+plot(elev_crop, alpha = ralpha, legend = FALSE, main = "weights = TRUE")
+plot(elev_crop_poly, add = TRUE)
+plot(elev_crop_poly[elev_crop_poly$cells %in% vals_tmp$cell], lwd = 3, border = "grey10", add = TRUE)
+plot(elev_crop_pts, col = "grey80", add = TRUE)
+plot(poly_tmp, lwd = 3, border = "red", add = TRUE)
+```
+
+If you often need to account for partially covered pixels and would like to use other functions to summarize the extracted values, you should have a look at the `exactextractr` package. It should also be a bit faster than `terra`, especially for large polygons. Similarly, the `fastfocal` package provides the `fastextract()` function, a faster alternative to extract raster values, but only for points (and buffers around them).
 
 
 ## Combine rasters
