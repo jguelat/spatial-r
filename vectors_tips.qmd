@@ -689,7 +689,7 @@ All the `sf` objects plotted on this map have the same geographic CRS but a map 
 :::
 
 ::: callout-important
-We've already seen examples where turning `s2` off will provide more precise results when using a geographic CRS. But keep in mind that computing areas, lengths or distances are probably the only valid cases where turning `s2` off is a good idea. For all other computations based on geographic CRSs you should NOT deactivate `s2`, otherwise you'll get results that will most probably be wrong.
+We've already seen examples where turning `s2` off will provide more precise results when using a geographic CRS. But keep in mind that computing areas, lengths or distances are probably the only valid cases where turning `s2` off is a good idea. For all other computations based on geographic CRSs you should NOT deactivate `s2`, otherwise you'll get results that will most probably be nonsensical.
 :::
 
 
@@ -1461,7 +1461,7 @@ library(tmap)
 ```
 :::
 
-If the data sets you're using have different CRSs, it's usually a good idea to transform some of them so that they all have the same CRS. We need the `st_transform()` function to do this. Sometimes we also say that we "project" the data to another CRS (however, transformations between geographic CRSs are not really projections).
+If the data sets you're using have different CRSs, it's usually a good idea to transform some of them so that they all have the same CRS. We need the `st_transform()` function to do this. When using a projected CRS, we can also say that we project the data to another CRS. However, transformations between geographic CRSs are not projections.
 
 Here we first check the CRS of the `World` data set using the `st_crs()` function and compute a graticule (grid). Then we project the data set to three different projected CRSs, the Swiss CRS, the Equal Earth projection and the Robinson projection. If we use a CRS with an EPSG number, we can also use the integer value directly (without specifying "EPSG:"). However it's a good habit to always specify the provider to avoid confusions.
 
@@ -1476,7 +1476,7 @@ world_rob <- st_transform(World, "ESRI:54030")
 grat_rob <- st_transform(grat, "ESRI:54030")
 ```
 
-When we plot that data, we first see that, not surprisingly, the Swiss CRS is not adapted at all for global data, and that the Equal Earth and Robinson projections give a pleasing result. Both of these projections are good choices for world maps.
+When we plot that data, we first see that, not surprisingly, the Swiss CRS is not adapted at all for global data, and that the Equal Earth and Robinson projections both give pleasing results. Both of these projections are good choices for world maps.
 
 ```{r, echo = -(1:2)}
 #| fig.width: 9
