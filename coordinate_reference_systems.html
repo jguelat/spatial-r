@@ -300,7 +300,7 @@ Tip
 </section>
 <section id="projected-crss" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="projected-crss"><span class="header-section-number">4.3</span> Projected CRSs</h2>
-<p>Projected CRSs are based on geographic CRSs but include an additional step: a projection on a flat surface. When using a projected CRS, locations are described using Cartesian coordinates called easting and northing (x and y). Projecting a spherical or ellipsoidal surface on a plane will cause deformations. These will affect four properties of the surface: shapes, areas, distances and directions. A map projection can satisfy at most two of these properties. Many map projections (especially global ones) do not fulfill any of these properties but are intended as a compromise (e.g.&nbsp;Robinson). The following table lists a few common projections based on their preserved property.</p>
+<p>Projected CRSs are based on geographic CRSs but include an additional step: a projection on a flat surface. When using a projected CRS, locations are described using Cartesian coordinates called easting and northing (<em>x</em> and <em>y</em>). Projecting a spherical or ellipsoidal surface on a plane will cause deformations. These will affect four properties of the surface: shapes, areas, distances and directions. A map projection can satisfy at most two of these properties. Many map projections (especially global ones) do not fulfill any of these properties but are intended as a compromise (e.g.&nbsp;Robinson). The following table lists a few common projections based on their preserved property.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 23%">
@@ -667,12 +667,31 @@ Important
 </section>
 <section id="crs-transformations" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="crs-transformations"><span class="header-section-number">4.6</span> CRS transformations</h2>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you start from here…
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 <p>It is sometimes necessary to transform coordinates or spatial objects into another CRS. For example when performing a GIS analysis with multiple data sets, it can be necessary to transform some of them in order to have all the data sets using a common CRS. We almost always speak of CRS or coordinate transformation, but we should actually distinguish between conversion and transformation. Going from one CRS to another without changing datum is called coordinate conversion. This process is lossless and invertible. The equations associated with a conversion are not empirical. Recomputing coordinates in a new datum is called coordinate transformation. The computations are approximate and the processes involved are empirical. Different approaches can be used to perform a coordinate transformation, such as equations, transformation grids, etc. Due to this complexity, multiple transformation paths (also called pipelines) are possible.</p>
 <p>Transforming a vector data set is a simple operation, we simply need to transform the points/vertices into the new CRS. The precision is only determined by the transformation used. Transforming a raster data set is more challenging. This is usually done using a technique called warping which first transforms the raster extent and then recomputes the pixel values using resampling. There is thus a loss of information and the precision is determined not only by the transformation used, but also by the raster properties. Moreover the interpolation algorithm used during the resampling must be chosen carefully depending on the raster content (e.g.&nbsp;continuous vs.&nbsp;discrete values). A more direct transformation is also possible but rarely used since the output raster will be curvilinear (i.e.&nbsp;the pixels will not be rectangles). Due to all these reasons, if you need vector and raster data sets with a common CRS, I’d recommend transforming the vector data set to the CRS of the raster data set and not the opposite.</p>
 <p>As we’ve seen above, there are often several transformation pipelines available between two CRSs. Fortunately we usually don’t have to care about this complexity since all these transformations are managed by the PROJ library. In case of multiple available pipelines, PROJ will automatically choose the one with the best accuracy. If you need more information about the chosen transformation, you can use the <code>st_proj_pipelines()</code> function in the <code>sf</code> package. Here’s an example showing the transformation pipeline between the Swiss projected CRS and EPSG:4326.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>trans <span class="ot">&lt;-</span> <span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:2056"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:4326"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>trans</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>trans <span class="ot">&lt;-</span> <span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:2056"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:4326"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>trans</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Candidate coordinate operations found:  2 
 Strict containment:     FALSE 
@@ -693,8 +712,8 @@ Definition:  +proj=pipeline +step +inv +proj=somerc +lat_0=46.9524055555556
 </div>
 <p>We see that PROJ found two possible pipelines and it automatically chose the best one which has a 1 meter accuracy. The definition also provides a list of all the steps needed for the transformation. The <code>st_proj_pipelines()</code> function returns a <code>proj_pipelines</code> object containing all the possible transformation pipelines (but only the best one is printed). This object is actually a data frame. To check the second, suboptimal, pipeline, we can thus use the usual indexing techniques.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>trans <span class="ot">&lt;-</span> <span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:2056"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:4326"</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>trans[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>trans <span class="ot">&lt;-</span> <span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:2056"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:4326"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>trans[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Candidate coordinate operations found:  1 
 Strict containment:     FALSE 
@@ -713,7 +732,7 @@ Definition:  +proj=pipeline +step +inv +proj=somerc +lat_0=46.9524055555556
 </div>
 <p>Here’s another example showing the transformation pipelines between the previous (deprecated) Swiss CRS and the one used currently.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:21781"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:21781"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Candidate coordinate operations found:  2 
 Strict containment:     FALSE 
@@ -736,11 +755,11 @@ URL: https://cdn.proj.org/ch_swisstopo_CHENyx06a.tif </code></pre>
 </div>
 <p>In this case PROJ found 2 possible pipelines but it tells us that it cannot use the best one (with 0.2 meter accuracy) since the required transformation grid is not available on our computer. Hence it had to choose the second pipeline which only has ballpark accuracy. Fortunately, the PROJ library also provides an online service called the PROJ Datumgrid CDN (Content Delivery Network) which allows us to automatically download such grids. We first need to enable it in <code>sf</code> using the <code>sf_proj_network()</code> function, and then we check again the available transformation pipelines.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_proj_network</span>(<span class="at">enable =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_proj_network</span>(<span class="at">enable =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "https://cdn.proj.org"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:21781"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:21781"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Candidate coordinate operations found:  2 
 Strict containment:     FALSE 
