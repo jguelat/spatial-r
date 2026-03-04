@@ -67,6 +67,17 @@ c(xmin(r), xmax(r), ymin(r), ymax(r))
 res(r)
 ```
 
+::: callout-important
+If you got a warning when creating the previous raster, please read the next lines carefully!
+
+The `terra` package currently has a bug causing some troubles finding the PROJ library if you manually installed another PROJ instance on Windows (e.g. this is happening when you install PostGIS). In this case you'll often see warnings referring to `PROJ: proj_create_from_database` and all CRS operations will fail. To solve this problem, run the following code *before* loading `terra` (do this ONLY if you get these warnings, otherwise this may cause other problems):
+
+```{r}
+#| eval: false
+Sys.setenv(PROJ_LIB = "")
+```
+:::
+
 As I mentioned above, `terra` usually doesn't import the full data set in memory but only create a pointer to the data stored on your computer. You can extract the reference to the data file using the sources() function. Since we create our raster from scratch, our `SpatRaster` object is of course not linked to any file and the whole object is stored in memory.
 
 ```{r}
