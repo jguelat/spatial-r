@@ -231,17 +231,17 @@ head(st_length(streets))
 Note that the results always have a unit of measurement. This is a feature that is provided by `sf` and will occur will all functions giving some sort of measurement. This is compatible with the `units` package which allows easy conversions between different unit types. However this can sometimes be a problem if you need a "raw" value. In this case you can use the `as.numeric()` function to remove the units.
 
 ::: callout-note
-The `st_perimeter()` function was not available in older versions of the `sf` package. The `lwgeom` package was needed to perform this computation.
+The `lwgeom` package is required in order to use the `st_perimeter()` function.
 :::
 
-If you use unprojected data (i.e., with a geographic CRS), `sf` will automatically use the `s2` library to compute areas, perimeters and lengths.
+If you use unprojected data (i.e., with a geographic CRS), `sf` will automatically use the S2 library to compute areas, perimeters and lengths.
 
 ```{r}
 st_area(World[1:5,])
 st_perimeter(World[1:5,])
 ```
 
-The `s2` library performs its computations on a sphere. For areas and lengths, it is possible to obtain a better approximation by using an ellipsoid. You can do this by turning off the `s2` library with the `sf_use_s2(FALSE)` function. In this case, `sf` will automatically use equivalent functions provided by the `lwgeom`[@pebesma_lwgeom_2023] package. These functions use algorithms from the GeographicLib library which are to my knowledge the most precise approximations you can currently get. Don't forget to reactivate `s2` (using the `sf_use_s2(TRUE)` function) when you're done.
+The S2 library performs its computations on a sphere. For areas and lengths, it is possible to obtain a better approximation by using an ellipsoid. You can do this by turning off the S2 library with the `sf_use_s2(FALSE)` function. In this case, `sf` will automatically use equivalent functions provided by the `lwgeom`[@pebesma_lwgeom_2023] package. These functions use algorithms from the [GeographicLib](https://geographiclib.sourceforge.io){target="_blank"} library which are to my knowledge the most precise approximations you can currently get. Don't forget to reactivate S2 (using the `sf_use_s2(TRUE)` function) when you're done.
 
 ```{r}
 sf_use_s2(FALSE)
@@ -251,7 +251,7 @@ sf_use_s2(TRUE)
 ```
 
 ::: callout-important
-You should normally not turn `s2` off. Computing areas and lengths (and distances, as we will see later) are probably the only valid cases where turning `s2` off is a good idea. For all other computations based on geographic CRSs you should NOT deactivate `s2`, otherwise you'll get results that will most probably be wrong.
+You should normally not turn S2 off. Computing areas and lengths (and distances, as we will see later) are probably the only valid cases where turning S2 off is a good idea. For all other computations based on geographic CRSs you should NOT deactivate S2, otherwise you'll get results that will most probably be wrong.
 :::
 
 ### Centroids
@@ -653,7 +653,7 @@ st_distance(obs[1:5,], muni[1:3,])
 
 The distances are measured between the points and the nearest edge of the polygons if they are located outside the polygons. The distance will be 0 if they are within the polygon.
 
-We will now make a short excursion in the world of geographic CRS with a quick example showing what `sf` is doing when we don't use standard Euclidean geometry. We will compute the distance between the centroids of Switzerland and Australia. By default `sf` is using the `s2` library to perform its computations on a sphere when we use a geographic CRS. However for distances, it is possible to obtain better approximations by using an ellipsoid. To do this, we need to tell `sf` to avoid using `s2` with the function `sf_use_s2(FALSE)`. The `st_distance()` will thus be forced to use a more precise algorithm (by automatically using a similar function from the `lwgeom` package). We can of course compare the two estimates.
+We will now make a short excursion in the world of geographic CRS with a quick example showing what `sf` is doing when we don't use standard Euclidean geometry. We will compute the distance between the centroids of Switzerland and Australia. By default `sf` is using the S2 library to perform its computations on a sphere when we use a geographic CRS. However for distances, it is possible to obtain better approximations by using an ellipsoid. To do this, we need to tell `sf` to avoid using S2 with the function `sf_use_s2(FALSE)`. The `st_distance()` will thus be forced to use a more precise algorithm (by automatically using a similar function from the `lwgeom` package). We can of course compare the two estimates.
 
 ```{r}
 world_centroids <- st_centroid(World)
@@ -689,7 +689,7 @@ All the `sf` objects plotted on this map have the same geographic CRS but a map 
 :::
 
 ::: callout-important
-We've already seen examples where turning `s2` off will provide more precise results when using a geographic CRS. But keep in mind that computing areas, lengths or distances are probably the only valid cases where turning `s2` off is a good idea. For all other computations based on geographic CRSs you should NOT deactivate `s2`, otherwise you'll get results that will most probably be nonsensical.
+We've already seen examples where turning S2 off will provide more precise results when using a geographic CRS. But keep in mind that computing areas, lengths or distances are probably the only valid cases where turning S2 off is a good idea. For all other computations based on geographic CRSs you should NOT deactivate S2, otherwise you'll get results that will most probably be nonsensical.
 :::
 
 
@@ -1450,7 +1450,7 @@ results
 ```
 
 
-## CRS transformations
+## CRS transformations {#sec-vector_crs_transformations}
 
 ::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
 Run the following code to load and create everything you'll need to run the examples in this section.
@@ -1458,15 +1458,27 @@ Run the following code to load and create everything you'll need to run the exam
 #| eval: false
 library(sf)
 library(tmap)
+obs <- read.csv("data/observations.csv")
+obs <- st_as_sf(obs, coords = c("x", "y"), crs = "EPSG:2056")
+soi <- st_as_sfc("POINT(2657271 1219754)", crs = "EPSG:2056")
 ```
 :::
 
-If the data sets you're using have different CRSs, it's usually a good idea to transform some of them so that they all have the same CRS. We need the `st_transform()` function to do this. When using a projected CRS, we can also say that we project the data to another CRS. However, transformations between geographic CRSs are not projections.
+If the data sets you're using have different CRSs, it's usually a good idea to transform some of them so that they all have the same CRS. When using a projected CRS, we can also say that we project the data to another CRS. However, transformations between geographic CRSs are not projections. The `st_transform()` function is the only one we need to perform all the available CRS transformations.
 
-Here we first check the CRS of the `World` data set using the `st_crs()` function and compute a graticule (grid). Then we project the data set to three different projected CRSs, the Swiss CRS, the Equal Earth projection and the Robinson projection. If we use a CRS with an EPSG number, we can also use the integer value directly (without specifying "EPSG:"). However it's a good habit to always specify the provider to avoid confusions.
+The first argument of `st_transform()` is the object (`sf` or `sfc`) we want to transform, the second argument is the CRS we want to use. The CRS is specified using the authority:identifier form. If we use a CRS with an EPSG number, we can also use the integer value directly (without specifying "EPSG:"). However it's a good habit to always specify the authority to avoid confusions. As a first example, let's check the CRS of our bird sightings and then perform a CRS transformation to EPSG:4326 (WGS 84).
 
 ```{r}
-st_crs(World)
+st_crs(obs)$Name
+obs_wgs <- st_transform(obs, "EPSG:4326")
+obs_wgs
+```
+
+We see that our `sf` object is now using the chosen geographic CRS, and the geometry column was modified (the coordinates are now in degrees).
+
+In the next example we first compute a graticule (i.e. a grid). Then we project the `World` data set with the associated graticule using three different projected CRSs, the Swiss CRS, the Equal Earth projection and the Robinson projection.
+
+```{r}
 grat <- st_graticule()
 world_ch <- st_transform(World, "EPSG:2056")
 grat_ch <- st_transform(grat, "EPSG:2056")
@@ -1476,27 +1488,23 @@ world_rob <- st_transform(World, "ESRI:54030")
 grat_rob <- st_transform(grat, "ESRI:54030")
 ```
 
-When we plot that data, we first see that, not surprisingly, the Swiss CRS is not adapted at all for global data, and that the Equal Earth and Robinson projections both give pleasing results. Both of these projections are good choices for world maps.
+When we plot that data, we first see that, not surprisingly, the Swiss CRS is not adapted at all for global data, and that the Equal Earth and Robinson projections both give pleasing results. These two projections are good choices for world maps.
 
 ```{r, echo = -(1:2)}
-#| fig.width: 9
-#| fig-asp: 1
+#| fig.height: 6
+#| fig.width: 10
 # Optimize margins for Quarto HTML rendering (hidden in the HTML output)
 par(mar = c(1, 2, 1, 2))
 par(mfrow = c(2, 2))
-plot(st_geometry(World), col = "grey90")
+plot(st_geometry(World), col = "grey90", main = "WGS84 (plate carrée)")
 plot(st_geometry(grat), col = "lightgrey", add = TRUE)
-plot(st_geometry(world_ch), col = "grey90")
+plot(st_geometry(world_ch), col = "grey90", main = "Swiss projection")
 plot(st_geometry(grat_ch), col = "lightgrey", add = TRUE)
-plot(st_geometry(world_equal), col = "grey90")
+plot(st_geometry(world_equal), col = "grey90", main = "Equal Earth projection")
 plot(st_geometry(grat_equal), col = "lightgrey", add = TRUE)
-plot(st_geometry(world_rob), col = "grey90")
+plot(st_geometry(world_rob), col = "grey90", main = "Robinson projection")
 plot(st_geometry(grat_rob), col = "lightgrey", add = TRUE)
 ```
-
-::: callout-important
-The `st_crs()` function is used to query or assign a CRS, but it does not perform any CRS transformation!
-:::
 
 ::: {.callout-note icon="false" title="Exercise (5 minutes)"}
 The Bonne projection is one of the most beautiful projection available. To understand why, try to make a world map with a graticule using this projection.
@@ -1511,3 +1519,54 @@ plot(st_geometry(world_bonne), col = "grey90")
 plot(st_geometry(grat_bonne), col = "lightgrey", add = TRUE)
 ```
 :::
+
+We've already seen that the Pseudo-Mercator projection (EPSG:3857) used by most online maps should be avoided at all costs when computing measurements such as areas or distances. As an example, let's compute the "true" area of Greenland using a geographic CRS, first with the most precise approximation and then using S2. After that we compare these areas with the estimated area after projecting Greenland to Pseudo-Mercator.
+
+```{r}
+greenland <- World[World$name == "Greenland",]
+
+sf_use_s2(FALSE)
+a1 <- st_area(greenland)
+sf_use_s2(TRUE)
+a2 <- st_area(greenland)
+a3 <- st_area(st_transform(greenland, "EPSG:3857"))
+
+units::set_units(c(a1, a2, a3), "km^2")
+```
+
+When projected using the Pseudo-Mercator projection, the estimated area of Greenland is almost twice its true area.
+
+To see how bad distance estimations are when using Pseudo-Mercator, let's compute the "true" distance between the Swiss Ornithological Institute and Cape Town using a geographic CRS, first with the most precise approximation and then using S2. After that we compare these distances with the estimated distance after projecting both points to Pseudo-Mercator.
+
+```{r}
+soi_4326 <- st_transform(soi, "EPSG:4326")
+capetown_4326 <- st_as_sfc("POINT(18.42 -33.91)", crs = "EPSG:4326")
+
+soi_3857 <- st_transform(soi_4326, "EPSG:3857")
+capetown_3857 <- st_transform(capetown_4326, "EPSG:3857")
+
+sf_use_s2(FALSE)
+d1 <- st_distance(soi_4326, capetown_4326)
+sf_use_s2(TRUE)
+d2 <- st_distance(soi_4326, capetown_4326)
+d3 <- st_distance(soi_3857, capetown_3857)
+
+units::set_units(c(d1, d2, d3), "km")
+```
+ 
+Once again, the results obtained when using the Pseudo-Mercator projection are completely wrong.
+
+In the chapter on coordinate reference systems, we discovered that there are often several possible transformation pipelines when transforming data between two different CRSs. The PROJ library is always trying to automatically use the best available pipeline. If for some reason you need to perform a CRS transformation using another pipeline than the one automatically chosen by PROJ, you can specify the desired pipeline inside the `st_transform()` function. You first need to call the `sf_proj_pipelines()` function to get a list of the available pipelines. You can then use the desired pipeline definition inside the `st_transform()` function using the `pipeline` argument. In the next example we see how to use the two different pipelines available to transform data from the old and deprecated Swiss CRS (EPSG:21781) to the current one (EPSG:2056).
+
+```{r}
+pt <- st_as_sfc("POINT(500000 118000)", crs = "EPSG:21781")
+
+sf_proj_network(enable = TRUE)
+pipe <- sf_proj_pipelines(source_crs = "EPSG:21781", target_crs = "EPSG:2056")
+pipe$definition
+
+st_coordinates(st_transform(pt, "EPSG:2056", pipeline = pipe$definition[1]))
+st_coordinates(st_transform(pt, "EPSG:2056", pipeline = pipe$definition[2]))
+```
+
+We see that there is a difference of 1 meter for the *x* coordinate between the first pipeline (the most accurate) and the second one.

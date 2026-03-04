@@ -52,7 +52,7 @@ landcover <- as.factor(landcover)
 plot(landcover)
 ```
 
-When processing raster data found in the wild, you'll see that it's unfortunately not so rare to find data where the CRS is not defined inside the raster file. If you know which CRS was used (check the metadata), you can easily add this information to the data set with the `crs()` function. The same function can be used the query the CRS.
+When processing raster data found in the wild, you'll see that it's unfortunately not so rare to find data where the CRS is not defined inside the raster file. If you know which CRS was used (check the metadata), you can easily add this information to the data set with the `crs()` function.
 
 ```{r}
 landcover2 <- rast("data/landcover_nocrs.tif")
@@ -740,7 +740,7 @@ plot(v)
 ```
 
 
-## CRS transformations
+## CRS transformations {#sec-raster_crs_transformations}
 
 ::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
 Run the following code to load and create everything you'll need to run the examples in this section.
@@ -753,7 +753,7 @@ landcover <- as.factor(landcover)
 ```
 :::
 
-Performing CRS transformations on vector data sets in relatively easy since you only have to transform the vertices. It is a bit more complex with raster data sets. Projecting a raster data involves a resampling, the geometric characteristics of your raster will change and the pixel values will be recomputed. If you have vector data in a specific CRS and rasters in another CRS but you want to use a common CRS, it's usually better to transform the vectors. Since the operation involves resampling we also need to define the interpolation function. As we've seen before, you need to be careful when projecting discrete rasters and use nearest neighbor interpolation.
+Performing CRS transformations on vector data sets is relatively easy since you only have to transform the vertices. It is a bit more complex with raster data sets. Transforming a raster involves a resampling, which means the geometric characteristics of your raster will change and the pixel values will be recomputed. If you have vector data in a specific CRS and rasters in another CRS but you want to use a common CRS, it is usually better to transform the vectors. Since the transformation of rasters involves resampling, we also need to define the interpolation function. As we've seen before, you need to be careful when projecting discrete rasters and use nearest neighbor interpolation. You should also be careful when projecting a raster where the pixel values are representing angles (such as exposition). Ideally you should use some sort of circular statistics in this case.
 
 ```{r}
 elev_wgs84 <- project(elev, "EPSG:4326", method = "bilinear")
