@@ -325,7 +325,7 @@ window.Quarto = {
   <li><a href="#convex-and-concave-hulls" id="toc-convex-and-concave-hulls" class="nav-link" data-scroll-target="#convex-and-concave-hulls"><span class="header-section-number">5.15</span> Convex and concave hulls</a></li>
   <li><a href="#neighborhood-analyses" id="toc-neighborhood-analyses" class="nav-link" data-scroll-target="#neighborhood-analyses"><span class="header-section-number">5.16</span> Neighborhood analyses</a></li>
   <li><a href="#geocoding" id="toc-geocoding" class="nav-link" data-scroll-target="#geocoding"><span class="header-section-number">5.17</span> Geocoding</a></li>
-  <li><a href="#crs-transformations" id="toc-crs-transformations" class="nav-link" data-scroll-target="#crs-transformations"><span class="header-section-number">5.18</span> CRS transformations</a></li>
+  <li><a href="#sec-vector_crs_transformations" id="toc-sec-vector_crs_transformations" class="nav-link" data-scroll-target="#sec-vector_crs_transformations"><span class="header-section-number">5.18</span> CRS transformations</a></li>
   </ul>
 </nav>
     </div>
@@ -723,10 +723,10 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <code>st_perimeter()</code> function was not available in older versions of the <code>sf</code> package. The <code>lwgeom</code> package was needed to perform this computation.</p>
+<p>The <code>lwgeom</code> package is required in order to use the <code>st_perimeter()</code> function.</p>
 </div>
 </div>
-<p>If you use unprojected data (i.e., with a geographic CRS), <code>sf</code> will automatically use the <code>s2</code> library to compute areas, perimeters and lengths.</p>
+<p>If you use unprojected data (i.e., with a geographic CRS), <code>sf</code> will automatically use the S2 library to compute areas, perimeters and lengths.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_area</span>(World[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -739,7 +739,7 @@ Note
 [1]  4552620.2   831564.7  6782465.9  6031452.9 29709970.9</code></pre>
 </div>
 </div>
-<p>The <code>s2</code> library performs its computations on a sphere. For areas and lengths, it is possible to obtain a better approximation by using an ellipsoid. You can do this by turning off the <code>s2</code> library with the <code>sf_use_s2(FALSE)</code> function. In this case, <code>sf</code> will automatically use equivalent functions provided by the <code>lwgeom</code><span class="citation" data-cites="pebesma_lwgeom_2023"><sup><a href="references.html#ref-pebesma_lwgeom_2023" role="doc-biblioref">1</a></sup></span> package. These functions use algorithms from the GeographicLib library which are to my knowledge the most precise approximations you can currently get. Don’t forget to reactivate <code>s2</code> (using the <code>sf_use_s2(TRUE)</code> function) when you’re done.</p>
+<p>The S2 library performs its computations on a sphere. For areas and lengths, it is possible to obtain a better approximation by using an ellipsoid. You can do this by turning off the S2 library with the <code>sf_use_s2(FALSE)</code> function. In this case, <code>sf</code> will automatically use equivalent functions provided by the <code>lwgeom</code><span class="citation" data-cites="pebesma_lwgeom_2023"><sup><a href="references.html#ref-pebesma_lwgeom_2023" role="doc-biblioref">1</a></sup></span> package. These functions use algorithms from the <a href="https://geographiclib.sourceforge.io" target="_blank">GeographicLib</a> library which are to my knowledge the most precise approximations you can currently get. Don’t forget to reactivate S2 (using the <code>sf_use_s2(TRUE)</code> function) when you’re done.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_use_s2</span>(<span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -770,7 +770,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You should normally not turn <code>s2</code> off. Computing areas and lengths (and distances, as we will see later) are probably the only valid cases where turning <code>s2</code> off is a good idea. For all other computations based on geographic CRSs you should NOT deactivate <code>s2</code>, otherwise you’ll get results that will most probably be wrong.</p>
+<p>You should normally not turn S2 off. Computing areas and lengths (and distances, as we will see later) are probably the only valid cases where turning S2 off is a good idea. For all other computations based on geographic CRSs you should NOT deactivate S2, otherwise you’ll get results that will most probably be wrong.</p>
 </div>
 </div>
 </section>
@@ -1583,7 +1583,7 @@ If you start from here…
 </div>
 </div>
 <p>The distances are measured between the points and the nearest edge of the polygons if they are located outside the polygons. The distance will be 0 if they are within the polygon.</p>
-<p>We will now make a short excursion in the world of geographic CRS with a quick example showing what <code>sf</code> is doing when we don’t use standard Euclidean geometry. We will compute the distance between the centroids of Switzerland and Australia. By default <code>sf</code> is using the <code>s2</code> library to perform its computations on a sphere when we use a geographic CRS. However for distances, it is possible to obtain better approximations by using an ellipsoid. To do this, we need to tell <code>sf</code> to avoid using <code>s2</code> with the function <code>sf_use_s2(FALSE)</code>. The <code>st_distance()</code> will thus be forced to use a more precise algorithm (by automatically using a similar function from the <code>lwgeom</code> package). We can of course compare the two estimates.</p>
+<p>We will now make a short excursion in the world of geographic CRS with a quick example showing what <code>sf</code> is doing when we don’t use standard Euclidean geometry. We will compute the distance between the centroids of Switzerland and Australia. By default <code>sf</code> is using the S2 library to perform its computations on a sphere when we use a geographic CRS. However for distances, it is possible to obtain better approximations by using an ellipsoid. To do this, we need to tell <code>sf</code> to avoid using S2 with the function <code>sf_use_s2(FALSE)</code>. The <code>st_distance()</code> will thus be forced to use a more precise algorithm (by automatically using a similar function from the <code>lwgeom</code> package). We can of course compare the two estimates.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a>world_centroids <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(World)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1660,7 +1660,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>We’ve already seen examples where turning <code>s2</code> off will provide more precise results when using a geographic CRS. But keep in mind that computing areas, lengths or distances are probably the only valid cases where turning <code>s2</code> off is a good idea. For all other computations based on geographic CRSs you should NOT deactivate <code>s2</code>, otherwise you’ll get results that will most probably be wrong.</p>
+<p>We’ve already seen examples where turning S2 off will provide more precise results when using a geographic CRS. But keep in mind that computing areas, lengths or distances are probably the only valid cases where turning S2 off is a good idea. For all other computations based on geographic CRSs you should NOT deactivate S2, otherwise you’ll get results that will most probably be nonsensical.</p>
 </div>
 </div>
 </section>
@@ -2412,7 +2412,7 @@ If you start from here…
 <span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a>temp_dist <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(samples_ssi)</span>
 <span id="cb224-3"><a href="#cb224-3" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(temp_dist[temp_dist <span class="sc">&gt;</span> <span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 51.26621</code></pre>
+<pre><code>[1] 64.33644</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb226"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(sempach), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
 <span id="cb226-2"><a href="#cb226-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(samples_ssi), <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2822,8 +2822,8 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 </section>
-<section id="crs-transformations" class="level2" data-number="5.18">
-<h2 data-number="5.18" class="anchored" data-anchor-id="crs-transformations"><span class="header-section-number">5.18</span> CRS transformations</h2>
+<section id="sec-vector_crs_transformations" class="level2" data-number="5.18">
+<h2 data-number="5.18" class="anchored" data-anchor-id="sec-vector_crs_transformations"><span class="header-section-number">5.18</span> CRS transformations</h2>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2839,84 +2839,71 @@ If you start from here…
 <p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb273"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb273-1"><a href="#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb273-2"><a href="#cb273-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb273-2"><a href="#cb273-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb273-3"><a href="#cb273-3" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/observations.csv"</span>)</span>
+<span id="cb273-4"><a href="#cb273-4" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(obs, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>), <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb273-5"><a href="#cb273-5" aria-hidden="true" tabindex="-1"></a>soi <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="st">"POINT(2657271 1219754)"</span>, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
-<p>If the data sets you’re using have different CRSs, it’s usually a good idea to transform some of them so that they all have the same CRS. We need the <code>st_transform()</code> function to do this. Sometimes we also say that we “project” the data to another CRS (however, transformations between geographic CRSs are not really projections).</p>
-<p>Here we first check the CRS of the <code>World</code> data set using the <code>st_crs()</code> function and compute a graticule (grid). Then we project the data set to three different projected CRSs, the Swiss CRS, the Equal Earth projection and the Robinson projection. If we use a CRS with an EPSG number, we can also use the integer value directly (without specifying “EPSG:”). However it’s a good habit to always specify the provider to avoid confusions.</p>
+<p>If the data sets you’re using have different CRSs, it’s usually a good idea to transform some of them so that they all have the same CRS. When using a projected CRS, we can also say that we project the data to another CRS. However, transformations between geographic CRSs are not projections. The <code>st_transform()</code> function is the only one we need to perform all the available CRS transformations.</p>
+<p>The first argument of <code>st_transform()</code> is the object (<code>sf</code> or <code>sfc</code>) we want to transform, the second argument is the CRS we want to use. The CRS is specified using the authority:identifier form. If we use a CRS with an EPSG number, we can also use the integer value directly (without specifying “EPSG:”). However it’s a good habit to always specify the authority to avoid confusions. As a first example, let’s check the CRS of our bird sightings and then perform a CRS transformation to EPSG:4326 (WGS 84).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb274"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb274-1"><a href="#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(World)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb274"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb274-1"><a href="#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(obs)<span class="sc">$</span>Name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Coordinate Reference System:
-  User input: EPSG:4326 
-  wkt:
-GEOGCRS["WGS 84",
-    ENSEMBLE["World Geodetic System 1984 ensemble",
-        MEMBER["World Geodetic System 1984 (Transit)"],
-        MEMBER["World Geodetic System 1984 (G730)"],
-        MEMBER["World Geodetic System 1984 (G873)"],
-        MEMBER["World Geodetic System 1984 (G1150)"],
-        MEMBER["World Geodetic System 1984 (G1674)"],
-        MEMBER["World Geodetic System 1984 (G1762)"],
-        MEMBER["World Geodetic System 1984 (G2139)"],
-        ELLIPSOID["WGS 84",6378137,298.257223563,
-            LENGTHUNIT["metre",1]],
-        ENSEMBLEACCURACY[2.0]],
-    PRIMEM["Greenwich",0,
-        ANGLEUNIT["degree",0.0174532925199433]],
-    CS[ellipsoidal,2],
-        AXIS["geodetic latitude (Lat)",north,
-            ORDER[1],
-            ANGLEUNIT["degree",0.0174532925199433]],
-        AXIS["geodetic longitude (Lon)",east,
-            ORDER[2],
-            ANGLEUNIT["degree",0.0174532925199433]],
-    USAGE[
-        SCOPE["Horizontal component of 3D system."],
-        AREA["World."],
-        BBOX[-90,-180,90,180]],
-    ID["EPSG",4326]]</code></pre>
+<pre><code>[1] "CH1903+ / LV95"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb276"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb276-1"><a href="#cb276-1" aria-hidden="true" tabindex="-1"></a>grat <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>()</span>
-<span id="cb276-2"><a href="#cb276-2" aria-hidden="true" tabindex="-1"></a>world_ch <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"EPSG:2056"</span>)</span>
-<span id="cb276-3"><a href="#cb276-3" aria-hidden="true" tabindex="-1"></a>grat_ch <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"EPSG:2056"</span>)</span>
-<span id="cb276-4"><a href="#cb276-4" aria-hidden="true" tabindex="-1"></a>world_equal <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"EPSG:8857"</span>)</span>
-<span id="cb276-5"><a href="#cb276-5" aria-hidden="true" tabindex="-1"></a>grat_equal <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"EPSG:8857"</span>)</span>
-<span id="cb276-6"><a href="#cb276-6" aria-hidden="true" tabindex="-1"></a>world_rob <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"ESRI:54030"</span>)</span>
-<span id="cb276-7"><a href="#cb276-7" aria-hidden="true" tabindex="-1"></a>grat_rob <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"ESRI:54030"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb276"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb276-1"><a href="#cb276-1" aria-hidden="true" tabindex="-1"></a>obs_wgs <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(obs, <span class="st">"EPSG:4326"</span>)</span>
+<span id="cb276-2"><a href="#cb276-2" aria-hidden="true" tabindex="-1"></a>obs_wgs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 530 features and 3 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 8.092236 ymin: 47.11564 xmax: 8.230824 ymax: 47.17866
+Geodetic CRS:  WGS 84
+First 10 features:
+   species_id               name       date                  geometry
+1        4240 Eurasian Blackbird 2022-04-12 POINT (8.208891 47.13692)
+2        3800  Eurasian Blue Tit 2022-04-12 POINT (8.209034 47.13864)
+3        4240 Eurasian Blackbird 2022-05-09 POINT (8.211216 47.13909)
+4        4240 Eurasian Blackbird 2022-05-09 POINT (8.211077 47.13862)
+5        4240 Eurasian Blackbird 2022-05-09 POINT (8.210684 47.13699)
+6        3800  Eurasian Blue Tit 2022-05-09 POINT (8.209452 47.13654)
+7        4240 Eurasian Blackbird 2022-05-09 POINT (8.209992 47.13924)
+8        3800  Eurasian Blue Tit 2022-05-09  POINT (8.21003 47.13915)
+9        4240 Eurasian Blackbird 2022-05-23 POINT (8.210732 47.13936)
+10       4240 Eurasian Blackbird 2022-05-23  POINT (8.209176 47.1366)</code></pre>
 </div>
-<p>When we plot that data, we first see that, not surprisingly, the Swiss CRS is not adapted at all for global data, and that the Equal Earth and Robinson projections give a pleasing result. Both of these projections are good choices for world maps.</p>
+</div>
+<p>We see that our <code>sf</code> object is now using the chosen geographic CRS, and the geometry column was modified (the coordinates are now in degrees).</p>
+<p>In the next example we first compute a graticule (i.e.&nbsp;a grid). Then we project the <code>World</code> data set with the associated graticule using three different projected CRSs, the Swiss CRS, the Equal Earth projection and the Robinson projection.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb277"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb277-2"><a href="#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(World), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
-<span id="cb277-3"><a href="#cb277-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb277-4"><a href="#cb277-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_ch), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
-<span id="cb277-5"><a href="#cb277-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_ch), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb277-6"><a href="#cb277-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_equal), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
-<span id="cb277-7"><a href="#cb277-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_equal), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb277-8"><a href="#cb277-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_rob), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
-<span id="cb277-9"><a href="#cb277-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_rob), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb278"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb278-1"><a href="#cb278-1" aria-hidden="true" tabindex="-1"></a>grat <span class="ot">&lt;-</span> <span class="fu">st_graticule</span>()</span>
+<span id="cb278-2"><a href="#cb278-2" aria-hidden="true" tabindex="-1"></a>world_ch <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb278-3"><a href="#cb278-3" aria-hidden="true" tabindex="-1"></a>grat_ch <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb278-4"><a href="#cb278-4" aria-hidden="true" tabindex="-1"></a>world_equal <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"EPSG:8857"</span>)</span>
+<span id="cb278-5"><a href="#cb278-5" aria-hidden="true" tabindex="-1"></a>grat_equal <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"EPSG:8857"</span>)</span>
+<span id="cb278-6"><a href="#cb278-6" aria-hidden="true" tabindex="-1"></a>world_rob <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"ESRI:54030"</span>)</span>
+<span id="cb278-7"><a href="#cb278-7" aria-hidden="true" tabindex="-1"></a>grat_rob <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"ESRI:54030"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When we plot that data, we first see that, not surprisingly, the Swiss CRS is not adapted at all for global data, and that the Equal Earth and Robinson projections both give pleasing results. These two projections are good choices for world maps.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb279"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb279-1"><a href="#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb279-2"><a href="#cb279-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(World), <span class="at">col =</span> <span class="st">"grey90"</span>, <span class="at">main =</span> <span class="st">"WGS84 (plate carrée)"</span>)</span>
+<span id="cb279-3"><a href="#cb279-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb279-4"><a href="#cb279-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_ch), <span class="at">col =</span> <span class="st">"grey90"</span>, <span class="at">main =</span> <span class="st">"Swiss projection"</span>)</span>
+<span id="cb279-5"><a href="#cb279-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_ch), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb279-6"><a href="#cb279-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_equal), <span class="at">col =</span> <span class="st">"grey90"</span>, <span class="at">main =</span> <span class="st">"Equal Earth projection"</span>)</span>
+<span id="cb279-7"><a href="#cb279-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_equal), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb279-8"><a href="#cb279-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_rob), <span class="at">col =</span> <span class="st">"grey90"</span>, <span class="at">main =</span> <span class="st">"Robinson projection"</span>)</span>
+<span id="cb279-9"><a href="#cb279-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_rob), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vectors_tips_files/figure-html/unnamed-chunk-114-1.png" class="img-fluid figure-img" width="864"></p>
+<p><img src="vectors_tips_files/figure-html/unnamed-chunk-115-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The <code>st_crs()</code> function is used to query or assign a CRS, but it does not perform any CRS transformation!</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise (5 minutes)">
@@ -2933,15 +2920,91 @@ Exercise (5 minutes)
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb278"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb278-1"><a href="#cb278-1" aria-hidden="true" tabindex="-1"></a>world_bonne <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"ESRI:54024"</span>)</span>
-<span id="cb278-2"><a href="#cb278-2" aria-hidden="true" tabindex="-1"></a>grat_bonne <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"ESRI:54024"</span>)</span>
-<span id="cb278-3"><a href="#cb278-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb278-4"><a href="#cb278-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_bonne), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
-<span id="cb278-5"><a href="#cb278-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_bonne), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb280"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb280-1"><a href="#cb280-1" aria-hidden="true" tabindex="-1"></a>world_bonne <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(World, <span class="st">"ESRI:54024"</span>)</span>
+<span id="cb280-2"><a href="#cb280-2" aria-hidden="true" tabindex="-1"></a>grat_bonne <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(grat, <span class="st">"ESRI:54024"</span>)</span>
+<span id="cb280-3"><a href="#cb280-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb280-4"><a href="#cb280-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(world_bonne), <span class="at">col =</span> <span class="st">"grey90"</span>)</span>
+<span id="cb280-5"><a href="#cb280-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(grat_bonne), <span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
 </div>
+<p>We’ve already seen that the Pseudo-Mercator projection (EPSG:3857) used by most online maps should be avoided at all costs when computing measurements such as areas or distances. As an example, let’s compute the “true” area of Greenland using a geographic CRS, first with the most precise approximation and then using S2. After that we compare these areas with the estimated area after projecting Greenland to Pseudo-Mercator.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb281"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb281-1"><a href="#cb281-1" aria-hidden="true" tabindex="-1"></a>greenland <span class="ot">&lt;-</span> World[World<span class="sc">$</span>name <span class="sc">==</span> <span class="st">"Greenland"</span>,]</span>
+<span id="cb281-2"><a href="#cb281-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb281-3"><a href="#cb281-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_use_s2</span>(<span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Spherical geometry (s2) switched off</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb283"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb283-1"><a href="#cb283-1" aria-hidden="true" tabindex="-1"></a>a1 <span class="ot">&lt;-</span> <span class="fu">st_area</span>(greenland)</span>
+<span id="cb283-2"><a href="#cb283-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_use_s2</span>(<span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Spherical geometry (s2) switched on</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb285"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb285-1"><a href="#cb285-1" aria-hidden="true" tabindex="-1"></a>a2 <span class="ot">&lt;-</span> <span class="fu">st_area</span>(greenland)</span>
+<span id="cb285-2"><a href="#cb285-2" aria-hidden="true" tabindex="-1"></a>a3 <span class="ot">&lt;-</span> <span class="fu">st_area</span>(<span class="fu">st_transform</span>(greenland, <span class="st">"EPSG:3857"</span>))</span>
+<span id="cb285-3"><a href="#cb285-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb285-4"><a href="#cb285-4" aria-hidden="true" tabindex="-1"></a>units<span class="sc">::</span><span class="fu">set_units</span>(<span class="fu">c</span>(a1, a2, a3), <span class="st">"km^2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Units: [km^2]
+[1]  2206662  2189770 36285880</code></pre>
+</div>
+</div>
+<p>When projected using the Pseudo-Mercator projection, the estimated area of Greenland is almost twice its true area.</p>
+<p>To see how bad distance estimations are when using Pseudo-Mercator, let’s compute the “true” distance between the Swiss Ornithological Institute and Cape Town using a geographic CRS, first with the most precise approximation and then using S2. After that we compare these distances with the estimated distance after projecting both points to Pseudo-Mercator.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb287"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb287-1"><a href="#cb287-1" aria-hidden="true" tabindex="-1"></a>soi_4326 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(soi, <span class="st">"EPSG:4326"</span>)</span>
+<span id="cb287-2"><a href="#cb287-2" aria-hidden="true" tabindex="-1"></a>capetown_4326 <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="st">"POINT(18.42 -33.91)"</span>, <span class="at">crs =</span> <span class="st">"EPSG:4326"</span>)</span>
+<span id="cb287-3"><a href="#cb287-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb287-4"><a href="#cb287-4" aria-hidden="true" tabindex="-1"></a>soi_3857 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(soi_4326, <span class="st">"EPSG:3857"</span>)</span>
+<span id="cb287-5"><a href="#cb287-5" aria-hidden="true" tabindex="-1"></a>capetown_3857 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(capetown_4326, <span class="st">"EPSG:3857"</span>)</span>
+<span id="cb287-6"><a href="#cb287-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb287-7"><a href="#cb287-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_use_s2</span>(<span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Spherical geometry (s2) switched off</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb289"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb289-1"><a href="#cb289-1" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(soi_4326, capetown_4326)</span>
+<span id="cb289-2"><a href="#cb289-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_use_s2</span>(<span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Spherical geometry (s2) switched on</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb291"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb291-1"><a href="#cb291-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(soi_4326, capetown_4326)</span>
+<span id="cb291-2"><a href="#cb291-2" aria-hidden="true" tabindex="-1"></a>d3 <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(soi_3857, capetown_3857)</span>
+<span id="cb291-3"><a href="#cb291-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb291-4"><a href="#cb291-4" aria-hidden="true" tabindex="-1"></a>units<span class="sc">::</span><span class="fu">set_units</span>(<span class="fu">c</span>(d1, d2, d3), <span class="st">"km"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Units: [km]
+[1]  9033.199  9068.657 10044.160</code></pre>
+</div>
+</div>
+<p>Once again, the results obtained when using the Pseudo-Mercator projection are completely wrong.</p>
+<p>In the chapter on coordinate reference systems, we discovered that there are often several possible transformation pipelines when transforming data between two different CRSs. The PROJ library is always trying to automatically use the best available pipeline. If for some reason you need to perform a CRS transformation using another pipeline than the one automatically chosen by PROJ, you can specify the desired pipeline inside the <code>st_transform()</code> function. You first need to call the <code>sf_proj_pipelines()</code> function to get a list of the available pipelines. You can then use the desired pipeline definition inside the <code>st_transform()</code> function using the <code>pipeline</code> argument. In the next example we see how to use the two different pipelines available to transform data from the old and deprecated Swiss CRS (EPSG:21781) to the current one (EPSG:2056).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb293"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb293-1"><a href="#cb293-1" aria-hidden="true" tabindex="-1"></a>pt <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="st">"POINT(500000 118000)"</span>, <span class="at">crs =</span> <span class="st">"EPSG:21781"</span>)</span>
+<span id="cb293-2"><a href="#cb293-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb293-3"><a href="#cb293-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_proj_network</span>(<span class="at">enable =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "https://cdn.proj.org"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb295"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb295-1"><a href="#cb295-1" aria-hidden="true" tabindex="-1"></a>pipe <span class="ot">&lt;-</span> <span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:21781"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb295-2"><a href="#cb295-2" aria-hidden="true" tabindex="-1"></a>pipe<span class="sc">$</span>definition</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "+proj=pipeline +step +inv +proj=somerc +lat_0=46.9524055555556 +lon_0=7.43958333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel +step +proj=hgridshift +grids=ch_swisstopo_CHENyx06a.tif +step +proj=somerc +lat_0=46.9524055555556 +lon_0=7.43958333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel"
+[2] "+proj=pipeline +step +inv +proj=somerc +lat_0=46.9524055555556 +lon_0=7.43958333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel +step +proj=somerc +lat_0=46.9524055555556 +lon_0=7.43958333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel"                                                         </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb297"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb297-1"><a href="#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_coordinates</span>(<span class="fu">st_transform</span>(pt, <span class="st">"EPSG:2056"</span>, <span class="at">pipeline =</span> pipe<span class="sc">$</span>definition[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           X       Y
+[1,] 2499999 1118000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb299"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb299-1"><a href="#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_coordinates</span>(<span class="fu">st_transform</span>(pt, <span class="st">"EPSG:2056"</span>, <span class="at">pipeline =</span> pipe<span class="sc">$</span>definition[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           X       Y
+[1,] 2500000 1118000</code></pre>
+</div>
+</div>
+<p>We see that there is a difference of 1 meter for the <em>x</em> coordinate between the first pipeline (the most accurate) and the second one.</p>
 
 
 <div id="refs" class="references csl-bib-body" role="list" style="display: none">

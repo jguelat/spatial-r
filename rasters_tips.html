@@ -271,7 +271,7 @@ window.Quarto = {
   <li><a href="#generate-raster-covariates" id="toc-generate-raster-covariates" class="nav-link" data-scroll-target="#generate-raster-covariates"><span class="header-section-number">6.9</span> Generate raster covariates</a></li>
   <li><a href="#rasterize-vector-data" id="toc-rasterize-vector-data" class="nav-link" data-scroll-target="#rasterize-vector-data"><span class="header-section-number">6.10</span> Rasterize vector data</a></li>
   <li><a href="#viewshed" id="toc-viewshed" class="nav-link" data-scroll-target="#viewshed"><span class="header-section-number">6.11</span> Viewshed</a></li>
-  <li><a href="#crs-transformations" id="toc-crs-transformations" class="nav-link" data-scroll-target="#crs-transformations"><span class="header-section-number">6.12</span> CRS transformations</a></li>
+  <li><a href="#sec-raster_crs_transformations" id="toc-sec-raster_crs_transformations" class="nav-link" data-scroll-target="#sec-raster_crs_transformations"><span class="header-section-number">6.12</span> CRS transformations</a></li>
   </ul>
 </nav>
     </div>
@@ -372,7 +372,7 @@ max value   : 26 </code></pre>
 </div>
 </div>
 </div>
-<p>When processing raster data found in the wild, you’ll see that it’s unfortunately not so rare to find data where the CRS is not defined inside the raster file. If you know which CRS was used (check the metadata), you can easily add this information to the data set with the <code>crs()</code> function. The same function can be used the query the CRS.</p>
+<p>When processing raster data found in the wild, you’ll see that it’s unfortunately not so rare to find data where the CRS is not defined inside the raster file. If you know which CRS was used (check the metadata), you can easily add this information to the data set with the <code>crs()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>landcover2 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover_nocrs.tif"</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>landcover2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -466,8 +466,8 @@ extent      : 2643988, 2664988, 1212913, 1228013  (xmin, xmax, ymin, ymax)
 coord. ref. :  
 source(s)   : memory
 names       : dem,      rand 
-min values  : 425, -4.575018 
-max values  : 930,  4.434176 </code></pre>
+min values  : 425, -4.732232 
+max values  : 930,  4.449897 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev2, <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1483,8 +1483,8 @@ If you start from here…
 </div>
 </div>
 </section>
-<section id="crs-transformations" class="level2" data-number="6.12">
-<h2 data-number="6.12" class="anchored" data-anchor-id="crs-transformations"><span class="header-section-number">6.12</span> CRS transformations</h2>
+<section id="sec-raster_crs_transformations" class="level2" data-number="6.12">
+<h2 data-number="6.12" class="anchored" data-anchor-id="sec-raster_crs_transformations"><span class="header-section-number">6.12</span> CRS transformations</h2>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1507,7 +1507,7 @@ If you start from here…
 </div>
 </div>
 </div>
-<p>Performing CRS transformations on vector data sets in relatively easy since you only have to transform the vertices. It is a bit more complex with raster data sets. Projecting a raster data involves a resampling, the geometric characteristics of your raster will change and the pixel values will be recomputed. If you have vector data in a specific CRS and rasters in another CRS but you want to use a common CRS, it’s usually better to transform the vectors. Since the operation involves resampling we also need to define the interpolation function. As we’ve seen before, you need to be careful when projecting discrete rasters and use nearest neighbor interpolation.</p>
+<p>Performing CRS transformations on vector data sets is relatively easy since you only have to transform the vertices. It is a bit more complex with raster data sets. Transforming a raster involves a resampling, which means the geometric characteristics of your raster will change and the pixel values will be recomputed. If you have vector data in a specific CRS and rasters in another CRS but you want to use a common CRS, it is usually better to transform the vectors. Since the transformation of rasters involves resampling, we also need to define the interpolation function. As we’ve seen before, you need to be careful when projecting discrete rasters and use nearest neighbor interpolation. You should also be careful when projecting a raster where the pixel values are representing angles (such as exposition). Ideally you should use some sort of circular statistics in this case.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>elev_wgs84 <span class="ot">&lt;-</span> <span class="fu">project</span>(elev, <span class="st">"EPSG:4326"</span>, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
 <span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>landcover_wgs84 <span class="ot">&lt;-</span> <span class="fu">project</span>(landcover, <span class="st">"EPSG:4326"</span>, <span class="at">method =</span> <span class="st">"near"</span>)</span>

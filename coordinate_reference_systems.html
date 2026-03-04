@@ -227,8 +227,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">4.1</span> Introduction</a></li>
+  <li><a href="#geographic-crss" id="toc-geographic-crss" class="nav-link" data-scroll-target="#geographic-crss"><span class="header-section-number">4.2</span> Geographic CRSs</a></li>
+  <li><a href="#projected-crss" id="toc-projected-crss" class="nav-link" data-scroll-target="#projected-crss"><span class="header-section-number">4.3</span> Projected CRSs</a></li>
+  <li><a href="#crs-representation" id="toc-crs-representation" class="nav-link" data-scroll-target="#crs-representation"><span class="header-section-number">4.4</span> CRS representation</a></li>
+  <li><a href="#crs-query-and-assignment" id="toc-crs-query-and-assignment" class="nav-link" data-scroll-target="#crs-query-and-assignment"><span class="header-section-number">4.5</span> CRS query and assignment</a></li>
+  <li><a href="#crs-transformations" id="toc-crs-transformations" class="nav-link" data-scroll-target="#crs-transformations"><span class="header-section-number">4.6</span> CRS transformations</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -252,27 +262,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-If you start from here…
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-<p>The majority of normal people will get scared if there’s some problem to solve involving coordinate reference systems or projections. That’s why I will keep this part really short and only show you the stuff you will need to perform standard GIS analyses with R. If you want to read more about this (extremely interesting) topic, I invite you to read the following book chapters: <a href="https://r.geocompx.org/spatial-class.html#crs-intro" target="_blank">https://r.geocompx.org/spatial-class.html#crs-intro</a> and <a href="https://tmap.geocompx.org/map-projections" target="_blank">https://tmap.geocompx.org/map-projections</a>.</p>
-<p>There is a famous expression saying “spatial is special”… One of the main reasons is that such data will have an associated location and you thus need a reference frame to describe this location. This reference frame is called a coordinate reference system (CRS) in the GIS world. CRSs can be either geographic or projected.</p>
+<section id="introduction" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">4.1</span> Introduction</h2>
+<p>The majority of normal people will get scared if there’s some problem to solve involving coordinate reference systems (also called spatial reference systems) or projections. That’s why I will keep this section as short as possible and provide only the information you’ll need to perform standard GIS analyses with R. If you want to read more about this topic, I invite you to read the following book chapters: <a href="https://r.geocompx.org/spatial-class.html#crs-intro" target="_blank">https://r.geocompx.org/spatial-class.html#crs-intro</a>, <a href="https://r.geocompx.org/reproj-geo-data" target="_blank">https://r.geocompx.org/reproj-geo-data</a> and <a href="https://tmap.geocompx.org/map-projections" target="_blank">https://tmap.geocompx.org/map-projections</a>.</p>
+<p>There is a famous expression saying “spatial is special”… One of the main reasons is that spatial data will have associated locations and you thus need a reference frame to describe these locations. This reference frame is called a coordinate reference system (CRS) in the GIS world. Coordinate reference systems can be either geographic or projected.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -283,11 +276,13 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>When you’re working with GIS data, you should always know the CRS you’re using. Otherwise coordinates are just numbers without a reference frame. When you share GIS data, make sure the CRS is always defined in the data set or documented in some other way. The CRS of <code>sf</code> objects can be queried with the <code>st_crs()</code> function, for <code>terra</code> objects you should use the <code>crs()</code> function.</p>
+<p>When you’re working with GIS data, you should always know the CRS you’re using. Otherwise coordinates are just numbers without a reference frame. When you share GIS data, make sure the CRS is always defined in the data set or documented in some other way.</p>
 </div>
 </div>
-<p>A geographic CRS will identify locations on a sphere or an ellipsoid using 2 values: latitude and longitude. The shape of the Earth is actually a geoid, but it is too complex to perform computations and thus one has to use approximations. A perfect sphere is a crude approximation (which can still be useful), while an ellipsoid (also called spheroid) is a better approximation accounting for the fact that our planet is a bit compressed (flatter at the North and South Poles). Geographic coordinate systems are not using a projection! All the computations (distances, buffers, etc.) have to happen on the chosen sphere/ellipsoid, which makes things more complex. It is easy to make mistakes when working with geographic CRSs, and even smart people fell in this trap (e.g.&nbsp;<a href="https://georeferenced.wordpress.com/2014/05/22/worldmapblunders" target="_blank">https://georeferenced.wordpress.com/2014/05/22/worldmapblunders</a>).</p>
-<p>Projected CRSs are based on geographic CRSs but include an additional step: a projection on a flat surface. When using a projected CRS, locations are described using Cartesian coordinates called easting and northing (x and y). Projecting a spherical or ellipsoidal surface on a plane will cause deformations. These will affect four properties of the surface: areas, distances, shapes and directions. A projected CRS can preserve only one or two of these properties. There exists a ton of different projections and all of them make different compromises, some are even totally useless (check this beautiful xkcd comic: <a href="https://xkcd.com/977" target="_blank">https://xkcd.com/977</a>). Choosing a projection can be challenging, especially if your data covers a very large area. The following websites allow you to visualize the main projection types: <a href="https://www.geo-projections.com" target="_blank">https://www.geo-projections.com</a> and <a href="https://map-projections.net/singleview.php" target="_blank">https://map-projections.net/singleview.php</a>. The second website also provides a nice tool to visualize distortions called a Tissot indicatrix. Fortunately, if your data is within a “smallish” area, it is relatively easy to find a good projected CRS that has only minimal distortions. Almost every country has its own recommended projected CRS (or CRSs), and if your data covers several countries, you can use a UTM (Universal Transverse Mercator) projection, or even better a Lambert azimuthal equal-area projection (set the latitude and the longitude of origin to the center of the study area).</p>
+</section>
+<section id="geographic-crss" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="geographic-crss"><span class="header-section-number">4.2</span> Geographic CRSs</h2>
+<p>A geographic CRS will identify locations using two values: longitude and latitude. However, these two values alone are insufficient to determine a precise location; they must be linked to a model that defines the shape of the Earth. The Earth’s actual shape is called a geoid, but it is almost impossible to perform computations using such a complex solid, and thus one has to use approximations. A perfect sphere is a crude approximation (which can still be useful), while an ellipsoid (also called spheroid) is a better approximation accounting for the fact that our planet is a bit compressed (flatter at the North and South Poles). Once we have chosen a shape, we need to fit it to the Earth. Since the Earth is not a perfect sphere, there’s an infinity of possible fits. An ellipsoid (or a sphere) fitted to the Earth is called a datum. Depending on the area of application of a CRS, we can use a global (also called geocentric) datum which provides an appropriate fit for the whole globe (such as WGS84), or a local datum which closely fits the Earth’s surface in a particular area.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -298,9 +293,50 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It is almost always easier to work with a projected CRS, except if your data is really global (or covering a really large area, like a continent). Moreover, most GIS software will (still) make the assumption that you’re data is on a flat plane, even if you’re working with a geographic CRS. The <code>sf</code> package is kind of an exception since it will by default perform calculations on a sphere if you use a geographic CRS, thanks to the s2 library.</p>
+<p>Coordinates in degrees (longitude and latitude) only have a precise meaning when the datum is provided… But most of the time you can assume that the associated datum is WGS84. Actually, WGS84 is a datum ensemble containing successive realizations of the reference system. Fortunately this can be ignored most of time, except if we need high positional accuracy.</p>
 </div>
 </div>
+<p>Remember that geographic coordinate systems are not using any projection, the measurements are done with angles! All the computations (distances, buffers, etc.) have to happen on the chosen sphere/ellipsoid, which makes things more complex. It is easy to make mistakes when working with geographic CRSs, and even smart people fell into this trap (e.g.&nbsp;<a href="https://georeferenced.wordpress.com/2014/05/22/worldmapblunders" target="_blank">https://georeferenced.wordpress.com/2014/05/22/worldmapblunders</a>).</p>
+</section>
+<section id="projected-crss" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="projected-crss"><span class="header-section-number">4.3</span> Projected CRSs</h2>
+<p>Projected CRSs are based on geographic CRSs but include an additional step: a projection on a flat surface. When using a projected CRS, locations are described using Cartesian coordinates called easting and northing (x and y). Projecting a spherical or ellipsoidal surface on a plane will cause deformations. These will affect four properties of the surface: shapes, areas, distances and directions. A map projection can satisfy at most two of these properties. Many map projections (especially global ones) do not fulfill any of these properties but are intended as a compromise (e.g.&nbsp;Robinson). The following table lists a few common projections based on their preserved property.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Property</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Conformal</td>
+<td>Preserves shape</td>
+<td>Mercator, Lambert conformal conic, Stereographic</td>
+</tr>
+<tr class="even">
+<td>Equal area</td>
+<td>Preserves area</td>
+<td>Equal Earth, Albers conic, Lambert azimuthal equal-area</td>
+</tr>
+<tr class="odd">
+<td>Equidistant</td>
+<td>Preserves distance</td>
+<td>Equirectangular, Equidistant conic, Azimuthal equidistant</td>
+</tr>
+<tr class="even">
+<td>Azimuthal</td>
+<td>Preserves direction</td>
+<td>Stereographic, Lambert azimuthal equal-area</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -311,10 +347,47 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The CRS used by almost all mapping websites (OpenStreetMap, Google Maps, etc.) should never be used for any analysis. It is a slightly modified version of the Mercator projection called Web Mercator or Pseudo-Mercator. It has some advantages allowing good visualization speed, but the distortions are massive. Check the following website: <a href="https://www.thetruesize.com" target="_blank">https://www.thetruesize.com</a>.</p>
+<p>The CRS used by almost all mapping websites (OpenStreetMap, Google Maps, etc.) should never be used for any analysis. It is a slightly modified version of the Mercator projection called Web Mercator or Pseudo-Mercator. It has some advantages allowing good visualization speed, but the distortions are massive. Check the following website: <a href="https://www.thetruesize.com" target="_blank">https://www.thetruesize.com</a>. Measurements (areas, distances, etc.) computed on data using this CRS will be completely wrong.</p>
 </div>
 </div>
-<p>With so many CRSs available, we need a way to classify them. That’s what the EPSG (European Petroleum Survey Group) started doing a few years ago. They collected and documented most available CRSs in a data set which is now called the EPSG Geodetic Parameter Dataset (<a href="https://epsg.org/home.html" target="_blank">https://epsg.org/home.html</a>). In this data set, every CRS has a unique identification number that can be used in a GIS software instead of writing the full definition of the CRS. The best available transformations between CRSs are also defined. Sadly this data set is still missing a few interesting CRSs and was thus completed by other companies such as ESRI. This is the reason why you’ll sometimes see ESRI codes instead of EPSG for some CRSs. To avoid confusion, CRSs are usually referenced by an SRID (Spatial Reference System Identifier), which is made of two components, an authority (such as EPSG or ESRI) and an identifier. If no authority is mentioned you can usually assume it’s coming from the EPSG data set (especially in the open-source GIS world). For clarity, I recommend always specifying the full SRID when working with CRSs. With <code>sf</code> and <code>terra</code> (and most other GIS packages), the SRID has to be written in the form “authority:identifier”.</p>
+<p>There exists a ton of different projections and all of them make different compromises, some are even totally useless (check this beautiful xkcd comic: <a href="https://xkcd.com/977" target="_blank">https://xkcd.com/977</a>). The following websites allow you to visualize the main projection types: <a href="https://www.geo-projections.com" target="_blank">https://www.geo-projections.com</a> and <a href="https://map-projections.net/singleview.php" target="_blank">https://map-projections.net/singleview.php</a>. Both websites also provides a nice tool to visualize distortions called Tissot’s indicatrices.</p>
+<p>Choosing a projection for your data can be challenging, especially if it covers a very large area. If you want to create world maps for which precision is not of utmost importance, I would recommend using the Robinson, Equal Earth or Winkel Tripel projections. For large areas, such as continents or a group of countries, the best choice will depend on the properties you want to preserve. Experts often recommend the Lambert azimuthal equal-area, the azimuthal equidistant and the Lambert conformical conic projections. Do not forget to set the latitude and the longitude of origin to the center of the study area. Using a UTM (Universal Transverse Mercator) projection is also a possibility if your data is contained in a single UTM zone. Since the distortions increase quickly when you move away from the center of a UTM zone, it is advised to restrict the longitudinal extent to 6 degrees from the central meridian of the chosen zone. The stereographic projection is especially interesting for polar regions. Things are getting easier if you work at the country level, since almost every country has its own recommended projected CRS (or CRSs).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is almost always easier to work with a projected CRS, except if your data is global or covering a really large area (like a continent). Moreover, most GIS software will (still) make the assumption that you’re data is on a flat plane, even if you’re working with a geographic CRS. This behavior can easily create nonsensical results, for example a buffer where the distance is specified in degrees. The <code>sf</code> package is kind of an exception since it will by default perform calculations on a sphere if you use a geographic CRS, thanks to the S2 library.</p>
+</div>
+</div>
+</section>
+<section id="crs-representation" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="crs-representation"><span class="header-section-number">4.4</span> CRS representation</h2>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you start from here…
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>With so many CRSs available, we need a way to classify them. That’s what the EPSG (European Petroleum Survey Group) started doing a few years ago. They collected and documented most available CRSs in a data set which is now called the EPSG Geodetic Parameter Dataset (<a href="https://epsg.org/home.html" target="_blank">https://epsg.org/home.html</a>). In this data set, every CRS has a unique identification number that can be used in a GIS software instead of writing the full definition of the CRS. The best available transformations between CRSs are also defined. Sadly this data set is still missing a few interesting CRSs and was thus completed by other companies such as ESRI. This is the reason why you’ll sometimes see ESRI codes instead of EPSG for some CRSs. To avoid confusion, CRSs are usually referenced by an SRID (Spatial Reference Identifier), which is made of two components, an authority (such as EPSG or ESRI) and an identifier. If no authority is mentioned you can usually assume it’s coming from the EPSG data set (especially in the open-source GIS world). For clarity, I recommend always specifying the full SRID when working with CRSs. With <code>sf</code> and <code>terra</code> (and most other GIS packages), the SRID has to be written in the form “authority:identifier”.</p>
 <p>The following CRSs are especially interesting for us:</p>
 <table class="caption-top table">
 <colgroup>
@@ -346,36 +419,27 @@ Important
 <td>Geographic CRS used for most global data sets, and by GPS devices</td>
 </tr>
 <tr class="even">
+<td>EPSG:3035</td>
+<td>ETRS89-extended/LAEA Europe</td>
+<td>Projected CRS recommended for Europe</td>
+</tr>
+<tr class="odd">
 <td>EPSG:3857</td>
 <td>Pseudo-Mercator</td>
 <td>Projected CRS used by online maps</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>EPSG:8857</td>
 <td>Equal Earth Greenwich</td>
-<td>Nice equal-area projection for world maps</td>
+<td>Nice equal area projection for world maps</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>ESRI:54030</td>
 <td>Robinson</td>
 <td>Aesthetically pleasing projection for world maps</td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-important callout-titled" title="Proj4strings">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proj4strings
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>When looking for examples on the web, you will often find code snippets using what is called a proj4string to define a CRS or to reproject data. For example the proj4string for the current Swiss CRS looks like this: <code>+proj=somerc +lat_0=46.9524055555556 +lon_0=7.43958333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs +type=crs</code>. This was the standard way of describing CRSs until a few years ago. You should NOT use these strings, instead always use the EPSG (or another authority) number to be on the safe side. Otherwise you may get small to medium position errors when reprojecting your data.</p>
-<p>Similarly, you will sometimes see some CRS definitions using the <code>+init=</code> syntax (e.g., <code>+init=EPSG:2056</code>). This should also be avoided for similar reasons, moreover this can also cause problems with other GIS software not recognizing the CRS properly.</p>
-</div>
-</div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -389,7 +453,22 @@ Important
 <p>If you search for the EPSG database on your favorite search engine, you may find the website <a href="https://epsg.io" target="_blank">https://epsg.io</a>. Please do not use it for EPSG codes (it’s still useful for ESRI codes, though)! It is not the official EPSG website, it doesn’t use the latest version of the EPSG database, and therefore some definitions of CRSs are outdated.</p>
 </div>
 </div>
-<p>You can easily explore how CRSs are stored in modern GIS software. For example if you want to inspect the current Swiss CRS:</p>
+<p>Almost all GIS software, including the <code>sf</code> and <code>terra</code> packages, rely on an open-source library called PROJ for their CRS and projection computations. It was created in 1983 by Gerald Evenden and is still actively developed by several contributors. PROJ also provides an online service for transformation grids. Thanks to PROJ, if the CRS of your data is properly defined, (almost) all CRS operations should just work automagically!</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Proj4strings">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proj4strings
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When looking for examples on the web, you will often find code snippets using what is called a proj4string to define a CRS or to reproject data. For example the proj4string for the current Swiss CRS looks like this: <code>+proj=somerc +lat_0=46.9524055555556 +lon_0=7.43958333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs +type=crs</code>. This was the standard way of describing CRSs in PROJ until a few years ago. You should NOT use these strings, instead always use the EPSG (or another authority) number to be on the safe side. Otherwise you may get small to medium position errors when reprojecting your data since some arguments of the proj4strings will be ignored.</p>
+<p>Similarly, you will sometimes see some CRS definitions using the <code>+init=</code> syntax (e.g., <code>+init=EPSG:2056</code>). This is also a proj4string. This should be avoided for the same reasons, moreover this can also cause problems with other GIS software not recognizing the CRS properly.</p>
+</div>
+</div>
+<p>A SRID is a convenient way to represent a CRS but it hides all the technical details. You can easily explore how CRSs are stored in modern GIS software by providing a SRID to the <code>st_crs()</code> function. If you use EPSG codes, you can also simply enter the code as an integer (but please don’t do this to avoid confusion). For example if you want to inspect the current Swiss CRS:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(<span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -442,7 +521,20 @@ PROJCRS["CH1903+ / LV95",
     ID["EPSG",2056]]</code></pre>
 </div>
 </div>
-<p>We get the full description of the CRS with all its parameters. The format used is unfortunately also named WKT, but this has nothing to do with the WKT format used to define geometries. If you use EPSG codes, you can also simply enter the code as an integer (please don’t do this to avoid confusion).</p>
+<p>We get the complete description of the CRS with all its parameters (e.g.&nbsp;datum, etc.) and some metadata (e.g.&nbsp;area of application). The format used is unfortunately also named WKT, but this has nothing to do with the WKT format we’ve seen before that is used to define geometries. It is of course possible to assign a CRS to some data using the full WKT description instead of using a SRID.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Axis order and EPSG:4326">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Axis order and EPSG:4326
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Geodesists don’t always agree on axis order when documenting CRSs. Hence we have some geographic CRSs storing coordinates as latitude/longitude, such as the widely used EPSG:4326, and others using longitude/latitude. This choice made some people very sad, and therefore they created a CRS called OGC:CRS84 which is exactly the same as EPSG:4326 except for the axis order. Fortunately you don’t have to worry about axis order. The PROJ library will do all the conversions for you!</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise (5 minutes)">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -456,8 +548,235 @@ Exercise (5 minutes)
 <p>Try to understand some of the elements of the output of the <code>st_crs()</code> function. Try it with a geographic CRS.</p>
 </div>
 </div>
+</section>
+<section id="crs-query-and-assignment" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="crs-query-and-assignment"><span class="header-section-number">4.5</span> CRS query and assignment</h2>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="If you start from here...">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+If you start from here…
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run the following code to load and create everything you’ll need to run the examples in this section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>We’ve seen how to use the <code>st_crs()</code> function to get information on existing CRSs. The same function can also be used to query the CRS of <code>sf</code> and <code>sfc</code> objects. The output is an object of class <code>crs</code>. You can use the <code>$</code> method on this object to retrieve the main properties of the CRS (e.g.&nbsp;name). Check the help of the <code>st_crs()</code> function to see all the available properties.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>crs_world <span class="ot">&lt;-</span> <span class="fu">st_crs</span>(World)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(crs_world)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "crs"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>crs_world<span class="sc">$</span>Name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "WGS 84"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>crs_world</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: EPSG:4326 
+  wkt:
+GEOGCRS["WGS 84",
+    ENSEMBLE["World Geodetic System 1984 ensemble",
+        MEMBER["World Geodetic System 1984 (Transit)"],
+        MEMBER["World Geodetic System 1984 (G730)"],
+        MEMBER["World Geodetic System 1984 (G873)"],
+        MEMBER["World Geodetic System 1984 (G1150)"],
+        MEMBER["World Geodetic System 1984 (G1674)"],
+        MEMBER["World Geodetic System 1984 (G1762)"],
+        MEMBER["World Geodetic System 1984 (G2139)"],
+        ELLIPSOID["WGS 84",6378137,298.257223563,
+            LENGTHUNIT["metre",1]],
+        ENSEMBLEACCURACY[2.0]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["geodetic latitude (Lat)",north,
+            ORDER[1],
+            ANGLEUNIT["degree",0.0174532925199433]],
+        AXIS["geodetic longitude (Lon)",east,
+            ORDER[2],
+            ANGLEUNIT["degree",0.0174532925199433]],
+    USAGE[
+        SCOPE["Horizontal component of 3D system."],
+        AREA["World."],
+        BBOX[-90,-180,90,180]],
+    ID["EPSG",4326]]</code></pre>
+</div>
+</div>
+<p>The <code>st_crs()</code> function is also used to assign a CRS to an existing <code>sf</code> or <code>sfc</code> object. As an input, you’ll need the usual authority:identifier SRID. This will replace any previously assigned CRS.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pt1 <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="st">"POINT(2657271 1219754)"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(pt1) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can also specify a <code>crs</code> object as an input. This allows you to assign a CRS used by another <code>sf</code> or <code>sfc</code> object. This can be useful if the data is using some exotic CRS which doesn’t have an EPSG number.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pt2 <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="st">"POINT(2600000 1200000)"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(pt2) <span class="ot">&lt;-</span> <span class="fu">st_crs</span>(pt1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>terra</code> package has a similar function to query and assign a CRS to <code>SpatRaster</code> and <code>SpatVector</code> objects, the <code>crs()</code> function. When querying the CRS of an object, the default output is the WKT description of the CRS. If you include the <code>describe = TRUE</code> argument, you’ll get a user-friendly description.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">nrow =</span> <span class="dv">10</span>, <span class="at">ncol =</span> <span class="dv">10</span>, <span class="at">xmin =</span> <span class="dv">2600000</span>, <span class="at">xmax =</span> <span class="dv">2610000</span>, <span class="at">ymin =</span> <span class="dv">1200000</span>, <span class="at">ymax =</span> <span class="dv">1210000</span>, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(r1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "PROJCRS[\"CH1903+ / LV95\",\n    BASEGEOGCRS[\"CH1903+\",\n        DATUM[\"CH1903+\",\n            ELLIPSOID[\"Bessel 1841\",6377397.155,299.1528128,\n                LENGTHUNIT[\"metre\",1]]],\n        PRIMEM[\"Greenwich\",0,\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        ID[\"EPSG\",4150]],\n    CONVERSION[\"Swiss Oblique Mercator 1995\",\n        METHOD[\"Hotine Oblique Mercator (variant B)\",\n            ID[\"EPSG\",9815]],\n        PARAMETER[\"Latitude of projection centre\",46.9524055555556,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8811]],\n        PARAMETER[\"Longitude of projection centre\",7.43958333333333,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8812]],\n        PARAMETER[\"Azimuth at projection centre\",90,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8813]],\n        PARAMETER[\"Angle from Rectified to Skew Grid\",90,\n            ANGLEUNIT[\"degree\",0.0174532925199433],\n            ID[\"EPSG\",8814]],\n        PARAMETER[\"Scale factor at projection centre\",1,\n            SCALEUNIT[\"unity\",1],\n            ID[\"EPSG\",8815]],\n        PARAMETER[\"Easting at projection centre\",2600000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8816]],\n        PARAMETER[\"Northing at projection centre\",1200000,\n            LENGTHUNIT[\"metre\",1],\n            ID[\"EPSG\",8817]]],\n    CS[Cartesian,2],\n        AXIS[\"(E)\",east,\n            ORDER[1],\n            LENGTHUNIT[\"metre\",1]],\n        AXIS[\"(N)\",north,\n            ORDER[2],\n            LENGTHUNIT[\"metre\",1]],\n    USAGE[\n        SCOPE[\"Cadastre, engineering survey, topographic mapping (large and medium scale).\"],\n        AREA[\"Liechtenstein; Switzerland.\"],\n        BBOX[45.81,5.95,47.81,10.5]],\n    ID[\"EPSG\",2056]]"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(r1, <span class="at">describe =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            name authority code                       area
+1 CH1903+ / LV95      EPSG 2056 Liechtenstein; Switzerland
+                     extent
+1 5.95, 10.50, 45.81, 47.81</code></pre>
+</div>
+</div>
+<p>Assigning a CRS using the <code>crs()</code> function is done in exactly the same way as with <code>st_crs()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>r2 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">nrow =</span> <span class="dv">10</span>, <span class="at">ncol =</span> <span class="dv">10</span>, <span class="at">xmin =</span> <span class="dv">2600000</span>, <span class="at">xmax =</span> <span class="dv">2610000</span>, <span class="at">ymin =</span> <span class="dv">1200000</span>, <span class="at">ymax =</span> <span class="dv">1210000</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(r2) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Similarly, you can also assign the CRS used by another <code>SpatRaster</code> or <code>SpatVector</code> object to your spatial object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>r3 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">nrow =</span> <span class="dv">10</span>, <span class="at">ncol =</span> <span class="dv">10</span>, <span class="at">xmin =</span> <span class="dv">2600000</span>, <span class="at">xmax =</span> <span class="dv">2610000</span>, <span class="at">ymin =</span> <span class="dv">1200000</span>, <span class="at">ymax =</span> <span class="dv">1210000</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(r3) <span class="ot">&lt;-</span> <span class="fu">crs</span>(r1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>st_crs()</code> and <code>crs()</code> functions are used to query or assign a CRS, but they do not perform any CRS transformation!</p>
+</div>
+</div>
+</section>
+<section id="crs-transformations" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="crs-transformations"><span class="header-section-number">4.6</span> CRS transformations</h2>
+<p>It is sometimes necessary to transform coordinates or spatial objects into another CRS. For example when performing a GIS analysis with multiple data sets, it can be necessary to transform some of them in order to have all the data sets using a common CRS. We almost always speak of CRS or coordinate transformation, but we should actually distinguish between conversion and transformation. Going from one CRS to another without changing datum is called coordinate conversion. This process is lossless and invertible. The equations associated with a conversion are not empirical. Recomputing coordinates in a new datum is called coordinate transformation. The computations are approximate and the processes involved are empirical. Different approaches can be used to perform a coordinate transformation, such as equations, transformation grids, etc. Due to this complexity, multiple transformation paths (also called pipelines) are possible.</p>
+<p>Transforming a vector data set is a simple operation, we simply need to transform the points/vertices into the new CRS. The precision is only determined by the transformation used. Transforming a raster data set is more challenging. This is usually done using a technique called warping which first transforms the raster extent and then recomputes the pixel values using resampling. There is thus a loss of information and the precision is determined not only by the transformation used, but also by the raster properties. Moreover the interpolation algorithm used during the resampling must be chosen carefully depending on the raster content (e.g.&nbsp;continuous vs.&nbsp;discrete values). A more direct transformation is also possible but rarely used since the output raster will be curvilinear (i.e.&nbsp;the pixels will not be rectangles). Due to all these reasons, if you need vector and raster data sets with a common CRS, I’d recommend transforming the vector data set to the CRS of the raster data set and not the opposite.</p>
+<p>As we’ve seen above, there are often several transformation pipelines available between two CRSs. Fortunately we usually don’t have to care about this complexity since all these transformations are managed by the PROJ library. In case of multiple available pipelines, PROJ will automatically choose the one with the best accuracy. If you need more information about the chosen transformation, you can use the <code>st_proj_pipelines()</code> function in the <code>sf</code> package. Here’s an example showing the transformation pipeline between the Swiss projected CRS and EPSG:4326.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>trans <span class="ot">&lt;-</span> <span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:2056"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:4326"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>trans</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Candidate coordinate operations found:  2 
+Strict containment:     FALSE 
+Axis order auth compl:  FALSE 
+Source:  EPSG:2056 
+Target:  EPSG:4326 
+Best instantiable operation has accuracy: 1 m
+Description: Inverse of Swiss Oblique Mercator 1995 + CH1903+ to WGS 84 (1)
+             + axis order change (2D)
+Definition:  +proj=pipeline +step +inv +proj=somerc +lat_0=46.9524055555556
+             +lon_0=7.43958333333333 +k_0=1 +x_0=2600000
+             +y_0=1200000 +ellps=bessel +step +proj=push +v_3
+             +step +proj=cart +ellps=bessel +step +proj=helmert
+             +x=674.374 +y=15.056 +z=405.346 +step +inv
+             +proj=cart +ellps=WGS84 +step +proj=pop +v_3 +step
+             +proj=unitconvert +xy_in=rad +xy_out=deg</code></pre>
+</div>
+</div>
+<p>We see that PROJ found two possible pipelines and it automatically chose the best one which has a 1 meter accuracy. The definition also provides a list of all the steps needed for the transformation. The <code>st_proj_pipelines()</code> function returns a <code>proj_pipelines</code> object containing all the possible transformation pipelines (but only the best one is printed). This object is actually a data frame. To check the second, suboptimal, pipeline, we can thus use the usual indexing techniques.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>trans <span class="ot">&lt;-</span> <span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:2056"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:4326"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>trans[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Candidate coordinate operations found:  1 
+Strict containment:     FALSE 
+Axis order auth compl:  FALSE 
+Source:  EPSG:2056 
+Target:  EPSG:4326 
+Best instantiable operation has only ballpark accuracy 
+Description: Inverse of Swiss Oblique Mercator 1995 + Ballpark geographic
+             offset from CH1903+ to WGS 84 + axis order change
+             (2D)
+Definition:  +proj=pipeline +step +inv +proj=somerc +lat_0=46.9524055555556
+             +lon_0=7.43958333333333 +k_0=1 +x_0=2600000
+             +y_0=1200000 +ellps=bessel +step +proj=unitconvert
+             +xy_in=rad +xy_out=deg</code></pre>
+</div>
+</div>
+<p>Here’s another example showing the transformation pipelines between the previous (deprecated) Swiss CRS and the one used currently.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:21781"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Candidate coordinate operations found:  2 
+Strict containment:     FALSE 
+Axis order auth compl:  FALSE 
+Source:  EPSG:21781 
+Target:  EPSG:2056 
+Best instantiable operation has only ballpark accuracy 
+Description: Inverse of Swiss Oblique Mercator 1903M + Ballpark geographic
+             offset from CH1903 to CH1903+ + Swiss Oblique
+             Mercator 1995
+Definition:  +proj=pipeline +step +inv +proj=somerc +lat_0=46.9524055555556
+             +lon_0=7.43958333333333 +k_0=1 +x_0=600000
+             +y_0=200000 +ellps=bessel +step +proj=somerc
+             +lat_0=46.9524055555556 +lon_0=7.43958333333333
+             +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel
+Operation 1 is lacking 1 grid with accuracy 0.2 m
+Missing grid: ch_swisstopo_CHENyx06a.tif 
+URL: https://cdn.proj.org/ch_swisstopo_CHENyx06a.tif </code></pre>
+</div>
+</div>
+<p>In this case PROJ found 2 possible pipelines but it tells us that it cannot use the best one (with 0.2 meter accuracy) since the required transformation grid is not available on our computer. Hence it had to choose the second pipeline which only has ballpark accuracy. Fortunately, the PROJ library also provides an online service called the PROJ Datumgrid CDN (Content Delivery Network) which allows us to automatically download such grids. We first need to enable it in <code>sf</code> using the <code>sf_proj_network()</code> function, and then we check again the available transformation pipelines.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_proj_network</span>(<span class="at">enable =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "https://cdn.proj.org"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sf_proj_pipelines</span>(<span class="at">source_crs =</span> <span class="st">"EPSG:21781"</span>, <span class="at">target_crs =</span> <span class="st">"EPSG:2056"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Candidate coordinate operations found:  2 
+Strict containment:     FALSE 
+Axis order auth compl:  FALSE 
+Source:  EPSG:21781 
+Target:  EPSG:2056 
+Best instantiable operation has accuracy: 0.2 m
+Description: Inverse of Swiss Oblique Mercator 1903M + CH1903 to CH1903+ (1)
+             + Swiss Oblique Mercator 1995
+Definition:  +proj=pipeline +step +inv +proj=somerc +lat_0=46.9524055555556
+             +lon_0=7.43958333333333 +k_0=1 +x_0=600000
+             +y_0=200000 +ellps=bessel +step +proj=hgridshift
+             +grids=ch_swisstopo_CHENyx06a.tif +step
+             +proj=somerc +lat_0=46.9524055555556
+             +lon_0=7.43958333333333 +k_0=1 +x_0=2600000
+             +y_0=1200000 +ellps=bessel</code></pre>
+</div>
+</div>
+<p>The more accurate pipeline is now available. Note that the transformation grid will only be available in the current R session and you’ll thus need to activate the CDN to download it again if you start a new R session. If you use this CRS transformation regularly, you can also download the grid and install it manually. To do that, put the grid inside the proj folder of your <code>sf</code> installation (run <code>system.file(package = "sf")</code> to check where <code>sf</code> was installed).</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Once a transformation grid is downloaded using the <code>sf_proj_network()</code> function or manually installed inside the <code>sf</code> package, this will obviously only affect CRS transformations performed using <code>sf</code>. With the <code>terra</code> package, the missing grids are downloaded automatically by default. Similarly to <code>sf</code>, it is also possible to manually install a grid in the proj folder of your <code>terra</code> installation (run <code>system.file(package = "terra")</code> to check where <code>terra</code> was installed).</p>
+</div>
+</div>
+<p>The goal of this section was to provide a general introduction to CRS transformations. To see how to actually perform CRS transformations on real data sets, check <a href="vectors_tips.html#sec-vector_crs_transformations" class="quarto-xref"><span>Section 5.18</span></a> for vector data and <a href="rasters_tips.html#sec-raster_crs_transformations" class="quarto-xref"><span>Section 6.12</span></a> for rasters.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
