@@ -41,7 +41,7 @@ Remember that geographic coordinate systems are not using any projection, the me
 
 ## Projected CRSs
 
-Projected CRSs are based on geographic CRSs but include an additional step: a projection on a flat surface. When using a projected CRS, locations are described using Cartesian coordinates called easting and northing (x and y). Projecting a spherical or ellipsoidal surface on a plane will cause deformations. These will affect four properties of the surface: shapes, areas, distances and directions. A map projection can satisfy at most two of these properties. Many map projections (especially global ones) do not fulfill any of these properties but are intended as a compromise (e.g. Robinson). The following table lists a few common projections based on their preserved property.
+Projected CRSs are based on geographic CRSs but include an additional step: a projection on a flat surface. When using a projected CRS, locations are described using Cartesian coordinates called easting and northing (*x* and *y*). Projecting a spherical or ellipsoidal surface on a plane will cause deformations. These will affect four properties of the surface: shapes, areas, distances and directions. A map projection can satisfy at most two of these properties. Many map projections (especially global ones) do not fulfill any of these properties but are intended as a compromise (e.g. Robinson). The following table lists a few common projections based on their preserved property.
 
 | Name | Property | Examples |
 |-----------------|-----------------|--------------------------------------|
@@ -179,6 +179,14 @@ The `st_crs()` and `crs()` functions are used to query or assign a CRS, but they
 
 
 ## CRS transformations
+
+::: {.callout-tip appearance="minimal" collapse="true" title="If you start from here..."}
+Run the following code to load and create everything you'll need to run the examples in this section.
+```{r}
+#| eval: false
+library(sf)
+```
+:::
 
 It is sometimes necessary to transform coordinates or spatial objects into another CRS. For example when performing a GIS analysis with multiple data sets, it can be necessary to transform some of them in order to have all the data sets using a common CRS. We almost always speak of CRS or coordinate transformation, but we should actually distinguish between conversion and transformation. Going from one CRS to another without changing datum is called coordinate conversion. This process is lossless and invertible. The equations associated with a conversion are not empirical. Recomputing coordinates in a new datum is called coordinate transformation. The computations are approximate and the processes involved are empirical. Different approaches can be used to perform a coordinate transformation, such as equations, transformation grids, etc. Due to this complexity, multiple transformation paths (also called pipelines) are possible.
 
