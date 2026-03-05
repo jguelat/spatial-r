@@ -241,7 +241,7 @@ st_area(World[1:5,])
 st_perimeter(World[1:5,])
 ```
 
-The S2 library performs its computations on a sphere. For areas and lengths, it is possible to obtain a better approximation by using an ellipsoid. You can do this by turning off the S2 library with the `sf_use_s2(FALSE)` function. In this case, `sf` will automatically use equivalent functions provided by the `lwgeom`[@pebesma_lwgeom_2023] package. These functions use algorithms from the [GeographicLib](https://geographiclib.sourceforge.io){target="_blank"} library which are to my knowledge the most precise approximations you can currently get. Don't forget to reactivate S2 (using the `sf_use_s2(TRUE)` function) when you're done.
+The S2 library performs its computations on a sphere. For areas and lengths, it is possible to obtain a better accuracy by using an ellipsoid. You can do this by turning off the S2 library with the `sf_use_s2(FALSE)` function. In this case, `sf` will automatically use equivalent functions provided by the `lwgeom`[@pebesma_lwgeom_2023] package. These functions use algorithms from the [GeographicLib](https://geographiclib.sourceforge.io){target="_blank"} library which are the most precise ones you can currently get if you need to compute measurements on an ellipsoid. Don't forget to reactivate S2 (using the `sf_use_s2(TRUE)` function) when you're done.
 
 ```{r}
 sf_use_s2(FALSE)
@@ -653,7 +653,7 @@ st_distance(obs[1:5,], muni[1:3,])
 
 The distances are measured between the points and the nearest edge of the polygons if they are located outside the polygons. The distance will be 0 if they are within the polygon.
 
-We will now make a short excursion in the world of geographic CRS with a quick example showing what `sf` is doing when we don't use standard Euclidean geometry. We will compute the distance between the centroids of Switzerland and Australia. By default `sf` is using the S2 library to perform its computations on a sphere when we use a geographic CRS. However for distances, it is possible to obtain better approximations by using an ellipsoid. To do this, we need to tell `sf` to avoid using S2 with the function `sf_use_s2(FALSE)`. The `st_distance()` will thus be forced to use a more precise algorithm (by automatically using a similar function from the `lwgeom` package). We can of course compare the two estimates.
+We will now make a short excursion in the world of geographic CRSs with a quick example showing what `sf` is doing when we don't use standard Euclidean geometry. We will compute the distance between the centroids of Switzerland and Australia. By default `sf` is using the S2 library to perform its computations on a sphere when we use a geographic CRS. However for distances, it is possible to obtain a better accuracy by using an ellipsoid. To do this, we need to tell `sf` to avoid using S2 with the function `sf_use_s2(FALSE)`. The `st_distance()` will thus be forced to use a more precise algorithm (by automatically using a similar function from the `lwgeom` package). We can of course compare the two estimates.
 
 ```{r}
 world_centroids <- st_centroid(World)
