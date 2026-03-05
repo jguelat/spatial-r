@@ -466,8 +466,8 @@ extent      : 2643988, 2664988, 1212913, 1228013  (xmin, xmax, ymin, ymax)
 coord. ref. :  
 source(s)   : memory
 names       : dem,      rand 
-min values  : 425, -4.656099 
-max values  : 930,  5.087709 </code></pre>
+min values  : 425, -4.668417 
+max values  : 930,  4.612374 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev2, <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1294,7 +1294,7 @@ If you start from here…
 </div>
 </div>
 </div>
-<p>The <code>terra</code> package is also really good at generating new covariates. For example you can use the <code>terrain()</code> function to compute terrain characteristics from elevation data. The available outputs are: slope, aspect, TPI, TRI, roughness and flow direction.</p>
+<p>The <code>terra</code> package is really good at generating new covariates based on other spatial data. For example you can use the <code>terrain()</code> function to compute terrain characteristics from elevation data. The available outputs are: slope, aspect, TPI, TRI, roughness and flow direction.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">terrain</span>(elev, <span class="st">"slope"</span>, <span class="at">unit =</span> <span class="st">"degrees"</span>)</span>
 <span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>aspect <span class="ot">&lt;-</span> <span class="fu">terrain</span>(elev, <span class="st">"aspect"</span>, <span class="at">unit =</span> <span class="st">"degrees"</span>)</span>

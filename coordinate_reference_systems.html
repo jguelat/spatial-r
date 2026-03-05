@@ -362,7 +362,8 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It is almost always easier to work with a projected CRS, except if your data is global or covering a really large area (like a continent). Moreover, most GIS software will (still) make the assumption that you’re data is on a flat plane, even if you’re working with a geographic CRS. This behavior can easily create nonsensical results, for example a buffer where the distance is specified in degrees. The <code>sf</code> package is kind of an exception since it will by default perform calculations on a sphere if you use a geographic CRS, thanks to the S2 library.</p>
+<p>It is often easier to work with a projected CRS, except if your data is global or covering a really large area (like a continent). Most GIS software will (still) make the assumption that you’re data is on a flat plane, even if you’re working with a geographic CRS. This behavior can easily create nonsensical results, for example a buffer where the distance is specified in degrees. The <code>sf</code> package is kind of an exception since it will by default perform calculations on a sphere if you use a geographic CRS, thanks to the S2 library.</p>
+<p>However if your original data is using a geographic CRS and you only need to compute basic measurements like areas, distances or azimuths, do not project it. As we will see in the next sections, it is possible to compute these values with a high precision using unprojected data.</p>
 </div>
 </div>
 </section>
