@@ -13,3 +13,4 @@ export/municipalities.csv
 /.quarto/
 /_book/
 /_site/
+**/*.quarto_ipynb
