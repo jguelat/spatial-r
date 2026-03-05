@@ -622,7 +622,7 @@ sempach <- muni[muni$name == "Sempach",]
 ```
 :::
 
-The `terra` package is also really good at generating new covariates. For example you can use the `terrain()` function to compute terrain characteristics from elevation data. The available outputs are: slope, aspect, TPI, TRI, roughness and flow direction.
+The `terra` package is really good at generating new covariates based on other spatial data. For example you can use the `terrain()` function to compute terrain characteristics from elevation data. The available outputs are: slope, aspect, TPI, TRI, roughness and flow direction.
 
 ```{r}
 #| fig-height: 3 
