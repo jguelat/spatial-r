@@ -14,7 +14,7 @@ A lot of ecological data you're going to analyse has a spatial component and it'
 
 Doing your GIS analyses with code is also a nice opportunity to make your research more reproducible. The whole data processing is documented and you and others can easily check and re-run everything. The same applies for maps, you can re-create them in a few seconds if the data changed. This is much harder if you only use a "point and click" GIS software.
 
-However there are some GIS tasks where R doesn't shine. I would for example never digitize GIS data or georeference images (such as old maps) using R. As we will later, the cartographic capabilities of some R packages are really impressive. But it will still be easier to use a traditional GIS software if you need more specialized techniques such as complex labeling, advanced symbology or complex map layouts. The same applies if you need to use 3D vector data (with the exception of point clouds).
+However there are some GIS tasks where R doesn't shine. I would for example never digitize GIS data or georeference images (such as old maps) using R. As we will see later, the cartographic capabilities of some R packages are really impressive. But it will still be easier to use a traditional GIS software if you need more specialized techniques such as complex labeling, advanced symbology or complex map layouts. The same applies if you need to use 3D vector data (with the exception of point clouds).
 
 
 ## GIS data models
