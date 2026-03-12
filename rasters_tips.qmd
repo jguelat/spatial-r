@@ -331,8 +331,7 @@ The `extract()` function was created to easily perform this task. The first argu
 
 ```{r}
 vals <- extract(elev, vect(obs), ID = FALSE)
-obs2 <- obs
-obs2$elev <- vals
+obs2 <- cbind(obs, vals)
 obs2
 ```
 

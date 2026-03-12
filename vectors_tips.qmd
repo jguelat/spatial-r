@@ -1534,7 +1534,7 @@ a3 <- st_area(st_transform(greenland, "EPSG:3857"))
 units::set_units(c(a1, a2, a3), "km^2")
 ```
 
-When projected using the Pseudo-Mercator projection, the estimated area of Greenland is almost twice its true area.
+When projected using the Pseudo-Mercator projection, the estimated area of Greenland is sixteen times larger than its actual area...
 
 To see how bad distance estimations are when using Pseudo-Mercator, let's compute the "true" distance between the Swiss Ornithological Institute and Cape Town using a geographic CRS, first with the most precise approximation and then using S2. After that we compare these distances with the estimated distance after projecting both points to Pseudo-Mercator.
 
