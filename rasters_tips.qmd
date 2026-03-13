@@ -372,10 +372,10 @@ vals_avg <- extract(elev, vect(obs_buff), fun = mean)
 vals_avg
 ```
 
-If you need to summarize a raster containing discrete values, you'll need to use a more appropriate function such as `table` which will give you the number of pixels in each category.
+If you need to summarize a raster containing discrete values, you'll need to use a more appropriate function such as `table` which will give you the number of pixels in each category. The default output is a data frame in the so-called "long" format which is not ideal if you need to append it to the vector data. That's why we need to add `wide = TRUE` to get a data frame in the appropriate format.
 
 ```{r}
-vals_tbl <- extract(landcover, vect(muni), fun = table)
+vals_tbl <- extract(landcover, vect(muni), fun = table, wide = TRUE)
 head(vals_tbl)
 ```
 
