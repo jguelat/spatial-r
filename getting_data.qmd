@@ -13,6 +13,7 @@ Here's a non-exhaustive list of packages you can use to download GIS data.
 | `maptiles` | Download and import background maps from several providers |
 | `osmdata` | Download and import small OpenStreetMap data sets |
 | `osmextract` | Download and import large OpenStreetMap data sets |
+| `geobounds` | Download and import administrative boundaries from geoBoundaries |
 | `geodata` | Download and import administrative boundaries, elevation, WorldClim data, etc. |
 | `rnaturalearth` | Access to Natural Earth vector and raster data |
 | `elevatr` | Import digital elevation models |
