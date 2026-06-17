@@ -162,7 +162,7 @@ s[["band 2"]]
 ```
 
 ::: {.callout-important title="Rasters and R workspaces"}
-Since `terra` only stores a pointer to the raster data set, this means the actual data set won't be included if you save your session in an R workspace (.Rdata files). If you really want to include it in your workspace, you can use the `wrap()` function. Note that this is also needed if you want to pass raster data over a connection that serializes, e.g. to a computer cluster.
+It is important to remember that the standard `terra` objects (e.g. `SpatRaster` and `SpatVector`) only store a pointer to the data (actually, they hold a pointer to an underlying C++ object that lives in the memory of the R session). This means the actual data set will not be included if you save your session in an R workspace (.Rdata files). If you really want to include it in your workspace, you can use the `wrap()` function. Note that this is also needed if you want to pass `terra` objects over a connection that serializes, e.g. to a computer cluster. For more details on parallel computing using `terra`, check <https://rspatial.org/pkg/10-parallel.html>{target="_blank"}.
 :::
 
 ::: {.callout-note icon="false" title="Exercise (5 minutes)"}
