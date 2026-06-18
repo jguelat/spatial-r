@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>2&nbsp; Vector data – Spatial Data Processing with R</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -88,15 +91,14 @@ div.csl-indent {
 <link href="./introduction.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8ebb74ed7322b552d34cd7b3cbef2177.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1ccffd64d110b545acdf795a7e1cd261.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -151,9 +153,7 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Spatial Data Processing with R</a> 
         <div class="sidebar-tools-main">
@@ -785,7 +785,7 @@ Tip
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>terra 1.9.11</code></pre>
+<pre><code>terra 1.9.27</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>xcoords <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2657000</span>, <span class="dv">2658000</span>, <span class="dv">2659000</span>)</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>ycoords <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1219000</span>, <span class="dv">1218000</span>, <span class="dv">1217000</span>)</span>
@@ -800,11 +800,11 @@ attr(,"package")
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>pts_terra</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> class       : SpatVector 
- geometry    : points 
- dimensions  : 3, 0  (geometries, attributes)
- extent      : 2657000, 2659000, 1217000, 1219000  (xmin, xmax, ymin, ymax)
- coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+<pre><code>class       : SpatVector
+geometry    : points
+dimensions  : 3, 0  (geometries, attributes)
+extent      : 2657000, 2659000, 1217000, 1219000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056)</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geom</span>(pts_terra)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -845,16 +845,16 @@ Important
 <span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>pts_terra <span class="ot">&lt;-</span> <span class="fu">vect</span>(coords, <span class="at">type=</span> <span class="st">"points"</span>, <span class="at">atts =</span> pts_data, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
 <span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>pts_terra</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> class       : SpatVector 
- geometry    : points 
- dimensions  : 3, 2  (geometries, attributes)
- extent      : 2657000, 2659000, 1217000, 1219000  (xmin, xmax, ymin, ymax)
- coord. ref. : CH1903+ / LV95 (EPSG:2056) 
- names       :       species    sex
- type        :         &lt;chr&gt;  &lt;chr&gt;
- values      :   wallcreeper   male
-               alpine chough female
-                  kingfisher female</code></pre>
+<pre><code>class       : SpatVector
+geometry    : points
+dimensions  : 3, 2  (geometries, attributes)
+extent      : 2657000, 2659000, 1217000, 1219000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
+names       :       species    sex
+type        :         &lt;chr&gt;  &lt;chr&gt;
+values      :   wallcreeper   male
+              alpine chough female
+                 kingfisher female</code></pre>
 </div>
 </div>
 <p>We can also create other geometry types from scratch but we need to provide additional information. For each vertex, we need to provide an index specifying the feature and the part (for MULTI* type) it belongs to.</p>
@@ -869,28 +869,28 @@ Important
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>pts_terra[,<span class="st">"species"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> class       : SpatVector 
- geometry    : points 
- dimensions  : 3, 1  (geometries, attributes)
- extent      : 2657000, 2659000, 1217000, 1219000  (xmin, xmax, ymin, ymax)
- coord. ref. : CH1903+ / LV95 (EPSG:2056) 
- names       :       species
- type        :         &lt;chr&gt;
- values      :   wallcreeper
-               alpine chough
-                  kingfisher</code></pre>
+<pre><code>class       : SpatVector
+geometry    : points
+dimensions  : 3, 1  (geometries, attributes)
+extent      : 2657000, 2659000, 1217000, 1219000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
+names       :       species
+type        :         &lt;chr&gt;
+values      :   wallcreeper
+              alpine chough
+                 kingfisher</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>pts_terra[pts_terra<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> class       : SpatVector 
- geometry    : points 
- dimensions  : 2, 2  (geometries, attributes)
- extent      : 2658000, 2659000, 1217000, 1218000  (xmin, xmax, ymin, ymax)
- coord. ref. : CH1903+ / LV95 (EPSG:2056) 
- names       :       species    sex
- type        :         &lt;chr&gt;  &lt;chr&gt;
- values      : alpine chough female
-                  kingfisher female</code></pre>
+<pre><code>class       : SpatVector
+geometry    : points
+dimensions  : 2, 2  (geometries, attributes)
+extent      : 2658000, 2659000, 1217000, 1218000  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
+names       :       species    sex
+type        :         &lt;chr&gt;  &lt;chr&gt;
+values      : alpine chough female
+                 kingfisher female</code></pre>
 </div>
 </div>
 <p>You can easily convert <code>sf</code> objects to <code>SpatVector</code> objects using the <code>vect()</code> function. To convert <code>SpatVector</code> objects to <code>sf</code> objects, use the <code>st_as_sf()</code> function.</p>

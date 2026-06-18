@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>6&nbsp; Tips and tricks for rasters – Spatial Data Processing with R</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -69,15 +72,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./vectors_tips.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8ebb74ed7322b552d34cd7b3cbef2177.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1ccffd64d110b545acdf795a7e1cd261.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -107,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -161,9 +163,7 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Spatial Data Processing with R</a> 
         <div class="sidebar-tools-main">
@@ -309,18 +309,18 @@ window.Quarto = {
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>terra 1.9.11</code></pre>
+<pre><code>terra 1.9.27</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>elev <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/dem.tif"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>elev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 604, 840, 1  (nrow, ncol, nlyr)
 resolution  : 25, 25  (x, y)
-extent      : 2643988, 2664988, 1212913, 1228013  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) 
-source      : dem.tif 
-name        : dem </code></pre>
+extent      : 2643988, 2664988, 1212912, 1228012  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
+source      : dem.tif
+name        : dem</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -333,14 +333,14 @@ name        : dem </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ortho <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/sempach_ortho.tif"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ortho</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 1427, 1996, 3  (nrow, ncol, nlyr)
 resolution  : 0.1000104, 0.1000196  (x, y)
 extent      : 2657219, 2657419, 1219699, 1219842  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) 
-source      : sempach_ortho.tif 
-colors RGB  : 1, 2, 3 
-names       : sempach_ortho_1, sempach_ortho_2, sempach_ortho_3 </code></pre>
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
+source      : sempach_ortho.tif
+colors rgb  : 1, 2, 3
+names       : sempach_ortho_1, sempach_ortho_2, sempach_ortho_3</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ortho)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -357,15 +357,15 @@ names       : sempach_ortho_1, sempach_ortho_2, sempach_ortho_3 </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover.tif"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>landcover</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 151, 210, 1  (nrow, ncol, nlyr)
 resolution  : 100, 100  (x, y)
 extent      : 2644000, 2665000, 1212900, 1228000  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) 
-source      : landcover.tif 
-name        :  X 
-min value   :  1 
-max value   : 26 </code></pre>
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
+source      : landcover.tif
+name        :  X
+min value   :  1
+max value   : 26</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>landcover <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(landcover)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landcover)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -382,15 +382,15 @@ max value   : 26 </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>landcover2 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/landcover_nocrs.tif"</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>landcover2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 151, 210, 1  (nrow, ncol, nlyr)
 resolution  : 100, 100  (x, y)
 extent      : 2644000, 2665000, 1212900, 1228000  (xmin, xmax, ymin, ymax)
-coord. ref. :  
-source      : landcover_nocrs.tif 
-name        :  X 
-min value   :  1 
-max value   : 26 </code></pre>
+coord. ref. : 
+source      : landcover_nocrs.tif
+name        :  X
+min value   :  1
+max value   : 26</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover2) <span class="ot">&lt;-</span> <span class="st">"EPSG:2056"</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(landcover2, <span class="at">describe =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -464,15 +464,15 @@ Important
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>elev2 <span class="ot">&lt;-</span> <span class="fu">rast</span>(elev_df, <span class="at">type =</span> <span class="st">"xyz"</span>)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>elev2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 604, 840, 2  (nrow, ncol, nlyr)
 resolution  : 25, 25  (x, y)
-extent      : 2643988, 2664988, 1212913, 1228013  (xmin, xmax, ymin, ymax)
-coord. ref. :  
+extent      : 2643988, 2664988, 1212912, 1228012  (xmin, xmax, ymin, ymax)
+coord. ref. : 
 source(s)   : memory
-names       : dem,      rand 
-min values  : 425, -4.683960 
-max values  : 930,  4.527221 </code></pre>
+names       : dem,      rand
+min values  : 425, -5.069785
+max values  : 930,  4.897807</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(elev2, <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">3.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -729,16 +729,16 @@ dem 930</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>elev_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(elev, landcover, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>elev_resample</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 151, 210, 1  (nrow, ncol, nlyr)
 resolution  : 100, 100  (x, y)
 extent      : 2644000, 2665000, 1212900, 1228000  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
 source(s)   : memory
-varname     : landcover 
-name        :      dem 
-min value   : 427.0625 
-max value   : 920.8250 </code></pre>
+varname     : landcover
+name        :        dem
+min value   :   427.0625
+max value   : 920.825012</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareGeom</span>(elev_resample, landcover)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -747,17 +747,17 @@ max value   : 920.8250 </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>landcover_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(landcover, elev, <span class="at">method =</span> <span class="st">"near"</span>)</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>landcover_resample</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 604, 840, 1  (nrow, ncol, nlyr)
 resolution  : 25, 25  (x, y)
-extent      : 2643988, 2664988, 1212913, 1228013  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+extent      : 2643988, 2664988, 1212912, 1228012  (xmin, xmax, ymin, ymax)
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
 source(s)   : memory
-varname     : dem 
-categories  : X 
-name        :  X 
-min value   :  1 
-max value   : 26 </code></pre>
+varname     : dem
+categories  : X
+name        :  X
+min value   :  1
+max value   : 26</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareGeom</span>(landcover_resample, elev)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">

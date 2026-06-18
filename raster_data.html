@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>3&nbsp; Raster data – Spatial Data Processing with R</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -69,15 +72,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./vector_data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8ebb74ed7322b552d34cd7b3cbef2177.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1ccffd64d110b545acdf795a7e1cd261.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -132,9 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Spatial Data Processing with R</a> 
         <div class="sidebar-tools-main">
@@ -316,11 +316,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">nrow =</span> <span class="dv">10</span>, <span class="at">ncol =</span> <span class="dv">10</span>, <span class="at">xmin =</span> <span class="dv">2600000</span>, <span class="at">xmax =</span> <span class="dv">2610000</span>, <span class="at">ymin =</span> <span class="dv">1200000</span>, <span class="at">ymax =</span> <span class="dv">1210000</span>, <span class="at">crs =</span> <span class="st">"EPSG:2056"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>r</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 10, 10, 1  (nrow, ncol, nlyr)
 resolution  : 1000, 1000  (x, y)
 extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+coord. ref. : CH1903+ / LV95 (EPSG:2056)</code></pre>
 </div>
 </div>
 <p>Printing a <code>SpatRaster</code> object shows some general information about the raster data set such as dimensions, resolution and extent. Note that the resolution was automatically computed since we provided the dimensions and the extent of the new raster. All the raster geometric properties (number of cells, dimensions, extent, resolution etc.) can also be extracted using specific functions.</p>
@@ -380,11 +380,11 @@ Important
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">res</span>(rmod1) <span class="ot">&lt;-</span> <span class="dv">100</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>rmod1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 100, 100, 1  (nrow, ncol, nlyr)
 resolution  : 100, 100  (x, y)
 extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+coord. ref. : CH1903+ / LV95 (EPSG:2056)</code></pre>
 </div>
 </div>
 <p>If the desired resolution is not compatible with the available extent, then <code>terra</code> will also automatically adapt the extent.</p>
@@ -392,11 +392,11 @@ coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">res</span>(rmod1) <span class="ot">&lt;-</span> <span class="dv">900</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>rmod1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 11, 11, 1  (nrow, ncol, nlyr)
 resolution  : 900, 900  (x, y)
 extent      : 2600000, 2609900, 1200000, 1209900  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+coord. ref. : CH1903+ / LV95 (EPSG:2056)</code></pre>
 </div>
 </div>
 <p>We can also provide two values to the <code>res()</code> function to create rectangular cells…</p>
@@ -404,11 +404,11 @@ coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">res</span>(rmod1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2000</span>, <span class="dv">1000</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>rmod1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 10, 5, 1  (nrow, ncol, nlyr)
 resolution  : 2000, 1000  (x, y)
 extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+coord. ref. : CH1903+ / LV95 (EPSG:2056)</code></pre>
 </div>
 </div>
 <p>Instead of changing the resolution, we can also modify the dimensions of the raster using the <code>nrow()</code> and <code>ncol()</code> (or <code>dim()</code>) functions. The resolution will be adapted automatically to maintain the defined extent.</p>
@@ -418,11 +418,11 @@ coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(rmod2) <span class="ot">&lt;-</span> <span class="dv">5</span></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>rmod2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 5, 9, 1  (nrow, ncol, nlyr)
 resolution  : 1111.111, 2000  (x, y)
 extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
+coord. ref. : CH1903+ / LV95 (EPSG:2056)</code></pre>
 </div>
 </div>
 <p>Until now we’ve only had a look on the geometry of <code>SpatRaster</code> objects. The raster objects we’ve created have cells but these are empty, they don’t store any values. We can assign values to a <code>SpatRaster</code> object using the <code>values()</code> function (note that we can use the same function to extract the cell values).</p>
@@ -430,15 +430,15 @@ coord. ref. : CH1903+ / LV95 (EPSG:2056) </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(r) <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fu">ncell</span>(r))</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>r</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 10, 10, 1  (nrow, ncol, nlyr)
 resolution  : 1000, 1000  (x, y)
 extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
 source(s)   : memory
-name        :      lyr.1 
-min value   : 0.01638269 
-max value   : 0.99074772 </code></pre>
+name        :    lyr.1
+min value   : 0.016383
+max value   : 0.990748</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -485,15 +485,15 @@ max value   : 0.99074772 </code></pre>
 <span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(s) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"band 1"</span>, <span class="st">"band 2"</span>, <span class="st">"band 3"</span>)</span>
 <span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>s</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 10, 10, 3  (nrow, ncol, nlyr)
 resolution  : 1000, 1000  (x, y)
 extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
 source(s)   : memory
-names       :     band 1, band 2, band 3 
-min values  : 0.01638269,      1,      1 
-max values  : 0.99074772,    100,    100 </code></pre>
+names       :   band 1, band 2, band 3
+min values  : 0.016383,      1,      1
+max values  : 0.990748,    100,    100</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(s)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -508,27 +508,27 @@ max values  : 0.99074772,    100,    100 </code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>s[[<span class="dv">2</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 10, 10, 1  (nrow, ncol, nlyr)
 resolution  : 1000, 1000  (x, y)
 extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
 source(s)   : memory
-name        : band 2 
-min value   :      1 
-max value   :    100 </code></pre>
+name        : band 2
+min value   :      1
+max value   :    100</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>s[[<span class="st">"band 2"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 10, 10, 1  (nrow, ncol, nlyr)
 resolution  : 1000, 1000  (x, y)
 extent      : 2600000, 2610000, 1200000, 1210000  (xmin, xmax, ymin, ymax)
-coord. ref. : CH1903+ / LV95 (EPSG:2056) 
+coord. ref. : CH1903+ / LV95 (EPSG:2056)
 source(s)   : memory
-name        : band 2 
-min value   :      1 
-max value   :    100 </code></pre>
+name        : band 2
+min value   :      1
+max value   :    100</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled" title="Rasters and R workspaces">
@@ -541,7 +541,7 @@ max value   :    100 </code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Since <code>terra</code> only stores a pointer to the raster data set, this means the actual data set won’t be included if you save your session in an R workspace (.Rdata files). If you really want to include it in your workspace, you can use the <code>wrap()</code> function. Note that this is also needed if you want to pass raster data over a connection that serializes, e.g.&nbsp;to a computer cluster.</p>
+<p>It is important to remember that the standard <code>terra</code> objects (e.g.&nbsp;<code>SpatRaster</code> and <code>SpatVector</code>) only store a pointer to the data (actually, they hold a pointer to an underlying C++ object that lives in the memory of the R session). This means the actual data set will not be included if you save your session in an R workspace (.Rdata files). If you really want to include it in your workspace, you can use the <code>wrap()</code> function. Note that this is also needed if you want to pass <code>terra</code> objects over a connection that serializes, e.g.&nbsp;to a computer cluster. For more details on parallel computing using <code>terra</code>, check <a href="https://rspatial.org/pkg/10-parallel.html" target="_blank">https://rspatial.org/pkg/10-parallel.html</a>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="Exercise (5 minutes)">
@@ -559,11 +559,11 @@ max value   :    100 </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rast</span>()</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>class       : SpatRaster 
+<pre><code>class       : SpatRaster
 size        : 180, 360, 1  (nrow, ncol, nlyr)
 resolution  : 1, 1  (x, y)
 extent      : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)
-coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) </code></pre>
+coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84)</code></pre>
 </div>
 </div>
 </div>
